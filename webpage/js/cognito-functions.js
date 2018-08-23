@@ -12,21 +12,7 @@ function loadSplash() {
 			event.preventDefault();
 			var email = $('[data-id=loginEmail_val]').val();
 			sessionStorage.setItem('email', email);
-			
-			var fname = 'Russ';
-			sessionStorage.setItem("fname", fname);
-			loadSignin();
-			$('#loginForm').hide();
-			/*$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'email':email }, function(result) {
-				if (result.statusCode === 200) {
-					var fname = result.body.alias;
-					sessionStorage.setItem("fname", fname);
-					loadSignin();
-					$('#loginForm').hide();
-				} else {
-					loadSignup();
-				}
-			});*/
+			trySignin(email);
 		});
 		$('#signupForm').submit(function(event){
 			event.preventDefault();
@@ -108,6 +94,20 @@ function loadAccount() {
 		$('#alias_display').text(sessionStorage.getItem('fname'));
 	});
 }
+function trySignin(email) {
+	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'email':email }, function(result) {
+		if (result.statusCode === 200) {
+			console.log('alias GET successful:\n', result);
+			var fname = result.body.alias;
+			sessionStorage.setItem("fname", fname);
+			loadSignin();
+			$('#loginForm').hide();
+		} else {
+			console.log('alias GET unsuccessful:\n', result);
+			loadSignup();
+		}
+	});
+}
 
 //on first load
 $(document).ready(function(){
@@ -115,11 +115,12 @@ $(document).ready(function(){
 });
 
 function registrationSuccess(result) {
-	console.log('Successfully Registered!\n' + result);
 	var fname = sessionStorage.getItem("fname");
 	var email = sessionStorage.getItem('email');
 	var data = { 'email':email, 'alias':fname };
-	//$.put('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', data);
+	$.post('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', data, function(result) {
+		console.log('alias POST result:\n', result);
+	});
 	alert('Registration successful! Please check your email inbox or spam folder for your verification link.\nVerify your email before signing in.');
 	loadSplash();
 }
