@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sara&rsquo;s IPA Study</title>
+
+	<link href="css/style.css" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+		  crossorigin="anonymous">
+
+	<!-- Animate.css https://daneden.github.io/animate.css/ -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+			crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+			crossorigin="anonymous"></script>
+	
+	<!-- Include all compiled plugins (below), or include individual files as needed --> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+			crossorigin="anonymous"></script>
+
+	<script src="js/vendor/aws-cognito-sdk.min.js"></script>
+	<script src="js/vendor/amazon-cognito-identity.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/wordMatchModal.js"></script>
+	<script src="js/cognito-functions.js"></script>
+	
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" onClick="loadSplash()" href="#">Sara&rsquo;s IPA Study</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" 
+					   onClick="loadSplash()" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Help</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					About
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				 		<a class="dropdown-item" href="http://www.sara.ai">About Sara.ai</a>
+				 		<a class="dropdown-item" data-toggle="collapse" data-target="#navbarSupportedContent" 
+							onClick="loadLearn()" href="#">About this study</a>
+				 		<div class="dropdown-divider"></div>
+				 		<a class="dropdown-item disabled" href="#">My Account</a>
+					</div>
+				</li>
+				<li id="logout" class="nav-item">
+					<a class="nav-link disabled" onClick="ipaStudy.signOut()" href="#">Log Out</a>
+				</li>
+			</ul>
+			<form id="loginForm" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" name="email" data-id="loginEmail_val" autocomplete="on" type="email"
+					   placeholder="my email address" aria-label="my login email address" required>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit" 
+						data-toggle="collapse" data-target="#navbarSupportedContent">Log In</button>
+			</form>
+		</div>
+	</nav>
+</header>
+<main id="main_content">
+	<section id="splash_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">International Phonetic Alphabet</h1>
+			<p class="lead">a study in computer aided learning through immersive reading of an unfamiliar orthography</p>
+			<hr class="my-4">
+			<div class="col-lg-6 offset-lg-3">
+				<p>You can contribute to the study of a frustration-mitigation model for beginning readers while learning the International Phonetic Alphabet (IPA), a tool for describing the intricacies of language &mdash; like the phonetic divergence of <a href="https://youtu.be/SKjHATJi0E8?t=43s" target="_blank">love, cove, and move</a>. Any hesitation, apprehension, or frustration you feel about learning IPA is felt by millions of children who are floundering readers of standard text. By reenacting the role of an emergent reader, your participation in this study will give us the data we need to address it.</p>
+				<p class="text-hide">Thanks to the University of Utah Lassonde Entrepreneur Institute's Get Seeded fund, sponsored by Zions Bank, you could be compensated for your diligent participation, while funding lasts.</p>
+				<p>Getting started is as easy as entering your email below.</p>
+			</div>
+			<div class="my-2 my-lg-0" style="display: inline-block">
+				<form id="signupForm" class="form-inline">
+					<input class="form-control mr-sm-2" name="email" data-id="signupEmail_val" autocomplete="on"
+						   type="email" placeholder="my email address" aria-label="my login email address" required>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
+				</form>
+				<small id="inputEmail_help" class="form-text text-muted">
+					We&rsquo;ll never share your email with anyone else.
+				</small>
+			</div>
+		</div>
+	</section>
+	<section id="signin_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">Welcome Back, <span id="userFirstName_display"></span></h1>
+			<p class="lead">enter your password for <span id="signinEmail_display"></span> below to sign in</p>
+			<hr class="my-4">
+			<form id="signinForm" class="form-inline my-2 my-lg-0" style="display: inline-block">
+				<input class="form-control mr-sm-2" name="password" id="password" type="password"
+					   placeholder="enter password" aria-label="my login password" required>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign In</button>
+			</form>
+		</div>
+	</section>
+	<section id="signup_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">welcome to the family</h1>
+			<p class="lead">enter a name and password for <span id="signupEmail_display" style="color: white; background-color: #28a745; padding: 0.375rem 0.75rem; border-radius: 0.25rem;"></span> below to sign up</p>
+			<hr class="my-4">
+			<form 	id="registrationForm" class="my-2 my-lg-0" style="display: inline-block; text-align: left">
+				<div class="form-group">
+					<label for="fname">Display Name</label>
+					<input class="form-control mr-sm-2" name="fname" type="text" autocomplete="on"
+					   placeholder="First Name, or an Alias" aria-label="my login password" required>
+				</div>
+				<div class="form-group">
+					<label for="password1">Choose a Password</label>
+					<input class="form-control mr-sm-2" name="password" id="password1" type="password"
+						placeholder="enter password" aria-label="choose a password" 
+						pattern="^(?:(?=.*[a-z])(?=.*[A-Z])(?=.*\d)).{8,}$" required>
+					<small id="noMatch_help" class="form-text invalid-feedback" style="color: red">
+						passwords did not match. try again
+					</small>
+					<small class="form-text text-muted">must be at least 8 characters and contain:
+						<ul>
+							<li>at least one uppercase letter,</li>
+							<li>at least one lowercase letter,</li>
+							<li>and at least one number</li>
+						</ul>
+					</small>
+				</div>
+				<div class="form-group">
+					<input class="form-control mr-sm-2" name="password" id="password2" type="password"
+					   placeholder="re-enter password" aria-label="reenter the password" required>
+					<small class="form-text text-muted">enter your password one more time, then press
+						<span style="color: #28a745">Sign Up</span></small>
+				</div>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
+			</form>
+		</div>
+	</section>
+	<section id="help_screen">
+	</section>
+	<section id="aboutSara_screen">
+	</section>
+	<section id="aboutStudy_screen">
+	</section>
+	<section id="account_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">Sorry, <span id="alias_display"></span>!</h1>
+			<p class="lead">we&rsquo;re not ready for you yet</p>
+			<div class="col-lg-6 offset-lg-3">
+				<p>We&rsquo;ll send an email when we are.</p>
+			</div>
+		</div>
+	</section>
+	<section id="learn_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<div id="learnImmersiveText" class="col-lg-6 offset-lg-3">
+			</div>
+		</div>
+	</section>
+	<div id="modal_wordMatch" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="wordMatch_title" class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Match one of the lexigrams below to the heading above &hellip;
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option1" type="button" class="btn">
+					</div>
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option2" type="button" class="btn">
+					</div>
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option3" type="button" class="btn">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="wordMatch_hidden" type="button" class="btn btn-outline-success" onClick="tadaWordMatch()">
+						the standard orthography <br/>will be revealed here
+					</button>
+					<button id="wordMatch_reveal" type="button"
+							class="btn btn-success animated tada" data-dismiss="modal">
+						the standard orthography <br/>is revealed here
+					</button>
+					<button id="wordMatch_close" type="button" class="btn btn-secondary" data-dismiss="modal">
+						close this popup <br/>and try again
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_phonemeMap" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="phonemeMap_title" class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="phonemeMap_body" class="phonemeMap"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_wordReveal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="wordReveal_title" class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="wordReveal_body" class="wordReveal"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="text-center col-lg-6 offset-lg-3">
+				<!--<h4>Footer </h4>-->
+				<p>
+					Copyright&nbsp;2018&nbsp;&middot; 
+					Russ&nbsp;Fugal&nbsp;&middot; 
+					All&nbsp;Rights&nbsp;Reserved&nbsp;&middot; 
+					<a href="http://www.sara.ai">www.Sara.ai</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</footer>
+</body>
+</html>

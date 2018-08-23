@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+
+.wordMatchLayout {
+	margin: 8pt auto 8pt 24pt;
+}
+.phonemeMap {
+	margin: 8pt auto 8pt 24pt;
+}
+.phonemeItem {
+	margin: 8pt auto 8pt 24pt;
+}
+.wordReveal {
+	margin: 8pt auto 8pt 24pt;
+}
+.interacted {
+	color: red;
+}
