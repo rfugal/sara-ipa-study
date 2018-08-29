@@ -1,0 +1,257 @@
+// JSON Document
+// Copyright 2018, Russ Fugal
+
+{
+	"ipaQuiz": [ // [θ, ɔ, ŋ, ʌ, ð, æ, j, ɛ, ʃ, a, ʒ, e]
+		"\u03b8",
+		"\u0254",
+		"\u014b",
+		"\u028c",
+		"\u00f0",
+		"\u00e6",
+		"j",
+		"\u025b",
+		"\u0283",
+		"a",
+		"\u0292",
+		"e"
+	],
+    "phonemes": {
+		"\u03b8": { // θ
+			"sound": "sounds like th in",
+			"asIn": ["thought", "threaten", "third"],
+			"quizOptions": [
+				"\u0283", // ʃ as in short
+				"\u00f0", // ð
+				"o", // 
+				"\u02a7", // ʧ
+				"\u0251" // ɑ as in hot
+			]
+		},
+		"\u0254": { // ɔ
+			"sound": "sounds like o in",
+			"asIn": ["boy", "forest", "for", "short", "more", "long", "before"],
+			"quizOptions": [
+				"\u02a7", // ʧ as in much
+				"k", // k as in cat
+				"\u00e6", // æ as in plan
+				"u", // u as in who
+				"\u0251" // ɑ as in hot
+			]
+		},
+		"\u014b": { // ŋ
+			"sound": "sounds like ng in",
+			"asIn": ["raising", "shouting", "long", "looking", "overcoming", "being", "racing", "trying"],
+			"quizOptions": [
+				"r",
+				"\u02a4", // ʤ as in change
+				"n",
+				"\u028c", // ʌ as in up
+				"l"
+			]
+		},
+		"\u028c": { // ʌ
+			"sound": "sounds like u in",
+			"asIn": ["up", "fun", "much", "just", "duck", "us"],
+			"quizOptions": [
+				"j", // j as in usual
+				"v", // v as in have
+				"f", // f as in foot
+				"u", // u as in who
+				"\u0251" // ɑ as in hot
+			]
+		},
+		"\u00f0": { // ð
+			"sound": "sounds like th in",
+			"asIn": ["there", "the", "they", "this", "that", "than", "them", "bother"],
+			"quizOptions": [
+				"o",
+				"\u02a4", // ʤ as in change
+				"\u03b8", // θ as in third
+				"\u028a", // ʊ as in foot
+				"\u0251" // ɑ as in hot
+			]
+		},
+		"\u00e6": { // æ
+			"sound": "sounds like a in",
+			"asIn": ["plan", "and", "have", "ran", "as", "that", "exactly", "after", "had", "began", "than"],
+			"quizOptions": [
+				"\u0251", // ɑ as in flocks
+				"e", // e as in days
+				"\u025b", // ɛ as in next
+				"\u0259", // ə as in chicken
+				"i" // i as in sheep
+			]
+		},
+		"j": {
+			"sound": "sounds like u in",
+			"asIn": ["used", "usual"],
+			"quizOptions": [
+				"\u0283", // ʃ as in short
+				"\u02a4", // ʤ as in change
+				"h", // h as in hot
+				"w", // w as in was
+				"g" // g as in get
+			]
+		},
+		"\u025b": { // ɛ
+			"sound": "sounds like e in",
+			"asIn": ["next", "get", "himself", "them"],
+			"quizOptions": [
+				"e", // e as in days
+				"\u025c", // ɜ as in concern
+				"\u00e6", // æ as in plan
+				"\u0259", // ə as in chicken
+				"i" // i as in he
+			]
+		},
+		"\u0283": { // ʃ
+			"sound": "sounds like sh in",
+			"asIn": ["shepherd", "shouting", "rushed", "short", "shot", "sheep"],
+			"quizOptions": [
+				"s",
+				"f",
+				"d",
+				"\u02a4", // ʤ as in change
+				"\u0292" // ʒ as in usual
+			]
+		},
+		"a": {
+			"sound": "sounds like o in",
+			"asIn": ["down", "shouting", "however", "out", "louder"],
+			"quizOptions": [
+				"\u0251", // ɑ as in flocks
+				"e", // e as in days
+				"\u00e6", // æ as in plan
+				"\u0259", // ə as in chicken
+				"\u028c" // ʌ as in up
+			]
+		},
+		"\u0292": { // ʒ
+			"sound": "sounds like s in",
+			"asIn": ["pleasure", "usual"],
+			"quizOptions": [
+				"\u0283", // ʃ as in short
+				"\u02a4", // ʤ as in change
+				"h",
+				"z",
+				"\u00f0" // ð
+			]
+		},
+		"e": {
+			"sound": "sounds like a in",
+			"asIn": ["raising", "safety", "stayed", "gave", "days", "later", "same", "change", "racing"],
+			"quizOptions": [
+				"\u025b", // ɛ as in next
+				"\u025c", // ɜ as in concern
+				"\u00e6", // æ as in plan
+				"\u0259", // ə as in chicken
+				"i" // i as in he
+			]
+		},
+		"\u026a": { // ɪ
+			"sound": "sounds like i in",
+			"asIn": ["his", "in", "himself", "little", "fist", "village", "him", "with", "this", "trick", "its", "chicken", "did"]
+		},
+		"\u0259": { // ə
+			"sound": "sounds like e in",
+			"asIn": ["the", "forest", "afternoon", "concern", "later", "after", "diet", "chicken", "louder", "bother"]
+		},
+		"t": {
+			"sound": "sounds like t in",
+			"asIn": ["to", "get", "fist", "short", "tried", "trick", "not", "just", "diet", "shot", "it", "out", "trying", "time", "told", "don\u2019t", "feast"]
+		},
+		"r": {
+			"sound": "sounds like r in",
+			"asIn": ["poor", "near", "for", "raising", "air", "ran", "rushed", "later", "however", "after", "fear", "racing", "louder", "bother"]
+		},
+		"n": {
+			"sound": "sounds like n in",
+			"asIn": ["in", "next", "near", "plan", "fun", "ran", "down", "soon", "even", "again", "not", "chicken", "began", "threaten", "than"]
+		},
+		"s": {
+			"sound": "sounds like s in",
+			"asIn": ["flocks", "some", "soon", "safety", "stayed", "this", "so", "same", "its", "us"]
+		},
+		"f": {
+			"sound": "sounds like f in",
+			"asIn": ["flocks", "fields", "forest", "foot", "for", "himself", "fun", "fist", "wolf", "from", "full", "few", "fear", "fool", "feast"]
+		},
+		"l": {
+			"sound": "sounds like l in",
+			"asIn": ["all", "full", "later", "successful", "long", "looking", "usual", "louder", "fool"]
+		},
+		"d": {
+			"sound": "sounds like d in",
+			"asIn": ["shepherd", "used", "dark", "good", "and", "down", "heard", "stayed", "days", "tried", "had", "diet", "duck", "did", "cried", "told", "don\u2019t"]
+		},
+		"\u028a": { // ʊ
+			"sound": "sounds like oo in",
+			"asIn": ["foot", "good", "looking"]
+		},
+		"z": {
+			"sound": "sounds like s in",
+			"asIn": ["was", "used", "his", "fields", "raising", "as", "homes", "cousins", "days"]
+		},
+		"h": {
+			"sound": "sounds like h in",
+			"asIn": ["his", "hot", "he", "himself", "have", "heard", "him", "homes", "however", "had"]
+		},
+		"k": {
+			"sound": "sounds like c in",
+			"asIn": ["company", "cousins", "escaped", "come", "course", "cried", "convinced"]
+		},
+		"m": {
+			"sound": "sounds like m in",
+			"asIn": ["mountain", "him", "from", "much", "more", "them"]
+		},
+		"u": {
+			"sound": "sounds like o in",
+			"asIn": ["who", "to", "soon", "zoo", "fool"]
+		},
+		"w": {
+			"sound": "sounds like w in",
+			"asIn": ["was", "watch", "wolf", "with", "while", "were"]
+		},
+		"i": {
+			"sound": "sounds like e in",
+			"asIn": ["he", "being", "sheep", "feast"]
+		},
+		"v": {
+			"sound": "sounds like v in",
+			"asIn": ["have", "village", "even", "gave"]
+		},
+		"o": {
+			"sound": "sounds like o in",
+			"asIn": ["also", "homes", "so", "told", "go", "don\u2019t"]
+		},
+		"p": {
+			"sound": "sounds like p in",
+			"asIn": ["poor", "up", "plan", "pleasure", "sheep"]
+		},
+		"g": {
+			"sound": "sounds like g in",
+			"asIn": ["good", "get", "gave", "go"]
+		},
+		"b": {
+			"sound": "sounds like b in",
+			"asIn": ["boy", "being", "began", "before", "bother"]
+		},
+		"\u0251": { // ɑ
+			"sound": "sounds like o in",
+			"asIn": ["flocks", "hot", "not", "shot", "bother"]
+		},
+		"\u02a7": { // ʧ
+			"sound": "sounds like ch in",
+			"asIn": ["watch", "much", "change", "chicken"]
+		},
+		"\u02a4": { // ʤ
+			"sound": "sounds like g in",
+			"asIn": ["village", "change"]
+		},
+		"\u025c": { // ɜ
+			"sound": "sounds like e in",
+			"asIn": ["heard", "concern"]
+		},
+	}
+}

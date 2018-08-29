@@ -1,0 +1,254 @@
+{
+	"ipaQuiz": [
+		"\u03b8",
+		"\u0254",
+		"\u014b",
+		"\u028c",
+		"\u00f0",
+		"\u00e6",
+		"j",
+		"\u025b",
+		"\u0283",
+		"a",
+		"\u0292",
+		"e"
+	],
+    "phonemes": {
+		"\u03b8": {
+			"sound": "sounds like th in",
+			"asIn": ["thought", "threaten", "third"],
+			"quizOptions": [
+				"\u0283",
+				"\u00f0",
+				"o",
+				"\u02a7",
+				"\u0251"
+			]
+		},
+		"\u0254": {
+			"sound": "sounds like o in",
+			"asIn": ["boy", "forest", "for", "short", "more", "long", "before"],
+			"quizOptions": [
+				"\u02a7",
+				"k",
+				"\u00e6",
+				"u",
+				"\u0251"
+			]
+		},
+		"\u014b": {
+			"sound": "sounds like ng in",
+			"asIn": ["raising", "shouting", "long", "looking", "overcoming", "being", "racing", "trying"],
+			"quizOptions": [
+				"r",
+				"\u02a4",
+				"n",
+				"\u028c",
+				"l"
+			]
+		},
+		"\u028c": {
+			"sound": "sounds like u in",
+			"asIn": ["up", "fun", "much", "just", "duck", "us"],
+			"quizOptions": [
+				"j",
+				"v",
+				"f",
+				"u",
+				"\u0251"
+			]
+		},
+		"\u00f0": {
+			"sound": "sounds like th in",
+			"asIn": ["there", "the", "they", "this", "that", "than", "them", "bother"],
+			"quizOptions": [
+				"o",
+				"\u02a4",
+				"\u03b8",
+				"\u028a",
+				"\u0251"
+			]
+		},
+		"\u00e6": {
+			"sound": "sounds like a in",
+			"asIn": ["plan", "and", "have", "ran", "as", "that", "exactly", "after", "had", "began", "than"],
+			"quizOptions": [
+				"\u0251",
+				"e",
+				"\u025b",
+				"\u0259",
+				"i"
+			]
+		},
+		"j": {
+			"sound": "sounds like u in",
+			"asIn": ["used", "usual"],
+			"quizOptions": [
+				"\u0283",
+				"\u02a4",
+				"h",
+				"w",
+				"g"
+			]
+		},
+		"\u025b": {
+			"sound": "sounds like e in",
+			"asIn": ["next", "get", "himself", "them"],
+			"quizOptions": [
+				"e",
+				"\u025c",
+				"\u00e6",
+				"\u0259",
+				"i"
+			]
+		},
+		"\u0283": {
+			"sound": "sounds like sh in",
+			"asIn": ["shepherd", "shouting", "rushed", "short", "shot", "sheep"],
+			"quizOptions": [
+				"s",
+				"f",
+				"d",
+				"\u02a4",
+				"\u0292"
+			]
+		},
+		"a": {
+			"sound": "sounds like o in",
+			"asIn": ["down", "shouting", "however", "out", "louder"],
+			"quizOptions": [
+				"\u0251",
+				"e",
+				"\u00e6",
+				"\u0259",
+				"\u028c"
+			]
+		},
+		"\u0292": {
+			"sound": "sounds like s in",
+			"asIn": ["pleasure", "usual"],
+			"quizOptions": [
+				"\u0283",
+				"\u02a4",
+				"h",
+				"z",
+				"\u00f0"
+			]
+		},
+		"e": {
+			"sound": "sounds like a in",
+			"asIn": ["raising", "safety", "stayed", "gave", "days", "later", "same", "change", "racing"],
+			"quizOptions": [
+				"\u025b",
+				"\u025c",
+				"\u00e6",
+				"\u0259",
+				"i"
+			]
+		},
+		"\u026a": {
+			"sound": "sounds like i in",
+			"asIn": ["his", "in", "himself", "little", "fist", "village", "him", "with", "this", "trick", "its", "chicken", "did"]
+		},
+		"\u0259": {
+			"sound": "sounds like e in",
+			"asIn": ["the", "forest", "afternoon", "concern", "later", "after", "diet", "chicken", "louder", "bother"]
+		},
+		"t": {
+			"sound": "sounds like t in",
+			"asIn": ["to", "get", "fist", "short", "tried", "trick", "not", "just", "diet", "shot", "it", "out", "trying", "time", "told", "don\u2019t", "feast"]
+		},
+		"r": {
+			"sound": "sounds like r in",
+			"asIn": ["poor", "near", "for", "raising", "air", "ran", "rushed", "later", "however", "after", "fear", "racing", "louder", "bother"]
+		},
+		"n": {
+			"sound": "sounds like n in",
+			"asIn": ["in", "next", "near", "plan", "fun", "ran", "down", "soon", "even", "again", "not", "chicken", "began", "threaten", "than"]
+		},
+		"s": {
+			"sound": "sounds like s in",
+			"asIn": ["flocks", "some", "soon", "safety", "stayed", "this", "so", "same", "its", "us"]
+		},
+		"f": {
+			"sound": "sounds like f in",
+			"asIn": ["flocks", "fields", "forest", "foot", "for", "himself", "fun", "fist", "wolf", "from", "full", "few", "fear", "fool", "feast"]
+		},
+		"l": {
+			"sound": "sounds like l in",
+			"asIn": ["all", "full", "later", "successful", "long", "looking", "usual", "louder", "fool"]
+		},
+		"d": {
+			"sound": "sounds like d in",
+			"asIn": ["shepherd", "used", "dark", "good", "and", "down", "heard", "stayed", "days", "tried", "had", "diet", "duck", "did", "cried", "told", "don\u2019t"]
+		},
+		"\u028a": {
+			"sound": "sounds like oo in",
+			"asIn": ["foot", "good", "looking"]
+		},
+		"z": {
+			"sound": "sounds like s in",
+			"asIn": ["was", "used", "his", "fields", "raising", "as", "homes", "cousins", "days"]
+		},
+		"h": {
+			"sound": "sounds like h in",
+			"asIn": ["his", "hot", "he", "himself", "have", "heard", "him", "homes", "however", "had"]
+		},
+		"k": {
+			"sound": "sounds like c in",
+			"asIn": ["company", "cousins", "escaped", "come", "course", "cried", "convinced"]
+		},
+		"m": {
+			"sound": "sounds like m in",
+			"asIn": ["mountain", "him", "from", "much", "more", "them"]
+		},
+		"u": {
+			"sound": "sounds like o in",
+			"asIn": ["who", "to", "soon", "zoo", "fool"]
+		},
+		"w": {
+			"sound": "sounds like w in",
+			"asIn": ["was", "watch", "wolf", "with", "while", "were"]
+		},
+		"i": {
+			"sound": "sounds like e in",
+			"asIn": ["he", "being", "sheep", "feast"]
+		},
+		"v": {
+			"sound": "sounds like v in",
+			"asIn": ["have", "village", "even", "gave"]
+		},
+		"o": {
+			"sound": "sounds like o in",
+			"asIn": ["also", "homes", "so", "told", "go", "don\u2019t"]
+		},
+		"p": {
+			"sound": "sounds like p in",
+			"asIn": ["poor", "up", "plan", "pleasure", "sheep"]
+		},
+		"g": {
+			"sound": "sounds like g in",
+			"asIn": ["good", "get", "gave", "go"]
+		},
+		"b": {
+			"sound": "sounds like b in",
+			"asIn": ["boy", "being", "began", "before", "bother"]
+		},
+		"\u0251": {
+			"sound": "sounds like o in",
+			"asIn": ["flocks", "hot", "not", "shot", "bother"]
+		},
+		"\u02a7": {
+			"sound": "sounds like ch in",
+			"asIn": ["watch", "much", "change", "chicken"]
+		},
+		"\u02a4": {
+			"sound": "sounds like g in",
+			"asIn": ["village", "change"]
+		},
+		"\u025c": {
+			"sound": "sounds like e in",
+			"asIn": ["heard", "concern"]
+		}
+	}
+}

@@ -6,8 +6,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sara&rsquo;s IPA Study</title>
 
-	<link href="css/style.css" rel="stylesheet">
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href="http://www.sara.ai/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="http://www.sara.ai/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="http://www.sara.ai/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="http://www.sara.ai/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="http://www.sara.ai/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="http://www.sara.ai/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="http://www.sara.ai/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="http://www.sara.ai/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="http://www.sara.ai/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="http://www.sara.ai/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.sara.ai/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="http://www.sara.ai/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="http://www.sara.ai/favicon/favicon-16x16.png">
+	<link rel="manifest" href="http://www.sara.ai/favicon/manifest.json">
 
+	<!-- css -->
+	<link href="css/style.css" rel="stylesheet">
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
@@ -17,9 +33,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
-			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
-			crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
 			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
 			crossorigin="anonymous"></script>
@@ -57,15 +71,9 @@
 					About
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				 		<a class="dropdown-item" href="http://www.sara.ai">About Sara.ai</a>
-				 		<a class="dropdown-item" data-toggle="collapse" data-target="#navbarSupportedContent" 
-							onClick="loadLearn()" href="#">About this study</a>
-				 		<div class="dropdown-divider"></div>
-				 		<a class="dropdown-item disabled" href="#">My Account</a>
+				 		<a class="dropdown-item" href="http://www.sara.ai" target="_blank">About Sara.ai</a>
+				 		<a class="dropdown-item" href="#">About this study</a>
 					</div>
-				</li>
-				<li id="logout" class="nav-item">
-					<a class="nav-link disabled" onClick="ipaStudy.signOut()" href="#">Log Out</a>
 				</li>
 			</ul>
 			<form id="loginForm" class="form-inline my-2 my-lg-0">
@@ -84,9 +92,10 @@
 			<p class="lead">a study in computer aided learning through immersive reading of an unfamiliar orthography</p>
 			<hr class="my-4">
 			<div class="col-lg-6 offset-lg-3">
-				<p>You can contribute to the study of a frustration-mitigation model for beginning readers while learning the International Phonetic Alphabet (IPA), a tool for describing the intricacies of language &mdash; like the phonetic divergence of <a href="https://youtu.be/SKjHATJi0E8?t=43s" target="_blank">love, cove, and move</a>. Any hesitation, apprehension, or frustration you feel about learning IPA is felt by millions of children who are floundering readers of standard text. By reenacting the role of an emergent reader, your participation in this study will give us the data we need to address it.</p>
-				<p class="text-hide">Thanks to the University of Utah Lassonde Entrepreneur Institute's Get Seeded fund, sponsored by Zions Bank, you could be compensated for your diligent participation, while funding lasts.</p>
-				<p>Getting started is as easy as entering your email below.</p>
+				<p style="text-align: left">You can contribute to the study of a frustration-mitigation model for beginning readers while learning the International Phonetic Alphabet (IPA), a tool for describing the intricacies of language &mdash; like the phonetic divergence of <a href="https://youtu.be/SKjHATJi0E8?t=43s" target="_blank">love, cove, and move</a>.</p>
+				<p style="text-align: left">Any hesitation, apprehension, or frustration you feel about learning the IPA is felt by millions of children who struggle as emergent readers of standard text. By reenacting the role of an emergent reader through this study, your participation will give us the data we need to create better tools which help these struggling readers.</p>
+				<p class="text-hide" style="text-align: left">Thanks to the University of Utah Lassonde Entrepreneur Institute's Get Seeded fund, sponsored by Zions Bank, you could be compensated for your diligent participation, while funding lasts.</p>
+				<p style="text-align: left">Getting started is as easy as entering your email below.</p>
 			</div>
 			<div class="my-2 my-lg-0" style="display: inline-block">
 				<form id="signupForm" class="form-inline">

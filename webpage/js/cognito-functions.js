@@ -1,5 +1,6 @@
 /*global ipaStudy _config AmazonCognitoIdentity AWSCognito*/
 
+
 function loadSplash() {
 	$('section').each(function() {
 		$( this ).hide();
@@ -48,7 +49,6 @@ function loadSignin() {
 				function signInFailure(err) {
 					$('#password').val('');
 					alert(err);
-					loadAccount();
 				}
 			);
 		});
@@ -87,22 +87,21 @@ function loadSignup() {
 	});
 }
 function loadAccount() {
+	window.location.href = 'learning.html';
 	$('section').each(function() {
 		$( this ).hide();
-	}).ready(function(){
-		$('section#account_screen').show();
-		$('#alias_display').text(sessionStorage.getItem('fname'));
 	});
 }
 function trySignin(email) {
+	$('#loginForm').hide();
 	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'email':email }, function(result) {
-		if (result.statusCode === 200) {
+		if (typeof result.alias !== "undefined" && result.alias !== null) {
 			console.log('alias GET successful:\n', result);
-			var fname = result.body.alias;
+			var fname = result.alias;
 			sessionStorage.setItem("fname", fname);
 			loadSignin();
-			$('#loginForm').hide();
 		} else {
+			$('#loginForm').show();
 			console.log('alias GET unsuccessful:\n', result);
 			loadSignup();
 		}
@@ -111,15 +110,34 @@ function trySignin(email) {
 
 //on first load
 $(document).ready(function(){
-	loadSplash();
+	$('section').each(function() {
+		$( this ).hide();
+	});
+	var cognitoUser = ipaStudy.userPool.getCurrentUser();
+	if (cognitoUser !== null) {
+		cognitoUser.getSession(function(err, session) {
+			if(!err) {
+				if (session.isValid()) {
+					window.location.href = 'learning.html';
+					return;
+				} else {
+					loadSplash();
+				}
+			} else {
+				loadSplash();
+			}
+		});
+	} else {
+		loadSplash();
+	}
 });
 
 function registrationSuccess(result) {
 	var fname = sessionStorage.getItem("fname");
 	var email = sessionStorage.getItem('email');
 	var data = { 'email':email, 'alias':fname };
-	$.post('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', data, function(result) {
-		console.log('alias POST result:\n', result);
+	$.put('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', data, function(result) {
+		console.log('alias PUT result:\n', result);
 	});
 	alert('Registration successful! Please check your email inbox or spam folder for your verification link.\nVerify your email before signing in.');
 	loadSplash();
@@ -206,3 +224,8 @@ function createCognitoUser(email) {
 var onFailure = function registerFailure(err) {
 	alert('Something went wrong with your registration.');
 };
+var credKeys = [
+	'accessKeyId',
+	'secretAccessKey',
+	'sessionToken'
+];

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sara&rsquo;s IPA Study</title>
+
+	<link href="css/style.css" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+		  crossorigin="anonymous">
+
+	<!-- Animate.css https://daneden.github.io/animate.css/ -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+			crossorigin="anonymous"></script>
+	
+	<!-- Include all compiled plugins (below), or include individual files as needed --> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+			crossorigin="anonymous"></script>
+
+	<script src="js/vendor/aws-cognito-sdk.min.js"></script>
+	<script src="js/vendor/amazon-cognito-identity.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/wordMatchModal.js"></script>
+	<script src="js/learning-functions.js"></script>
+	<style>body { padding: 50px 0 88px 0; }</style>
+</head>
+<body>
+<header>
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" onClick="loadSplash()" href="#">Sara&rsquo;s IPA Study</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" 
+						   href="#">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="collapse" data-target="#navbarSupportedContent"
+							onClick="loadLearn()" href="#">Help</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						About
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					 		<a class="dropdown-item" href="http://www.sara.ai">About Sara.ai</a>
+					 		<a class="dropdown-item" data-toggle="collapse" data-target="#navbarSupportedContent" 
+								href="#">About this study</a>
+					 		<div class="dropdown-divider"></div>
+					 		<a class="dropdown-item disabled" href="#">My Account</a>
+						</div>
+					</li>
+					<li id="logout" class="nav-item">
+						<a class="nav-link disabled" onClick="ipaStudy.signOut()" href="#">Log Out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+<main id="main_content">
+	<section id="help_screen">
+	</section>
+	<section id="aboutSara_screen">
+	</section>
+	<section id="aboutStudy_screen">
+	</section>
+	<section id="account_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">Sorry, <span id="alias_display"></span>!</h1>
+			<p class="lead">we&rsquo;re not ready for you yet</p>
+			<div class="col-lg-6 offset-lg-3">
+				<p>We&rsquo;ll send an email when we are.</p>
+			</div>
+		</div>
+	</section>
+	<section id="learn_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<div id="learnImmersiveText" class="col-lg-6 offset-lg-3 mainReader">
+			</div>
+			<div id="firstReadingAssesment" class="col-lg-6 offset-lg-3 mainReader">
+				<p class="lead">Chimamanda Ngozi Adichie</p>
+				<p>Chimamanda Ngozi Adichie was born on September 15, 1977, in Enugu, Nigeria. From an early age, Chimamanda was an avid reader, especially of books written by fellow Nigerian author, Chinua Achebe. Despite her early passion for literature, she did not initially want to be a writer. At first, she studied medicine in Nigeria and then decided to move to the United States to study communication and political science. It was not until attending graduate school that Chimamanda majored in creative writing.</p>
+				<p>Chimamanda Ngozi Adichie is now a famous author. One of her most popular novels is called Half of a Yellow Sun, which was published in 2006. It has since been adapted into a movie. This novel tells the story of three characters before and during Nigeria&rsquo;s Biafran War. This was a civil war that caused horrible famine throughout the country.</p>
+				<p>One of Chimamanda&rsquo;s more recent novels called Americanah focuses on a Nigerian girl&rsquo;s experience studying at an American college. While the protagonist&rsquo;s journey seems similar to Chimamanda&rsquo;s own journey, the author denies that she was writing about her own experience.</p>
+				<p>Chimamanda Ngozi Adichie has already won numerous awards for her writing. Currently, she lives part of the year in Nigeria and part of the year in the United States.</p>
+				<div class="lowerRightButton">
+					<div id="firstReadingAssesment_complete"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Done
+					</div>
+				</div>
+			</div>
+			<div id="secondReadingAssesment" class="col-lg-6 offset-lg-3 mainReader">
+				<p class="lead">Making the Team</p>
+				<p>Tick-tock. Tick-tock.</p>
+				<p>Andreas watched the clock. It seemed to be moving very slowly. This was his last class of the day&mdash;biology. Usually, Andreas liked biology. He liked learning about all of the different plants. He liked understanding how animals survived in the wild. Usually, Andreas didn&rsquo;t want biology class to end. But today was different. Today there were tryouts for the basketball team after school.</p>
+				<p>There was only one thing that Andreas liked more than science: basketball. Andreas had been practicing for months. His parents had put a basketball hoop in the backyard. Every night after dinner, Andreas went outside and practiced his shots. He loved the feeling of the basketball in his hands and the sound the ball made when it sailed through the net. Swish! Andreas thought it was the best sound in the world.</p>
+				<p>&ldquo;Psst! Andreas!&rdquo;</p>
+				<p>Andreas&rsquo;s best friend, Tyrell, was trying to get his attention.</p>
+				<p>&ldquo;I feel like this class will never end,&rdquo; said Tyrell.</p>
+				<p>&ldquo;I know,&rdquo; said Andreas. &ldquo;I&rsquo;m so nervous.&rdquo;</p>
+				<p>&ldquo;You shouldn&rsquo;t be nervous,&rdquo; said Tyrell. &ldquo;You&rsquo;re the tallest kid in fourth grade.&rdquo;</p>
+				<p>&ldquo;Height doesn&rsquo;t matter,&rdquo; said Andreas. &ldquo;What matters is if you can play the game. You&rsquo;re a much better shooter than I am.&rdquo;</p>
+				<p>Tyrell and Andreas had been best friends since kindergarten. Tyrell loved basketball, too, but his favorite team was the New York Knicks. Andreas&rsquo;s favorite team was the Chicago Bulls. The only time Tyrell and Andreas fought was when the Knicks were playing the Bulls. Tyrell was also trying out for the basketball team that afternoon. Andreas was glad he&rsquo;d have his best friend by his side.</p>
+				<p>Suddenly the bell rang and class was over. Andreas and Tyrell walked down to the gym. When they got there, Andreas&rsquo;s heart sank. There were at least 60 boys crowded onto the bleachers.</p>
+				<p>&ldquo;Oh no,&rdquo; said Tyrell. &ldquo;I never imagined there would be so many kids trying out for the basketball team.&rdquo;</p>
+				<p>Andreas knew the basketball team only had room for 20 people. That meant two-thirds of the kids there wouldn&rsquo;t make the team. Andreas and Tyrell looked at each other. What if only one of them made the team? That would be worse than not making the team at all.</p>
+				<p>The coach blew a whistle and the tryouts began. Andreas and Tyrell were separated into different groups. First Andreas ran sprints across the gym, over and over until his legs felt weak, and he was out of breath. Then, the coaches divided them into teams to play against one another. As soon as he felt his hands on the basketball, Andreas felt better. This was why he loved the game. All the nights of practicing paid off as he took shots from the 3-point line. Swish! Swish! Not all of the shots went in, but a lot of them did.</p>
+				<p>Tyrell was waiting outside when the tryouts were over.</p>
+				<p>&ldquo;How did it go?&rdquo; Andreas asked.</p>
+				<p>&ldquo;I don&rsquo;t know&hellip; I think it went alright,&rdquo; said Tyrell. &ldquo;The coach said he&rsquo;s posting a list of who made the team tomorrow before school. So I guess we&rsquo;ll find out soon enough.&rdquo;</p>
+				<p>Andreas felt his stomach tighten. He knew he had played well, but was it good enough?</p>
+				<p>&ldquo;It&rsquo;s okay,&rdquo; said Tyrell. Tyrell had known Andreas for so long that he could see when Andreas was upset. &ldquo;I&rsquo;m sure you made it. I just don&rsquo;t know if I did.&rdquo;</p>
+				<p>&ldquo;Playing on the basketball team wouldn&rsquo;t be any fun without you,&rdquo; said Andreas.</p>
+				<p>They walked the rest of the way home in silence.</p>
+				<p>The next morning Andreas couldn&rsquo;t eat any of his breakfast.  &ldquo;Can we go to school early today?&rdquo; he asked his mother. &ldquo;I can&rsquo;t wait anymore.&rdquo;</p>
+				<p>His mother nodded and reached for the car keys. Five minutes later, Andreas was standing in front of the gym. He looked at the list. Tyrell&rsquo;s name was at the very top&mdash;he had made it! Andreas&rsquo;s eyes moved down the list, slowly, reading every name. His eyes began to sting. He didn&rsquo;t see his name anywhere.</p>
+				<p>&ldquo;Andreas!&rdquo; He heard Tyrell&rsquo;s happy voice. &ldquo;We made it!&rdquo;</p>
+				<p>&ldquo;What do you mean?&rdquo; asked Andreas. &ldquo;My name&rsquo;s not on there.&rdquo;</p>
+				<p>&ldquo;Yes it is! Didn&rsquo;t you look at the second sheet?&rdquo; asked Tyrell.</p>
+				<p>Andreas looked back at the list. Tyrell was right; there was a second sheet of paper underneath. Andreas lifted up the first sheet of paper and saw his name at the very top. He turned and gave Tyrell a high-five. They were going to be on the basketball team together.</p>
+				<div class="lowerRightButton">
+					<div id="secondReadingAssesment_complete"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Done
+					</div>
+				</div>
+			</div>
+			<div id="initialIpaKnowledge" class="col-lg-6 offset-lg-3 mainReader">
+				<p class="lead">IPA Knowledge</p>
+				<p>We are almost ready to start learning. Before beginning, we want to record your baseline knowledge of IPA. This is a closed book test&nbsp;&mdash; we want to measure how much you actually learn in the upcoming lessons, so your honesty is appreciated.</p>
+				<p>There are only 12 questions. Each question is multiple choice. If you don&rsquo;t know the answer, check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
+				<p>Remember, we are not testing you&nbsp;&mdash; we are testing our hypothesis. When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assesment</span> button below.</p>
+				<div class="">
+					<div id="initialIpaKnowledge_complete" onClick="assessInitialIpaKnowledge()"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Begin IPA Assesment
+					</div>
+				</div>
+			</div>
+			<div id="ipaReadingSpeed" class="col-lg-6 offset-lg-3 mainReader">
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd h&#604;r m&#593;m go&#650; tu &#240;&#601; <span class="noWrapSpan">d&#618;&#712;p&#593;rtm&#601;nt</span> st&#596;r tu g&#603;t h&#604;r nu klo&#650;&#240;z. &#240;e&#618; w&#596;k p&#230;st &#240;&#601; b&#596;&#618;z &#712;s&#603;k&#643;&#601;n. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> siz &#601; ba&#650; ta&#618;. &#618;t h&#230;z blu &#230;nd p&#618;&#331;k stra&#618;ps, &#230;nd ta&#618;z <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#240;&#601; n&#603;k. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> la&#618;ks &#618;t. no&#650;, &#643;i l&#652;vz &#618;t!</p> <!--Alyssa and her mom go to the department store to get her new clothes. They walk past the boys’ section. Alyssa sees a bow tie. It has blue and pink stripes, and ties around the neck. Alyssa likes it. No, she loves it!-->
+				<p>&#8220;&#618;z &#240;&#230;t j&#650;&#601;r d&#230;dz?&#8221; <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; tu <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> nu ba&#650; ta&#618;.</p> <!--“Is that your dad’s?” Aveed says, pointing to Alyssa’s new bow tie.-->
+				<p>&#8220;wa&#618;?&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;sks. &#8220;&#618;ts &#601; ba&#650;. &#230;nd &#618;ts &#712;pr&#618;ti.&#8221;</p> <!--“Why?” Alyssa asks. “It’s a bow. And it’s pretty.”-->
+				<p>&#8220;b&#652;t ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z!&#8221; <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> s&#603;z.</p> <!--“But bow ties are for boys!” Aveed says.-->
+				<p>na&#650; &#643;i &#618;z &#712;r&#618;li <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st.</span> &#596;l &#240;&#601; nu k&#618;dz w&#618;l &#952;&#618;&#331;k &#643;iz d&#652;m f&#596;r &#712;w&#603;r&#618;&#331; &#601; ba&#650; ta&#618;. &#643;i w&#618;l &#230;sk &#240;&#601; &#712;ti&#679;&#601;r w&#603;n &#643;i g&#603;ts tu skul tu h&#603;lp h&#604;r te&#618;k &#618;t &#596;f.</p> <!--Now she is really embarrassed. All the new kids will think she’s dumb for wearing a bow tie. She will ask the teacher when she gets to school to help her take it off.-->
+				<div class="lowerRightButton">
+					<div id="ipaReadingSpeed_complete"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Done
+					</div>
+				</div>
+			</div>
+			<div id="firstIpaAssesment" class="col-lg-6 offset-lg-3 mainReader">
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#618;z <span class="noWrapSpan">&#618;k&#712;sa&#618;t&#601;d</span> f&#596;r h&#604;r f&#604;rst de&#618; &#652;v skul. &#712;s&#652;m&#601;r w&#652;z f&#652;n, b&#652;t &#643;i <span class="noWrapSpan">&#712;&#596;l&#716;we&#618;z</span> la&#618;ks &#618;t w&#603;n skul st&#593;rts <span class="noWrapSpan">&#601;&#712;g&#603;n</span> &#618;n <span class="noWrapSpan">s&#603;p&#712;t&#603;mb&#601;r.</span> &#240;&#603;r w&#618;l &#712;pr&#593;b&#601;bli bi nu k&#618;dz &#618;n h&#604;r kl&#230;s. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> la&#618;ks &#712;me&#618;k&#618;&#331; nu fr&#603;ndz.</p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#952;&#618;&#331;ks &#601; l&#593;t <span class="noWrapSpan">&#601;&#712;ba&#650;t</span> w&#652;t &#643;i w&#593;nts tu w&#603;r &#593;n &#240;&#601; f&#604;rst de&#618; &#652;v skul. h&#604;r m&#593;m &#230;nd d&#230;d se&#618; f&#604;rst <span class="noWrapSpan">&#618;m&#712;pr&#603;&#643;&#601;nz</span> &#593;r <span class="noWrapSpan">&#618;m&#712;p&#596;rt&#601;nt,</span> so&#650; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> w&#593;nts tu l&#650;k na&#618;s.</p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd h&#604;r m&#593;m go&#650; tu &#240;&#601; <span class="noWrapSpan">d&#618;&#712;p&#593;rtm&#601;nt</span> st&#596;r tu g&#603;t h&#604;r nu klo&#650;&#240;z. &#240;e&#618; w&#596;k p&#230;st &#240;&#601; b&#596;&#618;z &#712;s&#603;k&#643;&#601;n. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> siz &#601; ba&#650; ta&#618;. &#618;t h&#230;z blu &#230;nd p&#618;&#331;k stra&#618;ps, &#230;nd ta&#618;z <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#240;&#601; n&#603;k. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> la&#618;ks &#618;t. no&#650;, &#643;i l&#652;vz &#618;t!</p>
+				<p>&#8220;m&#593;m, me&#618; a&#618; h&#230;v &#240;&#230;t?&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; tu &#240;&#601; ba&#650; ta&#618;.</p>
+				<p>&#8220;b&#652;t &#240;&#230;ts f&#596;r b&#596;&#618;z,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> m&#593;m s&#603;z.</p>
+				<p>&#8220;wa&#618;?&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;sks. &#8220;&#618;ts &#601; ba&#650;. &#230;nd &#618;ts &#712;pr&#618;ti.&#8221;</p>
+				<p>&#8220;w&#603;l&#8230;&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> m&#593;m s&#603;z. &#643;i &#618;z &#712;&#952;&#618;&#331;k&#618;&#331;. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#712;kr&#596;s&#618;z h&#604;r &#712;f&#618;&#331;g&#601;rz.</p>
+				<p>&#8220;o&#650;ke&#618;, a&#618; g&#603;s wi k&#230;n g&#603;t &#618;t.&#8221;</p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#676;&#652;mps &#652;p &#230;nd da&#650;n &#618;n <span class="noWrapSpan">&#618;k&#712;sa&#618;tm&#601;nt.</span> &#8220;je&#618;!&#8221;</p>
+				<p>&#240;e&#618; p&#618;k &#652;p &#240;&#601; ba&#650; ta&#618;. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd h&#604;r m&#593;m &#712;&#596;lso&#650; p&#618;k a&#650;t &#601; wa&#618;t dr&#603;s w&#618;&#240; &#601; &#712;k&#593;l&#601;r w&#618;&#240; &#712;b&#652;t&#601;nz da&#650;n &#240;&#601; fr&#652;nt. &#618;ts s&#596;rt &#652;v la&#618;k &#601; b&#596;&#618;z &#643;&#604;rt, b&#652;t &#601; dr&#603;s. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#952;&#618;&#331;ks &#618;t w&#618;l l&#650;k kul w&#618;&#240; &#240;&#601; ba&#650; ta&#618;.</p>
+				<p>&#593;n &#240;&#601; &#712;m&#596;rn&#618;&#331; &#652;v &#240;&#601; f&#604;rst de&#618; &#652;v skul, <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#618;z &#712;v&#603;ri, &#712;v&#603;ri <span class="noWrapSpan">&#618;k&#712;sa&#618;t&#601;d.</span> &#643;i &#712;h&#593;rdli its &#712;&#603;ni &#652;v h&#604;r &#712;br&#603;kf&#601;st, &#712;iv&#618;n &#240;o&#650; h&#604;r d&#230;d me&#618;d &#712;w&#593;f&#601;lz. h&#604;r d&#230;d &#643;o&#650;z h&#604;r ha&#650; tu ta&#618; &#240;&#601; ba&#650; ta&#618;. &#618;ts &#712;h&#593;rd&#601;r &#240;&#230;n &#712;ta&#618;&#618;&#331; j&#650;&#601;r &#643;u!</p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> d&#230;d w&#596;ks h&#604;r tu &#240;&#601; b&#652;s st&#593;p. w&#603;n &#240;e&#618; g&#603;t &#240;&#603;r, <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> fr&#603;nd <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> &#618;z &#712;we&#618;t&#618;&#331; &#240;&#603;r <span class="noWrapSpan">&#596;l&#712;r&#603;di</span> w&#618;&#240; h&#604;r m&#593;m.</p>
+				<p>&#8220;ha&#618; <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d!&#8221;</span> <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z. &#643;iz &#712;h&#230;pi tu si h&#604;r fr&#603;nd.</p>
+				<p>&#8220;&#618;z &#240;&#230;t j&#650;&#601;r d&#230;dz?&#8221; <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; tu <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;z</span> nu ba&#650; ta&#618;.</p>
+				<p>&#8220;&#652;m, no&#650;,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z. &#8220;&#618;ts ma&#618;n!&#8221;</p>
+				<p>&#8220;b&#652;t ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z!&#8221; <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> s&#618;z.</p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#618;z <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st.</span> &#240;&#230;t &#618;z w&#652;t h&#604;r m&#593;m s&#603;d, tu! &#712;me&#618;bi &#643;i &#712;&#643;&#650;d&#601;nt w&#603;r &#240;&#601; ba&#650; ta&#618;. b&#652;t &#643;i &#712;&#596;lso&#650; &#712;d&#652;z&#601;nt w&#593;nt tu te&#618;k &#618;t &#596;f &#618;n fr&#652;nt &#652;v h&#604;r d&#230;d. so&#650; &#643;i &#676;&#652;st &#643;r&#652;gz &#230;nd s&#603;z &#712;n&#652;&#952;&#618;&#331;.</p>
+				<p>&#240;&#601; b&#652;s k&#652;mz, &#230;nd <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> g&#603;t &#593;n. &#240;e&#618; s&#618;t <span class="noWrapSpan">t&#601;&#712;g&#603;&#240;&#601;r.</span> <span class="noWrapSpan">&#601;&#712;n&#652;&#240;&#601;r</span> <span class="noWrapSpan">&#712;kl&#230;&#716;sme&#618;t</span> &#712;t&#593;mi g&#603;ts &#593;n &#230;t &#240;&#601; n&#603;kst st&#593;p.</p>
+				<p>&#8220;ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z!&#8221; &#712;t&#593;mi s&#603;z. &#8220;do&#650;nt ju no&#650; &#240;&#230;t?&#8221;</p>
+				<p>&#8220;j&#603;s,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#712;m&#652;mb&#601;lz.</p>
+				<p>na&#650; &#643;i &#618;z &#712;r&#618;li <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st.</span> &#596;l &#240;&#601; nu k&#618;dz w&#618;l &#952;&#618;&#331;k &#643;iz d&#652;m f&#596;r &#712;w&#603;r&#618;&#331; &#601; ba&#650; ta&#618;. &#643;i w&#618;l &#230;sk &#240;&#601; &#712;ti&#679;&#601;r w&#603;n &#643;i g&#603;ts tu skul tu h&#603;lp h&#604;r te&#618;k &#618;t &#596;f.</p>
+				<p>w&#603;n &#240;e&#618; g&#603;t tu skul, <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd <span class="noWrapSpan">&#712;&#593;&#716;ve&#618;d</span> w&#596;k &#601;&#712;kr&#596;s &#240;&#601; &#712;p&#593;rk&#618;&#331; l&#593;t <span class="noWrapSpan">t&#601;&#712;w&#596;rd</span> &#240;&#601; fr&#652;nt d&#596;rz. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> h&#230;z h&#604;r h&#603;d da&#650;n.</p>
+				<p>&#712;s&#652;d&#601;nli, <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> hirz, &#8220;&#601; ba&#650; ta&#618;! &#240;&#230;ts so&#650; kul.&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> l&#650;ks &#652;p, &#230;nd siz e&#618; &#712;s&#603;v&#601;n&#952; &#712;gre&#618;d&#601;r &#712;l&#650;k&#618;&#331; &#230;t h&#604;r.</p>
+				<p>&#8220;w&#652;t?&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z.</p>
+				<p>&#8220;a&#618; la&#618;k j&#650;&#601;r ba&#650; ta&#618;!&#8221; &#240;i &#712;o&#650;ld&#601;r g&#604;rl s&#603;z. &#8220;&#618;t &#618;z &#712;v&#603;ri kul. ju m&#652;st bi &#712;v&#603;ri <span class="noWrapSpan">kri&#712;e&#618;t&#618;v.&#8221;</span></p>
+				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#712;d&#652;z&#601;nt fil <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st</span> <span class="noWrapSpan">&#716;&#603;ni&#712;m&#596;r.</span> &#643;i la&#618;ks &#712;bi&#618;&#331; <span class="noWrapSpan">kri&#712;e&#618;t&#618;v.</span> &#643;i k&#230;nt we&#618;t tu &#643;o&#650; h&#604;r ba&#650; ta&#618; tu h&#604;r &#593;rt &#712;ti&#679;&#601;r.</p>
+				<p>w&#603;n w&#652;n &#652;v h&#604;r <span class="noWrapSpan">&#712;kl&#230;&#716;sme&#618;ts</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r <span class="noWrapSpan">&#712;&#603;vri&#716;w&#652;n.</span> <span class="noWrapSpan">&#601;&#712;sp&#603;&#643;li</span> &#618;f ju &#593;r <span class="noWrapSpan">kri&#712;e&#618;t&#618;v,</span> la&#618;k mi!&#8221;</p>
+				<div class="lowerRightButton">
+					<div id="firstIpaAssesment_complete"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Done
+					</div>
+				</div>
+			</div>
+			<div id="secondIpaAssesment" class="col-lg-6 offset-lg-3 mainReader">
+				<p>&#712;&#676;in&#601; l&#650;ks <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> h&#604;r nu <span class="noWrapSpan">&#712;b&#603;&#716;drum.</span> h&#604;r &#712;f&#230;m&#601;li b&#593;t &#240;&#618;s o&#650;ld <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> l&#230;st wik. &#643;iz st&#618;l &#712;g&#603;t&#618;&#331; juzd tu &#712;l&#618;v&#618;&#331; hir. &#240;&#601; s&#652;n &#618;z &#712;ra&#618;z&#618;&#331;, &#230;nd &#712;&#676;in&#601; p&#650;lz &#240;&#601; &#712;k&#652;v&#601;rz &#712;o&#650;v&#601;r h&#604;r h&#603;d.</p> 
+				<p>&#593;n h&#604;r &#712;dr&#603;s&#601;r, &#240;&#603;rz &#601; &#712;p&#596;rs&#601;l&#601;n d&#593;l &#618;n &#240;&#601; &#643;e&#618;p &#652;v &#601; f&#593;ks. &#618;ts &#712;mjuz&#618;k&#601;l. &#618;t ple&#618;z <span class="noWrapSpan">&#8220;&#712;pit&#601;r</span> &#230;nd &#240;&#601; w&#650;lf&#8221; w&#603;n ju w&#618;nd &#601; ki &#618;n &#240;&#601; b&#230;k. &#618;t ke&#618;m w&#618;&#240; &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l.</span></p>
+				<p>&#712;&#676;in&#601; &#712;dr&#603;s&#601;z <span class="noWrapSpan">h&#601;r&#712;s&#603;lf</span> &#618;n &#676;inz &#230;nd h&#604;r &#712;fe&#618;v&#601;r&#618;t <span class="noWrapSpan">&#712;sw&#603;t&#716;&#643;&#604;rt.</span> &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> &#618;z &#712;kwa&#618;&#601;t. &#712;f&#593;&#240;&#601;r &#618;z <span class="noWrapSpan">&#596;l&#712;r&#603;di</span> a&#650;t b&#230;k. hiz &#712;w&#604;rk&#618;&#331; &#593;n &#712;f&#618;ks&#618;&#331; &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> so&#650; &#240;&#230;t g&#603;sts k&#230;n ste&#618; &#240;&#603;r sun. &#618;ts ta&#618;m tu h&#603;d tu skul.</p>
+				<p>&#230;z &#643;i livz, &#643;i &#712;no&#650;t&#601;s&#601;z &#601;n o&#650;ld &#712;ba&#618;s&#618;k&#601;l &#643;iz &#712;n&#603;v&#601;r sin <span class="noWrapSpan">b&#618;&#712;f&#596;r</span> &#712;la&#618;&#618;&#331; &#618;n &#240;&#601; <span class="noWrapSpan">&#712;dra&#618;&#716;vwe&#618;.</span> &#712;&#676;in&#601; &#643;r&#652;gz &#230;nd &#712;f&#618;gj&#601;rz &#643;il g&#603;t tu skul &#712;kw&#618;k&#601;r &#240;&#618;s we&#618;. &#643;i p&#650;ts h&#604;r <span class="noWrapSpan">&#712;skul&#716;b&#650;ks</span> &#618;n &#240;&#601; &#712;b&#230;sk&#601;t &#230;nd h&#593;ps &#593;n.</p>
+				<p>&#240;&#601; h&#618;l &#618;z stip &#230;nd &#712;r&#593;ki. h&#604;r &#712;ba&#618;s&#618;k&#601;l &#712;kw&#618;kli st&#593;rts &#712;we&#618;v&#601;r&#618;&#331;. &#240;&#601; fr&#652;nt &#712;ta&#618;&#601;r &#618;z &#712;muv&#618;&#331; b&#230;k &#230;nd f&#596;r&#952;. &#712;s&#652;d&#601;nli, &#240;&#601; ba&#618;k v&#618;rz &#596;f &#240;&#601; ro&#650;d. &#618;ts &#230;z &#618;f <span class="noWrapSpan">&#712;s&#652;m&#716;w&#652;n</span> &#603;ls &#618;z &#712;st&#618;r&#618;&#331; &#240;&#601; ba&#618;k. &#230;nd &#240;&#603;n, &#601; &#712;t&#652;mb&#601;l! b&#230;k &#712;ta&#618;&#601;r &#712;o&#650;v&#601;r fr&#652;nt &#712;ta&#618;&#601;r, h&#604;r b&#650;ks fla&#618; &#652;p &#618;n &#240;i &#603;r. <span class="noWrapSpan">&#712;&#603;vri&#716;&#952;&#618;&#331;</span> go&#650;z &#712;fla&#618;&#618;&#331;.</p>
+				<p>&#952;&#652;d! h&#604;r &#712;&#618;&#331;gl&#618;&#643; b&#650;k h&#618;ts h&#604;r ra&#618;t &#593;n t&#593;p &#652;v &#240;&#601; h&#603;d. &#952;&#652;d! &#952;&#652;d! da&#650;n k&#652;mz m&#230;&#952; &#230;nd &#240;&#603;n <span class="noWrapSpan">ba&#618;&#712;&#593;l&#601;&#676;i.</span> <span class="noWrapSpan">(&#712;&#952;&#230;&#331;kf&#601;li,</span> &#240;o&#650;z l&#230;st tu &#593;r <span class="noWrapSpan">s&#593;ft&#712;k&#652;v&#601;r</span> b&#650;ks!)</p>
+				<p>&#8220;wooo&#650;&#650;&#650; o&#650;&#650;,&#8221; &#643;i kra&#618;z, h&#604;r a&#618;z &#712;ro&#650;l&#618;&#331; b&#230;k &#652;p &#712;&#618;ntu h&#604;r h&#603;d. <span class="noWrapSpan">&#712;&#603;vri&#716;&#952;&#618;&#331;</span> g&#603;ts d&#593;rk &#230;nd &#712;d&#618;zi &#230;nd filz la&#618;k &#643;iz &#712;sp&#618;n&#618;&#331; <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#593;n &#601; <span class="noWrapSpan">&#712;k&#603;r&#601;&#716;s&#603;l.</span> <span class="noWrapSpan">p&#601;r&#712;h&#230;ps</span> &#643;i &#618;z.</p>
+				<p>&#712;&#676;in&#601; la&#618;z da&#650;n &#618;n &#240;&#601; gr&#230;s &#230;nd f&#596;lz <span class="noWrapSpan">&#601;&#712;slip</span> f&#596;r &#601; wa&#618;l. &#618;ts &#712;st&#593;rt&#618;&#331; tu g&#603;t d&#593;rk w&#603;n &#643;i l&#618;fts h&#604;r h&#603;d. &#240;&#601; b&#650;k &#240;&#230;t h&#618;t h&#604;r &#593;n &#240;&#601; &#712;t&#603;mp&#601;l &#618;z na&#650; &#712;la&#618;&#618;&#331; <span class="noWrapSpan">b&#618;&#712;lo&#650;</span> h&#604;r la&#618;k &#601; &#712;p&#618;lo&#650;. &#643;i ridz &#240;&#601; &#712;ta&#618;t&#601;l: &#240;&#601; &#712;kj&#650;ri&#601;s <span class="noWrapSpan">&#716;s&#618;&#679;u&#712;e&#618;&#643;&#601;n</span> &#652;v &#712;f&#593;ks&#601;z.</p>
+				<p>&#240;&#230;ts &#712;f&#652;ni, &#712;&#676;in&#601; &#952;&#618;&#331;ks. a&#618; do&#650;nt <span class="noWrapSpan">r&#618;&#712;m&#603;mb&#601;r</span> &#712;te&#618;k&#618;&#331; &#240;&#618;s b&#650;k a&#650;t &#652;v &#240;&#601; <span class="noWrapSpan">&#712;la&#618;&#716;br&#603;ri.</span></p>
+				<p>&#643;iz &#712;&#643;&#650;rli m&#618;st skul na&#650;, &#230;nd &#240;&#601; &#712;ba&#618;s&#618;k&#601;l &#618;z <span class="noWrapSpan">&#712;no&#650;&#716;w&#603;r</span> tu bi sin. m&#652;st bi &#712;la&#618;&#618;&#331; &#618;n &#601; hip &#618;n &#240;&#601; &#712;br&#230;mb&#601;lz. &#643;i st&#230;ndz &#230;nd l&#650;ks <span class="noWrapSpan">&#601;&#712;ra&#650;nd,</span> &#712;d&#652;st&#618;&#331; &#596;f h&#604;r &#676;inz. &#240;&#603;rz &#601; b&#618;g ho&#650;l &#618;n &#240;&#601; sliv &#652;v h&#604;r &#712;fe&#618;v&#601;r&#618;t <span class="noWrapSpan">&#712;sw&#603;t&#716;&#643;&#604;rt!</span></p>
+				<p>&#643;iz f&#593;r <span class="noWrapSpan">b&#618;&#712;ha&#618;nd</span> &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l,</span> <span class="noWrapSpan">s&#601;&#712;ra&#650;nd&#601;d</span> ba&#618; <span class="noWrapSpan">&#712;bl&#230;k&#716;b&#603;ri</span> &#712;b&#650;&#643;&#601;z. &#240;&#603;rz &#601; sto&#650;n w&#596;l &#712;k&#652;v&#601;rd &#618;n m&#596;s &#230;nd &#601; &#712;h&#603;vi grin d&#596;r w&#618;&#240; &#601; &#712;k&#593;p&#601;r &#712;h&#230;nd&#601;l &#618;n &#240;&#601; &#643;e&#618;p &#652;v &#601; f&#593;ks. &#643;i &#712;t&#652;&#679;&#601;z &#240;&#601; f&#593;ks h&#603;d, &#230;nd &#240;&#601; d&#596;r &#712;o&#650;p&#601;nz.</p>
+				<p>&#643;i w&#596;ks &#952;ru &#240;&#601; d&#596;r &#230;nd siz &#240;&#601; fr&#652;nt &#652;v &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l.</span> &#230;nd &#240;&#603;rz &#240;&#601; &#712;ba&#618;s&#618;k&#601;l! b&#652;t &#240;&#618;s k&#230;nt bi &#240;i &#712;&#603;ntr&#601;ns tu &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l,</span> k&#230;n &#618;t?</p>
+				<p>&#643;i p&#618;rz da&#650;n &#601; l&#596;&#331; <span class="noWrapSpan">&#712;h&#596;l&#716;we&#618;.</span> &#618;ts &#712;l&#596;&#331;g&#601;r &#240;&#230;n &#643;i <span class="noWrapSpan">r&#618;&#712;m&#603;mb&#601;rz.</span> h&#604;r h&#603;d st&#618;l h&#604;rts fr&#652;m &#712;bi&#618;&#331; h&#618;t so&#650; h&#593;rd. &#618;n h&#604;r h&#230;nd, &#643;i &#712;k&#230;riz &#240;&#601; b&#650;k &#240;&#230;t <span class="noWrapSpan">&#601;&#712;t&#230;kt</span> h&#604;r fr&#652;m &#240;i &#603;r. &#643;i &#712;t&#652;&#679;&#601;z h&#604;r &#712;f&#596;rh&#603;d &#230;nd &#712;w&#618;ns&#618;z.</p>
+				<p>&#8220;&#652;g, a&#618;v g&#593;t &#601; l&#652;mp &#593;n ma&#618; h&#603;d la&#618;k &#601; h&#596;rn!&#8221;</p>
+				<p>&#230;t &#240;i &#603;nd &#652;v &#240;&#601; <span class="noWrapSpan">&#712;h&#596;l&#716;we&#618;</span> &#618;z &#601; rum &#643;i h&#230;z &#712;n&#603;v&#601;r sin <span class="noWrapSpan">b&#618;&#712;f&#596;r.</span> &#643;i hirz &#712;l&#230;ft&#601;r &#230;nd &#712;kl&#618;&#331;k&#618;&#331; &#712;gl&#230;s&#601;z, &#230;nd siz &#240;&#601; &#712;fl&#618;k&#601;r &#652;v &#601; &#712;r&#596;r&#618;&#331; <span class="noWrapSpan">&#712;fa&#618;&#601;r&#716;ple&#618;s.</span></p>
+				<p>&#618;n &#601; stre&#618;n&#676; rum w&#618;&#240; o&#650;k w&#596;lz &#230;nd &#712;t&#230;p&#601;striz, &#952;ri &#712;pip&#601;l &#593;r &#712;ple&#618;&#618;&#331; &#601; b&#596;rd ge&#618;m. w&#652;n m&#601;n &#618;z &#712;w&#603;r&#618;&#331; &#601; twid &#712;&#676;&#230;k&#601;t &#230;nd &#601; &#712;m&#593;n&#601;k&#601;l. w&#652;n &#712;w&#650;m&#601;n h&#230;z &#601; &#712;f&#603;&#240;&#601;r &#618;n h&#604;r h&#603;r. &#240;i &#712;&#652;&#240;&#601;r &#712;w&#650;m&#601;n w&#603;rz &#601; l&#596;&#331; str&#618;&#331; &#652;v p&#604;rlz <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> h&#604;r n&#603;k. &#240;e&#618; l&#650;k la&#618;k go&#650;sts. &#240;e&#618; dr&#618;&#331;k &#643;&#230;m&#712;pe&#618;n &#230;nd wa&#618;t ti, &#230;nd p&#230;s <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#712;&#679;&#603;riz &#593;n &#601; &#712;s&#618;lv&#601;r &#712;pl&#230;t&#601;r.</p>
+				<p><span class="noWrapSpan">&#8220;h&#601;&#712;lo&#650;,</span> ma&#618; d&#618;r,&#8221; s&#603;z &#240;&#601; &#712;w&#650;m&#601;n &#618;n &#240;&#601; &#712;n&#603;kl&#601;s &#652;v p&#604;rlz. &#8220;&#676;&#596;&#618;n &#712;a&#650;&#601;r &#712;p&#593;rti. do&#650;nt l&#650;k so&#650; sk&#603;rd.&#8221;</p>
+				<p>&#8220;hu &#593;r ju, &#230;nd ha&#650; d&#618;d ju g&#603;t &#712;&#618;ntu &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l?&#8221;</span> &#712;&#676;in&#601; &#230;sks.</p>
+				<p>&#8220;a&#618; &#230;m &#712;m&#603;r&#601;l&#601;n,&#8221; &#643;i s&#603;z. &#8220;&#230;nd &#240;&#601; j&#652;&#331; &#712;w&#650;m&#601;n w&#618;&#240; &#240;&#601; &#712;f&#603;&#240;&#601;r &#618;n h&#604;r h&#603;r &#618;z <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;.</span> wi h&#230;v <span class="noWrapSpan">&#712;&#596;l&#716;we&#618;z</span> la&#618;vd hir.&#8221;</p>
+				<p>&#8220;&#712;f&#603;st&#618;v <span class="noWrapSpan">&#712;a&#650;t&#716;f&#618;t!&#8221;</span> <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;</span> kw&#618;ps.</p>
+				<p>&#712;m&#603;r&#601;l&#601;n te&#618;ks &#712;&#676;in&#601; ba&#618; &#240;&#601; h&#230;nd &#230;nd lidz h&#604;r tu &#601; &#679;&#603;r. na&#650;, &#712;&#676;in&#601; siz &#240;&#230;t h&#604;r klo&#650;&#240;z h&#230;v &#679;e&#618;n&#676;d. &#643;i &#618;z no&#650; &#712;l&#596;&#331;g&#601;r &#712;w&#603;r&#618;&#331; &#240;&#601; &#676;inz &#230;nd <span class="noWrapSpan">&#712;sw&#603;t&#716;&#643;&#604;rt</span> &#643;i p&#650;t &#593;n &#712;&#604;rli&#601;r. &#643;i &#618;z &#712;w&#603;r&#618;&#331; &#601; r&#603;d &#230;nd grin &#712;p&#593;rti dr&#603;s w&#618;&#240; &#601; bl&#230;k &#712;v&#603;lv&#601;t ba&#650; &#618;n h&#604;r h&#603;r.</p>
+				<p>&#8220;&#230;nd &#712;fa&#618;n&#601;li, &#712;a&#650;&#601;r g&#603;st &#618;z &#618;n &#712;m&#230;&#679;&#618;&#331; <span class="noWrapSpan">&#712;h&#593;l&#601;&#716;de&#618;</span> <span class="noWrapSpan">&#601;&#712;ta&#618;&#601;r!&#8221;</span> &#676;o&#650;ks <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;.</span></p>
+				<p>&#240;&#601; m&#601;n st&#230;ndz &#230;nd <span class="noWrapSpan">&#716;&#618;ntr&#601;&#712;dus&#618;z</span> <span class="noWrapSpan">h&#618;m&#712;s&#603;lf.</span> hi &#712;ple&#618;s&#601;z w&#652;n h&#230;nd &#618;n fr&#652;nt &#652;v h&#618;z &#712;st&#652;m&#601;k &#230;nd ba&#650;z. &#8220;&#712;m&#230;d&#601;m &#712;&#676;in&#601;, <span class="noWrapSpan">&#601;&#712;la&#650;</span> mi tu <span class="noWrapSpan">&#716;&#618;ntr&#601;&#712;dus</span> <span class="noWrapSpan">&#716;ma&#618;&#712;s&#603;lf.</span> a&#618; &#230;m &#240;&#601; f&#593;ks &#712;h&#652;nt&#601;r no&#650;n &#230;z <span class="noWrapSpan">&#676;&#601;&#712;r&#593;rd.&#8221;</span></p>
+				<p>&#8220;l&#650;k hir, &#712;m&#618;st&#601;r. f&#593;ks &#712;h&#652;nt&#601;r,&#8221; &#712;&#676;in&#601; s&#603;z. &#8220;wi du n&#593;t h&#652;nt &#596;r h&#604;rt &#712;f&#593;ks&#601;z &#618;n ma&#618; &#712;f&#230;m&#601;li!&#8221;</p>
+				<p>&#8220;a&#618; do&#650;nt h&#604;rt &#240;&#603;m! a&#618; st&#652;f &#240;&#603;m &#230;nd h&#230;&#331; &#240;&#603;m &#593;n ma&#618; w&#596;l &#230;z &#593;rt!&#8221; hi &#712;b&#603;lo&#650;z. &#8220;&#240;&#601; &#712;f&#593;ks&#601;z &#593;r ra&#618;p f&#596;r &#240;&#601; &#712;p&#618;k&#618;&#331;!&#8221;</p>
+				<p><span class="noWrapSpan">b&#618;&#712;f&#596;r</span> &#712;&#676;in&#601; k&#230;n sko&#650;ld h&#618;m f&#596;r &#240;&#618;s &#712;t&#603;r&#601;b&#601;l &#712;k&#593;m&#603;nt, &#240;i o&#650;ld, o&#650;k <span class="noWrapSpan">&#712;la&#618;&#716;br&#603;ri</span> &#643;&#603;lf <span class="noWrapSpan">b&#618;&#712;g&#618;nz</span> tu st&#604;r.</p>
+				<p>&#8220;w&#652;t muvz <span class="noWrapSpan">b&#618;&#712;ha&#618;nd</span> &#240;&#601; &#712;l&#603;&#240;&#601;r-ba&#650;nd <span class="noWrapSpan">&#712;&#593;lm&#601;&#716;n&#230;k?&#8221;</span> &#230;sks &#240;&#601; f&#593;ks &#712;h&#652;nt&#601;r.</p>
+				<p>&#240;i <span class="noWrapSpan">&#712;&#593;lm&#601;&#716;n&#230;k</span> <span class="noWrapSpan">b&#618;&#712;g&#618;nz</span> tu &#712;kw&#618;v&#601;r. &#712;&#676;in&#601; muvz &#712;klo&#650;s&#601;r tu &#240;&#601; <span class="noWrapSpan">&#712;b&#650;k&#716;ke&#618;s</span> tu <span class="noWrapSpan">&#618;n&#712;sp&#603;kt</span> &#240;&#601; &#712;fl&#652;t&#601;r&#618;&#331;. &#230;t &#240;&#618;s &#712;mo&#650;m&#601;nt, &#240;&#601; b&#650;k p&#593;ps a&#650;t &#652;v &#240;&#601; &#643;&#603;lf la&#618;k &#601; t&#596;&#618; &#593;n &#601; spr&#618;&#331;! &#230;nd w&#652;t <span class="noWrapSpan">&#601;&#712;p&#618;rz</span> &#618;n &#618;ts ple&#618;s? n&#652;n &#712;&#652;&#240;&#601;r &#240;&#230;n &#601; f&#593;ks!</p>
+				<p>&#240;&#601; f&#593;ks w&#618;l n&#593;t <span class="noWrapSpan">r&#618;&#712;me&#618;n</span> st&#618;l, <span class="noWrapSpan">&#716;ha&#650;&#712;&#603;v&#601;r.</span> hi &#618;z &#712;r&#618;g&#601;l&#618;&#331; <span class="noWrapSpan">h&#618;m&#712;s&#603;lf</span> fri. &#712;fr&#230;nt&#618;k &#712;muvm&#601;nts: &#601; h&#593;rd &#712;b&#603;r&#618;&#331;-da&#650;n &#593;n h&#618;z fr&#652;nt p&#596;z, &#230;nd &#601;n <span class="noWrapSpan">&#601;&#712;ke&#618;&#658;&#601;n&#601;l</span> &#712;gr&#652;nt&#618;&#331;.</p>
+				<p>&#712;s&#652;d&#601;nli, &#240;&#601; f&#593;ks k&#652;mz &#712;fla&#618;&#618;&#331; a&#650;t &#652;v &#240;&#601; ho&#650;l &#230;nd &#643;uts la&#618;k &#601;n &#712;&#230;ro&#650; <span class="noWrapSpan">&#601;&#712;kr&#596;s</span> &#240;&#601; rum. hi l&#230;ndz &#593;n &#601; b&#603;r sk&#618;n r&#652;g &#230;nd f&#596;lz &#712;&#618;ntu &#601; dip slip.</p>
+				<p><span class="noWrapSpan">&#601;&#712;n&#652;&#240;&#601;r</span> f&#593;ks <span class="noWrapSpan">&#601;&#712;p&#618;rz!</span> &#240;i &#712;&#230;n&#601;m&#601;lz pl&#652;g &#240;&#601; ra&#650;nd ho&#650;l &#712;p&#604;rf&#601;ktli, la&#618;k &#601; s&#593;ft, r&#603;d k&#596;rk!</p>
+				<p>&#8220;b&#652;t ha&#650; k&#230;n &#240;&#618;s bi?&#8221; &#712;&#676;in&#601; r&#652;bz h&#604;r a&#618;z w&#618;&#240; h&#604;r f&#618;st. &#8220;fr&#652;m &#601; <span class="noWrapSpan">&#712;la&#618;&#716;br&#603;ri</span> &#643;&#603;lf?&#8221;</p>
+				<p>w&#603;n &#240;&#230;t f&#593;ks &#676;&#652;mps a&#650;t, j&#603;t <span class="noWrapSpan">&#601;&#712;n&#652;&#240;&#601;r</span> f&#593;ks <span class="noWrapSpan">&#601;&#712;p&#618;rz.</span> &#230;nd <span class="noWrapSpan">&#601;&#712;g&#603;n.</span> &#712;f&#230;st&#601;r &#230;nd &#712;f&#230;st&#601;r. &#240;&#601; ho&#650;l <span class="noWrapSpan">b&#618;&#712;k&#652;mz</span> &#601; <span class="noWrapSpan">mo&#650;&#712;m&#603;nt&#601;s</span> bl&#604;r &#652;v &#712;&#596;r&#601;n&#676; &#230;nd bra&#650;n. &#712;f&#593;ks&#601;z &#593;r &#712;b&#652;b&#601;l&#618;&#331; f&#596;r&#952; &#618;n &#601; strim, la&#618;k &#601; &#712;f&#596;s&#601;t &#240;&#230;t wo&#650;nt t&#604;rn &#596;f. &#596;l &#652;v &#240;&#603;m &#712;l&#230;nd&#618;&#331; &#593;n &#240;&#601; r&#652;g &#618;n &#601; pa&#618;l.</p>
+				<p>&#8220;&#240;&#601; ho&#650;l,&#8221; &#712;m&#603;r&#601;l&#601;n g&#230;sps. &#8220;&#618;ts &#601; &#712;p&#596;rt&#601;l! &#601; &#712;p&#596;rt&#601;l tu &#712;f&#593;ks&#601;z!&#8221;</p>
+				<p><span class="noWrapSpan">&#716;&#596;l&#712;&#240;o&#650;</span> ju me&#618; <span class="noWrapSpan">&#618;&#712;m&#230;&#676;&#601;n</span> &#712;a&#650;&#601;r grup tu bi &#618;n &#240;&#601; m&#618;dst &#652;v &#601; <span class="noWrapSpan">k&#601;&#712;mo&#650;&#643;&#601;n,</span> &#240;&#601; &#712;f&#593;ks&#601;z &#593;r &#712;&#230;k&#679;u&#601;li kwa&#618;t &#712;d&#593;s&#601;l. f&#604;rst, &#240;e&#618; &#676;&#652;mp fr&#652;m &#240;&#601; ho&#650;l &#230;nd r&#652;n <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#240;&#601; rum. &#712;kw&#618;kli, &#240;o&#650;, &#240;&#603;r a&#618;z klo&#650;s &#712;&#676;&#603;ntli, &#230;nd &#240;e&#618; &#712;s&#603;t&#601;l da&#650;n &#230;z &#618;f f&#596;r &#601; l&#596;&#331; &#712;w&#618;nt&#601;rz n&#230;p.</p>
+				<p>&#240;&#601; fl&#596;r, <span class="noWrapSpan">&#716;ha&#650;&#712;&#603;v&#601;r,</span> &#618;z na&#650; <span class="noWrapSpan">&#712;no&#650;&#716;w&#603;r</span> tu bi sin. &#712;f&#593;ks&#601;z &#593;r &#712;slip&#618;&#331; &#230;nd &#712;sn&#596;r&#618;&#331; <span class="noWrapSpan">&#712;&#603;vri&#716;w&#603;r,</span> <span class="noWrapSpan">w&#618;&#712;&#952;a&#650;t</span> &#712;&#603;ni <span class="noWrapSpan">r&#601;&#712;g&#593;rd</span> f&#596;r &#712;m&#230;n&#601;rz.</p>
+				<p>&#8220;h&#603;lp! h&#603;lp!&#8221; kra&#618;z <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;.</span> &#643;i &#618;z tr&#230;pt <span class="noWrapSpan">b&#618;&#712;ni&#952;</span> &#601; &#712;f&#652;zi pa&#618;l &#652;v sm&#596;l, &#712;be&#618;bi &#712;f&#593;ks&#601;z &#712;slip&#618;&#331; &#596;l <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> h&#604;r &#712;&#643;o&#650;ld&#601;rz &#230;nd h&#603;d.</p>
+				<p>&#8220;&#712;tr&#230;&#676;&#601;di! w&#652;t k&#230;n wi du?&#8221; &#240;e&#618; kra&#618;.</p>
+				<p>&#676;&#652;st na&#650;, &#712;&#676;in&#601; <span class="noWrapSpan">r&#618;&#712;m&#603;mb&#601;rz</span> &#240;&#601; b&#650;k &#618;n h&#604;r h&#230;nd: &#240;&#601; &#712;kj&#650;ri&#601;s <span class="noWrapSpan">&#716;s&#618;&#679;u&#712;e&#618;&#643;&#601;n</span> &#652;v &#712;f&#593;ks&#601;z. &#643;i &#712;o&#650;p&#601;nz tu &#240;&#601; f&#604;rst pe&#618;&#676; &#230;nd <span class="noWrapSpan">b&#618;&#712;g&#618;nz</span> tu rid: <span class="noWrapSpan">&#8220;&#712;&#679;&#230;pt&#601;r</span> w&#652;n: &#618;n ke&#618;s &#652;v <span class="noWrapSpan">&#618;&#712;m&#604;r&#676;&#601;nsi.</span> w&#652;t tu du w&#603;n &#601; f&#593;ks &#712;p&#596;rt&#601;l &#618;z &#712;o&#650;p&#601;nd.&#8221;</p>
+				<p><span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;</span> &#952;ro&#650;z h&#604;r &#593;rmz &#618;n &#240;i &#603;r. &#8220;mrfn!&#8221; &#643;i p&#650;lz &#601; &#712;slip&#618;&#331; &#712;be&#618;bi f&#593;ks a&#650;t &#652;v h&#604;r ma&#650;&#952;. &#8220;rid &#618;t!&#8221;</p>
+				<p>&#8220;w&#603;l, &#618;t s&#603;z hir,&#8221; &#712;&#676;in&#601; ridz, &#8220;&#240;&#230;t &#240;i <span class="noWrapSpan">&#652;n-&#712;f&#593;ks&#618;&#331;</span> sp&#603;l m&#652;st bi &#712;&#679;&#230;nt&#618;d &#618;n &#712;jun&#601;s&#601;n. na&#650;, <span class="noWrapSpan">&#712;&#603;vri&#716;w&#652;n,</span> tra&#618; j&#650;&#601;r b&#603;st tu gr&#230;b i&#679; &#712;&#652;&#240;&#601;rz h&#230;nd!&#8221;</p>
+				<p>&#8220;a&#618; k&#230;nt ri&#679;!&#8221; &#712;m&#603;r&#601;l&#601;n kra&#618;z.</p>
+				<p>&#8220;j&#603;s, ju k&#230;n!&#8221; s&#603;z &#240;&#601; f&#593;ks &#712;h&#652;nt&#601;r. hi <span class="noWrapSpan">b&#618;&#712;g&#618;nz</span> &#712;sw&#618;m&#618;&#331; <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#240;&#601; rum. hi d&#652;z &#240;&#601; <span class="noWrapSpan">&#712;b&#230;k&#716;stro&#650;k</span> &#952;ru &#712;f&#593;ks&#601;z, &#712;g&#230;&#240;&#601;r&#618;&#331; &#712;m&#603;r&#601;l&#601;n &#230;nd <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;</span> &#618;n i&#679; &#593;rm.</p>
+				<p>&#712;m&#603;r&#601;l&#601;nz &#712;de&#618;nti &#712;f&#618;&#331;g&#601;rz r&#230;p <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#712;&#676;in&#601;z h&#230;nd. &#240;e&#618; &#679;&#230;nt.</p>
+				<p>&#8220;&#712;f&#593;ks&#601;z &#652;v &#712;ne&#618;&#679;&#601;r, wi b&#603;g f&#596;r j&#650;&#601;r <span class="noWrapSpan">f&#601;r&#712;g&#618;vn&#601;s</span> &#230;nd <span class="noWrapSpan">bi&#712;si&#679;</span> &#240;i tu <span class="noWrapSpan">r&#618;&#712;t&#604;rn</span> tu &#240;&#601; &#712;f&#596;r&#601;st. &#240;&#618;s <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> &#618;z n&#593;t w&#603;r ju &#643;&#650;d <span class="noWrapSpan">&#712;ha&#618;b&#601;r&#716;ne&#618;t!&#8221;</span></p>
+				<p>&#712;&#676;in&#601; &#712;p&#596;z&#601;z f&#596;r &#601; &#712;s&#603;k&#601;nd, &#230;nd &#240;&#603;n s&#603;z: &#8220;f&#593;ks&#603;n big&#596;n&#603;n <span class="noWrapSpan">&#712;b&#603;n&#601;&#716;d&#618;kt&#603;n</span> f&#593;ksno&#650;m&#596;r!&#8221;</p>
+				<p>&#240;&#603;r &#618;z &#601; &#712;la&#618;tn&#618;&#331; kr&#230;&#643; <span class="noWrapSpan">&#712;a&#650;t&#712;sa&#618;d</span> &#230;nd &#596;l &#240;&#601; &#712;w&#618;ndo&#650;z &#712;r&#230;t&#601;l. &#230;nd &#240;&#603;n, &#712;b&#230;kw&#601;rdz, &#240;&#601; we&#618; &#240;e&#618; ke&#618;m, &#240;&#601; &#712;f&#593;ks&#601;z &#593;r s&#652;kt b&#230;k &#712;&#618;ntu &#240;&#601; &#712;p&#596;rt&#601;l. w&#652;n ba&#618; w&#652;n, te&#618;lz f&#604;rst &#230;nd h&#603;dz l&#230;st. &#240;e&#618; &#593;r s&#652;kt b&#230;k &#712;&#618;ntu &#240;&#601; ho&#650;l, st&#618;l &#712;slip&#618;&#331; &#712;sa&#650;ndli, tu <span class="noWrapSpan">r&#618;&#712;t&#604;rn</span> tu &#712;o&#650;nli &#240;&#601; &#712;d&#603;v&#601;l no&#650;z w&#603;r.</p>
+				<p>w&#603;n &#240;&#601; l&#230;st f&#593;ks <span class="noWrapSpan">&#716;d&#618;s&#601;&#712;p&#618;rz,</span> &#240;&#601; b&#650;k &#618;n &#712;&#676;in&#601;z h&#230;nd <span class="noWrapSpan">b&#618;&#712;g&#618;nz</span> tu &#712;fl&#652;t&#601;r. &#618;ts &#712;bi&#618;&#331; p&#650;ld <span class="noWrapSpan">&#716;&#652;nk&#601;n&#712;tro&#650;l&#601;bli</span> <span class="noWrapSpan">t&#601;&#712;w&#596;rd</span> &#240;&#601; &#712;p&#596;rt&#601;l na&#650;. &#643;i &#712;k&#230;n&#593;t <span class="noWrapSpan">k&#601;n&#712;tro&#650;l</span> h&#604;r &#593;rm, &#618;f &#643;i &#712;d&#652;z&#601;nt l&#603;t go&#650;, &#643;il go&#650; &#712;fla&#618;&#618;&#331; <span class="noWrapSpan">&#601;&#712;kr&#596;s</span> &#240;&#601; rum. &#230;nd &#643;i d&#652;z!</p>
+				<p>&#8220;&#712;&#596;&#596;&#596;&#596;&#596;&#596;!&#8221; &#712;&#676;in&#601; skrimz, &#712;bi&#618;&#331; p&#650;ld <span class="noWrapSpan">t&#601;&#712;w&#596;rd</span> &#240;&#601; ho&#650;l. &#618;t filz la&#618;k h&#604;r &#593;rm w&#618;l t&#603;r ra&#618;t &#596;f.</p>
+				<p>&#8220;l&#603;t go&#650; &#652;v &#240;&#601; b&#650;k!&#8221; &#712;&#676;in&#601; hirz &#601; v&#596;&#618;s kra&#618;. &#230;nd &#643;i d&#652;z &#240;&#230;t, tu. &#240;&#601; f&#596;rs &#712;p&#650;l&#618;&#331; h&#604;r &#618;z <span class="noWrapSpan">ri&#712;list</span> &#230;nd h&#604;r &#712;b&#593;di st&#593;ps m&#618;d-&#603;r. &#643;i f&#596;lz tu &#240;&#601; fl&#596;r w&#618;&#240; &#601; &#952;&#652;d. &#676;&#652;st la&#618;k &#240;&#601; &#712;f&#593;ks&#601;z, &#643;i f&#596;lz <span class="noWrapSpan">&#601;&#712;slip.</span></p>
+				<p>&#8220;&#712;&#676;in&#601;, l&#603;t go&#650; &#652;v &#240;&#601; b&#650;k,&#8221; &#643;i hirz. &#643;i &#712;o&#650;p&#601;nz h&#604;r a&#618;z, &#230;nd h&#604;r &#712;m&#652;&#240;&#601;r &#230;nd &#712;f&#593;&#240;&#601;r &#593;r &#712;st&#230;nd&#618;&#331; <span class="noWrapSpan">&#601;&#712;b&#652;v</span> h&#604;r. &#643;iz b&#230;k &#618;n &#240;&#601; &#712;br&#230;mb&#601;l, &#240;&#601; &#712;ba&#618;s&#618;k&#601;l &#601; &#712;tw&#618;st&#601;d m&#603;s <span class="noWrapSpan">b&#618;&#712;sa&#618;d</span> h&#604;r. &#8220;l&#603;t go&#650; &#652;v &#240;&#601; b&#650;k, &#712;&#676;in&#601;. wir &#712;go&#650;&#618;&#331; tu te&#618;k ju <span class="noWrapSpan">&#618;n&#712;sa&#618;d</span> &#230;nd klin &#652;p &#596;l &#240;iz skre&#618;ps &#230;nd &#712;bruz&#601;z.</p>
+				<p>&#8220;w&#652;t &#712;h&#230;p&#601;nd?&#8221;</p>
+				<p>&#8220;juv &#712;f&#593;l&#601;n &#596;f &#240;&#618;s ba&#618;k, d&#618;r. &#230;nd &#618;ts no&#650; &#712;w&#652;nd&#601;r; &#618;t h&#230;d &#601; <span class="noWrapSpan">k&#601;m&#712;plitli</span> &#712;r&#652;st&#601;d &#679;e&#618;n! na&#650;, l&#603;t go&#650; &#652;v &#240;&#601; b&#650;k.&#8221;</p>
+				<p>&#643;i &#618;z &#712;kl&#652;&#679;&#618;&#331; &#601; b&#650;k tu h&#604;r &#679;&#603;st. &#240;&#601; &#712;k&#652;v&#601;r ridz: &#240;&#601; &#712;kj&#650;ri&#601;s <span class="noWrapSpan">&#716;s&#618;&#679;u&#712;e&#618;&#643;&#601;n</span> &#652;v &#712;b&#593;ks&#601;z: ha&#650; tu b&#618;ld &#601; b&#593;ks f&#596;r &#712;&#603;ni <span class="noWrapSpan">&#601;&#712;ke&#618;&#658;&#601;n.</span></p>
+				<p>&#8220;w&#652;t &#593;r ju &#712;du&#618;&#331; w&#618;&#240; &#240;&#618;s stre&#618;n&#676; b&#650;k, <span class="noWrapSpan">&#712;&#603;ni&#716;we&#618;?</span> &#712;pl&#230;n&#618;&#331; tu me&#618;k &#601; b&#593;ks?&#8221;</p>
+				<p>&#8220;a&#618;&#8230; do&#650;nt &#712;r&#618;li <span class="noWrapSpan">r&#618;&#712;m&#603;mb&#601;r,&#8221;</span> &#712;&#676;in&#601; s&#603;z, &#712;r&#652;b&#618;&#331; &#601; &#712;pe&#618;nf&#601;l l&#652;mp &#593;n h&#604;r &#712;f&#596;rh&#603;d.</p>
+				<p>&#8220;o&#650;, w&#618;l ju l&#650;k &#230;t &#240;&#230;t!&#8221; h&#604;r &#712;m&#652;&#240;&#601;r s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; &#230;t &#240;&#601; w&#650;dz. &#8220;ha&#650; swit!&#8221;</p>
+				<p>&#593;n &#240;&#601; d&#604;rt p&#230;&#952; <span class="noWrapSpan">b&#618;&#712;ha&#618;nd</span> h&#604;r, &#601; &#712;f&#230;m&#601;li &#652;v &#712;f&#593;ks&#601;z &#618;z &#712;me&#618;k&#618;&#331; &#240;&#603;r we&#618; &#712;&#618;ntu &#240;&#601; w&#650;dz. &#712;&#676;in&#601; skw&#618;nts &#230;nd sw&#603;rz &#643;i siz &#712;m&#603;r&#601;l&#601;n &#230;nd <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;,</span> dr&#603;st &#618;n &#712;f&#603;&#240;&#601;rz &#230;nd &#712;fa&#618;n&#601;riz, &#712;lid&#618;&#331; &#240;&#603;m ho&#650;m.</p>
+				<div class="lowerRightButton">
+					<div id="secondIpaAssesment_complete"
+							class="btn btn-outline-success my-2 my-sm-0 float-right">
+						Done
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div id="modal_firstReadingAssesment" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="firstReadingAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="firstReadingAssesment_body" class="immersionInstructions">
+						<p>Before you begin learning the International Phonetic Alphabet (IPA), we want to record a baseline to measure your learning against. We are not testing you&nbsp;&mdash; we are testing a method of aiding you in learning the IPA. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Begin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_secondReadingAssesment" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="secondReadingAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="secondReadingAssesment_body" class="immersionInstructions">
+						<p>Now that you are familiar with the interface, we have one more, slightly longer text for you to read. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Begin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_initialIpaKnowledge" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="initialIpaKnowledge_title" class="modal-title">IPA Familiarity</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="initialIpaKnowledge_body" class="immersionInstructions">
+					</div>
+					<label class="checkbox-inline immersionInstructions">
+						<input id="unsure_checkbox" type="checkbox">I&rsquo;m not sure
+					</label>
+					<div id="initialIpaKnowledge_options">
+						<div class="wordMatchLayout">
+							<input id="initialIpaKnowledge_option1" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="initialIpaKnowledge_option2" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="initialIpaKnowledge_option3" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="initialIpaKnowledge_option4" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="initialIpaKnowledge_option5" type="button" class="btn">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" id="initialIpaKnowledge_questionIndex">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_immersionInstructions" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="immersionInstructions_title" class="modal-title">Immersive Text</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="immersionInstructions_body" class="immersionInstructions">
+						<p>This is an immersive text learning environment. After closing this pop-up, please click on each unfamiliar word for assistance on how to read the combination of IPA characters (we refer to this combination as a lexigram&nbsp;&mdash; a visual representation of a word).</p>
+						<p>In this study, we want to track your actual time on task. A timer is started when you close this pop-up. Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please press the Pause button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>When you have finished reading the entire text, please press the Done button in the lower right corner.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Begin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_firstIpaAssesment" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="firstIpaAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="firstIpaAssesment_body" class="immersionInstructions">
+						<p>Now that you are familiar with the IPA, we want to measure your learning. This text will not have access to the immersive aide you&rsquo;ve been using. We are not testing you&nbsp;&mdash; we are testing the method we put you through. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Begin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_secondIpaAssesment" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="secondIpaAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="secondIpaAssesment_body" class="immersionInstructions">
+						<p>That first reading should have had many familiar lexigrams. This second reading is a little longer, and has more unfamiliar lexigrams&nbsp;&mdash; you will need to use the recoding skills you&rsquo;ve developed. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Begin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_wordMatch" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="wordMatch_title" class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Match one of the lexigrams below to the heading above &hellip;
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option1" type="button" class="btn">
+					</div>
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option2" type="button" class="btn">
+					</div>
+					<div class="wordMatchLayout">
+						<input id="wordMatch_option3" type="button" class="btn">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="wordMatch_hidden" type="button" class="btn btn-outline-success" onClick="tadaWordMatch()">
+						the standard orthography <br/>will be revealed here
+					</button>
+					<button id="wordMatch_reveal" type="button"
+							class="btn btn-success animated tada" data-dismiss="modal">
+						the standard orthography <br/>is revealed here
+					</button>
+					<button id="wordMatch_close" type="button" class="btn btn-secondary" data-dismiss="modal">
+						close this popup <br/>and try again
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_phonemeMap" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="phonemeMap_title" class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="phonemeMap_body" class="phonemeMap"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_wordReveal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="wordReveal_title" class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="wordReveal_body" class="wordReveal"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<footer class="footer fixed-bottom" style="height: 88px; background: white; padding: 20px 0 20px 0;">
+	<div class="container">
+		<div class="text-center col-lg-6 offset-lg-3">
+			<!--<h4>Footer </h4>-->
+			<p>
+				Copyright&nbsp;2018&nbsp;&middot; 
+				Russ&nbsp;Fugal&nbsp;&middot; 
+				All&nbsp;Rights&nbsp;Reserved&nbsp;&middot; 
+				<a href="http://www.sara.ai">www.Sara.ai</a>
+			</p>
+		</div>
+	</div>
+</footer>
+</body>
+</html>

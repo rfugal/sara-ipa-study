@@ -1,4 +1,4 @@
-// JavaScript Document
+ti// JavaScript Document
 // word match modal functions
 // Copyright 2018 Russ Fugal
 
@@ -18,7 +18,7 @@ function prepPhonemeMapModal(lexigram, reveal) {
 			var sound = wolf.phonemes[alpha].sound;
 			var asIn = reveal;
 			while ( asIn === reveal ) {
-				asIn = shuffle(wolf.phonemes[alpha].asIn)[0];
+				asIn = window.shuffle(wolf.phonemes[alpha].asIn)[0];
 			}
 			var p = document.createElement('p');
 			p.textContent = alpha + ' - ' + sound + ' ' + asIn;
@@ -120,19 +120,7 @@ function wordMatchTest() {
 	}
 }
 
-function loadLearn() {
-	var cognitoUser = ipaStudy.userPool.getCurrentUser();
-	if (cognitoUser !== null) {
-		cognitoUser.getSession(function(err, session) {
-			if(!err) {
-				if (session.isValid()) {
-					authenticatedLoadLearn();
-				}
-			}
-		});
-	}
-}
-function authenticatedLoadLearn() {
+window.loadLearn = function loadLearn() {
 	var interactionIndex = parseInt(sessionStorage.getItem('interactionIndex'));	
 	// cycle interaction methods
 	interactionIndex = (interactionIndex === 2) ? 0 : interactionIndex + 1;
@@ -141,20 +129,31 @@ function authenticatedLoadLearn() {
 	$('section').each(function() {
 		$( this ).hide();
 	}).ready(function(){
-		$('section#learn_screen').show();
+		$('div.mainReader').each(function(){
+			$( this ).hide();
+		}).ready(function(){
+			$('#learnImmersiveText').show();
+			$('section#learn_screen').show();
+		});
 	});
 	$('#modal_wordMatch').on('hide.bs.modal', freezeWordMatchModal);
+	$('#modal_immersionInstructions').modal('show');
 	$('#learnImmersiveText').html('');
-	$.each( wolf.paragraphs, function(index, paragraph) {
+	window.learningRecord.title = wolf.title;
+	window.learningRecord.interactions = [];
+	var spanIndex = 0;
+	$.each( wolf.paragraphs, function(paragraphIndex, paragraph) {
 		var interactionMethod = 'wordMatchSpan';
 		interactionMethod = (interactionIndex === 0) ? 'phonemeMapSpan' : interactionMethod;
 		interactionMethod = (interactionIndex === 1) ? 'wordRevealSpan' : interactionMethod;
 		var p = document.createElement('p');
-		$.each (paragraph, function(index, lex) {
+		$.each(paragraph, function(lexigramIndex, lex) {
 			var span = document.createElement('span');
 			span.textContent = lex.displayText;
 			span.setAttribute('data-lexigram', lex.lexigram);
 			span.setAttribute('data-reveal', lex.reveal);
+			span.setAttribute('data-index', spanIndex.toString());
+			spanIndex += 1;
 			span.setAttribute('style', 'white-space:nowrap;');
 			span.setAttribute('class', interactionMethod);
 			p.appendChild(span);
@@ -162,6 +161,11 @@ function authenticatedLoadLearn() {
 		});
 		$('#learnImmersiveText').append(p);
 	});
+	var done = document.createElement('div');
+	done.textContent = 'Done';
+	done.setAttribute('class', 'btn btn-outline-success my-2 my-sm-0 float-right');
+	done.setAttribute('onClick', 'updateLearnScreenDiv()');
+	$('#learnImmersiveText').append(done);
 	$('#learnImmersiveText span').on('click', function() {
 		var lexigram = $(this).attr('data-lexigram');
 		var reveal = $(this).attr('data-reveal');
@@ -170,7 +174,7 @@ function authenticatedLoadLearn() {
 		prepModal(lexigram, reveal, method);
 	});
 }
-function shuffle(a) {
+window.shuffle = function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));

@@ -10,9 +10,20 @@
 .phonemeItem {
 	margin: 8pt auto 8pt 24pt;
 }
+.immersionInstructions {
+	margin: 8pt auto 8pt 24pt;
+}
 .wordReveal {
 	margin: 8pt auto 8pt 24pt;
 }
 .interacted {
 	color: red;
+}
+.mainReader {
+	font-size: 20pt;
+	line-height: 1.7;
+	text-align: left;
+}
+.noWrapSpan {
+	white-space: nowrap;
 }
