@@ -61,7 +61,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" 
-					   onClick="loadSplash()" href="#">Home <span class="sr-only">(current)</span></a>
+					   onClick="location.reload()" href="#">Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Help</a>
@@ -129,7 +129,7 @@
 			<form 	id="registrationForm" class="my-2 my-lg-0" style="display: inline-block; text-align: left">
 				<div class="form-group">
 					<label for="fname">Display Name</label>
-					<input class="form-control mr-sm-2" name="fname" type="text" autocomplete="on"
+					<input class="form-control mr-sm-2" id="fname" name="fname" type="text" autocomplete="on"
 					   placeholder="First Name, or an Alias" aria-label="my login password" required>
 				</div>
 				<div class="form-group">
@@ -154,7 +154,7 @@
 					<small class="form-text text-muted">enter your password one more time, then press
 						<span style="color: #28a745">Sign Up</span></small>
 				</div>
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sign_up_button">Sign Up</button>
 			</form>
 		</div>
 	</section>
@@ -164,12 +164,21 @@
 	</section>
 	<section id="aboutStudy_screen">
 	</section>
-	<section id="account_screen">
+	<section id="registration_success_screen">
 		<div class="jumbotron jumbotron-fluid text-center">
-			<h1 class="display-4">Sorry, <span id="alias_display"></span>!</h1>
-			<p class="lead">we&rsquo;re not ready for you yet</p>
+			<h1 class="display-4">check your email</h1>
+			<p class="lead">we&rsquo;re sending you a confirmation link</p>
 			<div class="col-lg-6 offset-lg-3">
-				<p>We&rsquo;ll send an email when we are.</p>
+				<p>Your registration was a success, <span id="alias_display"></span>! Sign in after you confirm your email.</p>
+			</div>
+		</div>
+	</section>
+	<section id="registration_failure_screen">
+		<div class="jumbotron jumbotron-fluid text-center">
+			<h1 class="display-4">something went wrong</h1>
+			<p class="lead">don&rsquo;t quite know what happened there</p>
+			<div class="col-lg-6 offset-lg-3">
+				<p>Your registration failed. Maybe try again?</p>
 			</div>
 		</div>
 	</section>

@@ -6,8 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sara&rsquo;s IPA Study</title>
 
-	<link href="css/style.css" rel="stylesheet">
-
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
@@ -15,6 +13,8 @@
 
 	<!-- Animate.css https://daneden.github.io/animate.css/ -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+	<link href="css/style.css" rel="stylesheet">
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -80,32 +80,23 @@
 	<section id="aboutStudy_screen">
 	</section>
 	<section id="account_screen">
-		<div class="jumbotron jumbotron-fluid text-center">
-			<h1 class="display-4">Sorry, <span id="alias_display"></span>!</h1>
-			<p class="lead">we&rsquo;re not ready for you yet</p>
-			<div class="col-lg-6 offset-lg-3">
-				<p>We&rsquo;ll send an email when we are.</p>
-			</div>
-		</div>
 	</section>
 	<section id="learn_screen">
 		<div class="jumbotron jumbotron-fluid text-center">
 			<div id="learnImmersiveText" class="col-lg-6 offset-lg-3 mainReader">
 			</div>
-			<div id="firstReadingAssesment" class="col-lg-6 offset-lg-3 mainReader">
+			<div id="firstReadingAssessment" class="col-lg-6 offset-lg-3 mainReader">
 				<p class="lead">Chimamanda Ngozi Adichie</p>
 				<p>Chimamanda Ngozi Adichie was born on September 15, 1977, in Enugu, Nigeria. From an early age, Chimamanda was an avid reader, especially of books written by fellow Nigerian author, Chinua Achebe. Despite her early passion for literature, she did not initially want to be a writer. At first, she studied medicine in Nigeria and then decided to move to the United States to study communication and political science. It was not until attending graduate school that Chimamanda majored in creative writing.</p>
 				<p>Chimamanda Ngozi Adichie is now a famous author. One of her most popular novels is called Half of a Yellow Sun, which was published in 2006. It has since been adapted into a movie. This novel tells the story of three characters before and during Nigeria&rsquo;s Biafran War. This was a civil war that caused horrible famine throughout the country.</p>
 				<p>One of Chimamanda&rsquo;s more recent novels called Americanah focuses on a Nigerian girl&rsquo;s experience studying at an American college. While the protagonist&rsquo;s journey seems similar to Chimamanda&rsquo;s own journey, the author denies that she was writing about her own experience.</p>
 				<p>Chimamanda Ngozi Adichie has already won numerous awards for her writing. Currently, she lives part of the year in Nigeria and part of the year in the United States.</p>
-				<div class="lowerRightButton">
-					<div id="firstReadingAssesment_complete"
-							class="btn btn-outline-success my-2 my-sm-0 float-right">
-						Done
-					</div>
+				<div id="firstReadingAssessment_complete" onClick="assesReadingComprehension()"
+						class="btn btn-outline-success my-2 my-sm-0 float-right">
+					Done
 				</div>
 			</div>
-			<div id="secondReadingAssesment" class="col-lg-6 offset-lg-3 mainReader">
+			<div id="secondReadingAssessment" class="col-lg-6 offset-lg-3 mainReader">
 				<p class="lead">Making the Team</p>
 				<p>Tick-tock. Tick-tock.</p>
 				<p>Andreas watched the clock. It seemed to be moving very slowly. This was his last class of the day&mdash;biology. Usually, Andreas liked biology. He liked learning about all of the different plants. He liked understanding how animals survived in the wild. Usually, Andreas didn&rsquo;t want biology class to end. But today was different. Today there were tryouts for the basketball team after school.</p>
@@ -134,22 +125,20 @@
 				<p>&ldquo;What do you mean?&rdquo; asked Andreas. &ldquo;My name&rsquo;s not on there.&rdquo;</p>
 				<p>&ldquo;Yes it is! Didn&rsquo;t you look at the second sheet?&rdquo; asked Tyrell.</p>
 				<p>Andreas looked back at the list. Tyrell was right; there was a second sheet of paper underneath. Andreas lifted up the first sheet of paper and saw his name at the very top. He turned and gave Tyrell a high-five. They were going to be on the basketball team together.</p>
-				<div class="lowerRightButton">
-					<div id="secondReadingAssesment_complete"
-							class="btn btn-outline-success my-2 my-sm-0 float-right">
-						Done
-					</div>
+				<div id="secondReadingAssessment_complete" onClick="assesReadingComprehension()"
+						class="btn btn-outline-success my-2 my-sm-0 float-right">
+					Done
 				</div>
 			</div>
 			<div id="initialIpaKnowledge" class="col-lg-6 offset-lg-3 mainReader">
 				<p class="lead">IPA Knowledge</p>
 				<p>We are almost ready to start learning. Before beginning, we want to record your baseline knowledge of IPA. This is a closed book test&nbsp;&mdash; we want to measure how much you actually learn in the upcoming lessons, so your honesty is appreciated.</p>
 				<p>There are only 12 questions. Each question is multiple choice. If you don&rsquo;t know the answer, check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
-				<p>Remember, we are not testing you&nbsp;&mdash; we are testing our hypothesis. When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assesment</span> button below.</p>
+				<p>Remember, we are not testing you&nbsp;&mdash; we are testing our hypothesis. When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assessment</span> button below.</p>
 				<div class="">
 					<div id="initialIpaKnowledge_complete" onClick="assessInitialIpaKnowledge()"
 							class="btn btn-outline-success my-2 my-sm-0 float-right">
-						Begin IPA Assesment
+						Begin IPA Assessment
 					</div>
 				</div>
 			</div>
@@ -166,7 +155,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="firstIpaAssesment" class="col-lg-6 offset-lg-3 mainReader">
+			<div id="firstIpaAssessment" class="col-lg-6 offset-lg-3 mainReader">
 				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#618;z <span class="noWrapSpan">&#618;k&#712;sa&#618;t&#601;d</span> f&#596;r h&#604;r f&#604;rst de&#618; &#652;v skul. &#712;s&#652;m&#601;r w&#652;z f&#652;n, b&#652;t &#643;i <span class="noWrapSpan">&#712;&#596;l&#716;we&#618;z</span> la&#618;ks &#618;t w&#603;n skul st&#593;rts <span class="noWrapSpan">&#601;&#712;g&#603;n</span> &#618;n <span class="noWrapSpan">s&#603;p&#712;t&#603;mb&#601;r.</span> &#240;&#603;r w&#618;l &#712;pr&#593;b&#601;bli bi nu k&#618;dz &#618;n h&#604;r kl&#230;s. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> la&#618;ks &#712;me&#618;k&#618;&#331; nu fr&#603;ndz.</p>
 				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#952;&#618;&#331;ks &#601; l&#593;t <span class="noWrapSpan">&#601;&#712;ba&#650;t</span> w&#652;t &#643;i w&#593;nts tu w&#603;r &#593;n &#240;&#601; f&#604;rst de&#618; &#652;v skul. h&#604;r m&#593;m &#230;nd d&#230;d se&#618; f&#604;rst <span class="noWrapSpan">&#618;m&#712;pr&#603;&#643;&#601;nz</span> &#593;r <span class="noWrapSpan">&#618;m&#712;p&#596;rt&#601;nt,</span> so&#650; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> w&#593;nts tu l&#650;k na&#618;s.</p>
 				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#230;nd h&#604;r m&#593;m go&#650; tu &#240;&#601; <span class="noWrapSpan">d&#618;&#712;p&#593;rtm&#601;nt</span> st&#596;r tu g&#603;t h&#604;r nu klo&#650;&#240;z. &#240;e&#618; w&#596;k p&#230;st &#240;&#601; b&#596;&#618;z &#712;s&#603;k&#643;&#601;n. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> siz &#601; ba&#650; ta&#618;. &#618;t h&#230;z blu &#230;nd p&#618;&#331;k stra&#618;ps, &#230;nd ta&#618;z <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> &#240;&#601; n&#603;k. <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> la&#618;ks &#618;t. no&#650;, &#643;i l&#652;vz &#618;t!</p>
@@ -195,13 +184,13 @@
 				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#712;d&#652;z&#601;nt fil <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st</span> <span class="noWrapSpan">&#716;&#603;ni&#712;m&#596;r.</span> &#643;i la&#618;ks &#712;bi&#618;&#331; <span class="noWrapSpan">kri&#712;e&#618;t&#618;v.</span> &#643;i k&#230;nt we&#618;t tu &#643;o&#650; h&#604;r ba&#650; ta&#618; tu h&#604;r &#593;rt &#712;ti&#679;&#601;r.</p>
 				<p>w&#603;n w&#652;n &#652;v h&#604;r <span class="noWrapSpan">&#712;kl&#230;&#716;sme&#618;ts</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r <span class="noWrapSpan">&#712;&#603;vri&#716;w&#652;n.</span> <span class="noWrapSpan">&#601;&#712;sp&#603;&#643;li</span> &#618;f ju &#593;r <span class="noWrapSpan">kri&#712;e&#618;t&#618;v,</span> la&#618;k mi!&#8221;</p>
 				<div class="lowerRightButton">
-					<div id="firstIpaAssesment_complete"
+					<div id="firstIpaAssessment_complete"
 							class="btn btn-outline-success my-2 my-sm-0 float-right">
 						Done
 					</div>
 				</div>
 			</div>
-			<div id="secondIpaAssesment" class="col-lg-6 offset-lg-3 mainReader">
+			<div id="secondIpaAssessment" class="col-lg-6 offset-lg-3 mainReader">
 				<p>&#712;&#676;in&#601; l&#650;ks <span class="noWrapSpan">&#601;&#712;ra&#650;nd</span> h&#604;r nu <span class="noWrapSpan">&#712;b&#603;&#716;drum.</span> h&#604;r &#712;f&#230;m&#601;li b&#593;t &#240;&#618;s o&#650;ld <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> l&#230;st wik. &#643;iz st&#618;l &#712;g&#603;t&#618;&#331; juzd tu &#712;l&#618;v&#618;&#331; hir. &#240;&#601; s&#652;n &#618;z &#712;ra&#618;z&#618;&#331;, &#230;nd &#712;&#676;in&#601; p&#650;lz &#240;&#601; &#712;k&#652;v&#601;rz &#712;o&#650;v&#601;r h&#604;r h&#603;d.</p> 
 				<p>&#593;n h&#604;r &#712;dr&#603;s&#601;r, &#240;&#603;rz &#601; &#712;p&#596;rs&#601;l&#601;n d&#593;l &#618;n &#240;&#601; &#643;e&#618;p &#652;v &#601; f&#593;ks. &#618;ts &#712;mjuz&#618;k&#601;l. &#618;t ple&#618;z <span class="noWrapSpan">&#8220;&#712;pit&#601;r</span> &#230;nd &#240;&#601; w&#650;lf&#8221; w&#603;n ju w&#618;nd &#601; ki &#618;n &#240;&#601; b&#230;k. &#618;t ke&#618;m w&#618;&#240; &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l.</span></p>
 				<p>&#712;&#676;in&#601; &#712;dr&#603;s&#601;z <span class="noWrapSpan">h&#601;r&#712;s&#603;lf</span> &#618;n &#676;inz &#230;nd h&#604;r &#712;fe&#618;v&#601;r&#618;t <span class="noWrapSpan">&#712;sw&#603;t&#716;&#643;&#604;rt.</span> &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> &#618;z &#712;kwa&#618;&#601;t. &#712;f&#593;&#240;&#601;r &#618;z <span class="noWrapSpan">&#596;l&#712;r&#603;di</span> a&#650;t b&#230;k. hiz &#712;w&#604;rk&#618;&#331; &#593;n &#712;f&#618;ks&#618;&#331; &#240;&#601; <span class="noWrapSpan">ho&#650;&#712;t&#603;l</span> so&#650; &#240;&#230;t g&#603;sts k&#230;n ste&#618; &#240;&#603;r sun. &#618;ts ta&#618;m tu h&#603;d tu skul.</p>
@@ -261,7 +250,7 @@
 				<p>&#8220;o&#650;, w&#618;l ju l&#650;k &#230;t &#240;&#230;t!&#8221; h&#604;r &#712;m&#652;&#240;&#601;r s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; &#230;t &#240;&#601; w&#650;dz. &#8220;ha&#650; swit!&#8221;</p>
 				<p>&#593;n &#240;&#601; d&#604;rt p&#230;&#952; <span class="noWrapSpan">b&#618;&#712;ha&#618;nd</span> h&#604;r, &#601; &#712;f&#230;m&#601;li &#652;v &#712;f&#593;ks&#601;z &#618;z &#712;me&#618;k&#618;&#331; &#240;&#603;r we&#618; &#712;&#618;ntu &#240;&#601; w&#650;dz. &#712;&#676;in&#601; skw&#618;nts &#230;nd sw&#603;rz &#643;i siz &#712;m&#603;r&#601;l&#601;n &#230;nd <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;,</span> dr&#603;st &#618;n &#712;f&#603;&#240;&#601;rz &#230;nd &#712;fa&#618;n&#601;riz, &#712;lid&#618;&#331; &#240;&#603;m ho&#650;m.</p>
 				<div class="lowerRightButton">
-					<div id="secondIpaAssesment_complete"
+					<div id="secondIpaAssessment_complete"
 							class="btn btn-outline-success my-2 my-sm-0 float-right">
 						Done
 					</div>
@@ -269,17 +258,17 @@
 			</div>
 		</div>
 	</section>
-	<div id="modal_firstReadingAssesment" class="modal"  tabindex="-1" role="dialog">
+	<div id="modal_firstReadingAssessment" class="modal"  tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 id="firstReadingAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<h5 id="firstReadingAssessment_title" class="modal-title">Reading Pace and Comprehension</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="firstReadingAssesment_body" class="immersionInstructions">
+					<div id="firstReadingAssessment_body" class="immersionInstructions">
 						<p>Before you begin learning the International Phonetic Alphabet (IPA), we want to record a baseline to measure your learning against. We are not testing you&nbsp;&mdash; we are testing a method of aiding you in learning the IPA. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
 						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
@@ -291,17 +280,53 @@
 			</div>
 		</div>
 	</div>
-	<div id="modal_secondReadingAssesment" class="modal"  tabindex="-1" role="dialog">
+	<div id="modal_ReadingAssessmentComprehension" class="modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 id="secondReadingAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<h5 id="ReadingAssessmentComprehension_title" class="modal-title">Comprehension</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="secondReadingAssesment_body" class="immersionInstructions">
+					<div id="ReadingAssessmentComprehension_body" class="immersionInstructions">
+					</div>
+					<div id="ReadingAssessmentComprehension_options">
+						<div class="wordMatchLayout">
+							<input id="ReadingAssessmentComprehension_option1" 
+								   style="white-space: normal; text-align: left;" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="ReadingAssessmentComprehension_option2" 
+								   style="white-space: normal; text-align: left;" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="ReadingAssessmentComprehension_option3" 
+								   style="white-space: normal; text-align: left;" type="button" class="btn">
+						</div>
+						<div class="wordMatchLayout">
+							<input id="ReadingAssessmentComprehension_option4" 
+								   style="white-space: normal; text-align: left;" type="button" class="btn">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" id="ReadingAssessmentComprehension_questionIndex">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_secondReadingAssessment" class="modal"  tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="secondReadingAssessment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="secondReadingAssessment_body" class="immersionInstructions">
 						<p>Now that you are familiar with the interface, we have one more, slightly longer text for you to read. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
 						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
@@ -323,11 +348,12 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="initialIpaKnowledge_body" class="immersionInstructions">
+					<div class="immersionInstructions">
+						<div id="initialIpaKnowledge_body"></div>
+						<div class="btn btn-info" id="unsure_checkbox" data-checked="unchecked">
+							&#x25EF;&nbsp;&nbsp;I&rsquo;m sure
+						</div>
 					</div>
-					<label class="checkbox-inline immersionInstructions">
-						<input id="unsure_checkbox" type="checkbox">I&rsquo;m not sure
-					</label>
 					<div id="initialIpaKnowledge_options">
 						<div class="wordMatchLayout">
 							<input id="initialIpaKnowledge_option1" type="button" class="btn">
@@ -363,8 +389,7 @@
 				<div class="modal-body">
 					<div id="immersionInstructions_body" class="immersionInstructions">
 						<p>This is an immersive text learning environment. After closing this pop-up, please click on each unfamiliar word for assistance on how to read the combination of IPA characters (we refer to this combination as a lexigram&nbsp;&mdash; a visual representation of a word).</p>
-						<p>In this study, we want to track your actual time on task. A timer is started when you close this pop-up. Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please press the Pause button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
-						<p>When you have finished reading the entire text, please press the Done button in the lower right corner.</p>
+						<p>Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please press the Pause button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -373,17 +398,17 @@
 			</div>
 		</div>
 	</div>
-	<div id="modal_firstIpaAssesment" class="modal"  tabindex="-1" role="dialog">
+	<div id="modal_firstIpaAssessment" class="modal"  tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 id="firstIpaAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<h5 id="firstIpaAssessment_title" class="modal-title">Reading Pace and Comprehension</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="firstIpaAssesment_body" class="immersionInstructions">
+					<div id="firstIpaAssessment_body" class="immersionInstructions">
 						<p>Now that you are familiar with the IPA, we want to measure your learning. This text will not have access to the immersive aide you&rsquo;ve been using. We are not testing you&nbsp;&mdash; we are testing the method we put you through. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
 						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
@@ -395,17 +420,17 @@
 			</div>
 		</div>
 	</div>
-	<div id="modal_secondIpaAssesment" class="modal"  tabindex="-1" role="dialog">
+	<div id="modal_secondIpaAssessment" class="modal"  tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 id="secondIpaAssesment_title" class="modal-title">Reading Pace and Comprehension</h5>
+					<h5 id="secondIpaAssessment_title" class="modal-title">Reading Pace and Comprehension</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="secondIpaAssesment_body" class="immersionInstructions">
+					<div id="secondIpaAssessment_body" class="immersionInstructions">
 						<p>That first reading should have had many familiar lexigrams. This second reading is a little longer, and has more unfamiliar lexigrams&nbsp;&mdash; you will need to use the recoding skills you&rsquo;ve developed. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
 						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>

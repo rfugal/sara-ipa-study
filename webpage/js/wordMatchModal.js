@@ -1,4 +1,4 @@
-ti// JavaScript Document
+// JavaScript Document
 // word match modal functions
 // Copyright 2018 Russ Fugal
 
@@ -134,6 +134,7 @@ window.loadLearn = function loadLearn() {
 		}).ready(function(){
 			$('#learnImmersiveText').show();
 			$('section#learn_screen').show();
+            $(window).scrollTop(0);
 		});
 	});
 	$('#modal_wordMatch').on('hide.bs.modal', freezeWordMatchModal);
@@ -173,7 +174,7 @@ window.loadLearn = function loadLearn() {
 		$(this).addClass('interacted');
 		prepModal(lexigram, reveal, method);
 	});
-}
+};
 window.shuffle = function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -183,9 +184,9 @@ window.shuffle = function shuffle(a) {
         a[j] = x;
     }
     return a;
-}
+};
 
-var pairs = {"\u025b": "\u00f0", "r": "\u0259", "\u028c": "w", "z": "\u026a", "n": "\u00e6", "s": "\u02c8", "u": "t", "\u0283": "\u02c8", "p": "\u025b", "\u0259": "\u00f0", "d": "n", "\u0254": "f", "\u026a": "e", "\u0251": "w", "\u02a7": "\u0251", "l": "\u028a", "k": "\u02c8", "i": "h", "t": "s", "f": "l", "\u028a": "o", "v": "\u028c", "m": "\u028c", "a": "d", "\u00e6": "\u00f0", "\u02c8": "n", "o": "s", "e": "r", "\u014b": "\u026a", "\u02a4": "\u0259", "\u025c": "h", "\u00f0": "\u026a", "\u0292": "\u025b", "j": "f", "g": "\u02c8", "h": "\u02cc", "w": "\u0259", "\u02cc": "r", "b": "\u02c8", "\u03b8": "\u02c8"}
+var pairs = {"\u025b": "\u00f0", "r": "\u0259", "\u028c": "w", "z": "\u026a", "n": "\u00e6", "s": "\u02c8", "u": "t", "\u0283": "\u02c8", "p": "\u025b", "\u0259": "\u00f0", "d": "n", "\u0254": "f", "\u026a": "e", "\u0251": "w", "\u02a7": "\u0251", "l": "\u028a", "k": "\u02c8", "i": "h", "t": "s", "f": "l", "\u028a": "o", "v": "\u028c", "m": "\u028c", "a": "d", "\u00e6": "\u00f0", "\u02c8": "n", "o": "s", "e": "r", "\u014b": "\u026a", "\u02a4": "\u0259", "\u025c": "h", "\u00f0": "\u026a", "\u0292": "\u025b", "j": "f", "g": "\u02c8", "h": "\u02cc", "w": "\u0259", "\u02cc": "r", "b": "\u02c8", "\u03b8": "\u02c8"};
 
 var wolf = {
 	title: "The Boy who Cried Wolf",
@@ -1455,4 +1456,4 @@ var wolf = {
 			"asIn": ["pleasure", "usual"]
 		}
 	}
-}
+};

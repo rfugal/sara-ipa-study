@@ -72,6 +72,7 @@ function loadSignup() {
 			$('#signupEmail_display').text(email);
 		}
 		$('#registrationForm').submit(function submitRegistrationForm(event){
+			event.target.sign_up_button.disabled = true;
 			event.preventDefault();
 			var fname = $('#fname').val();
 			if ($('#password1').val() === $('#password2').val()) {
@@ -79,6 +80,7 @@ function loadSignup() {
 				sessionStorage.setItem("fname", fname);
 				ipaStudy.register(fname, email, password, registrationSuccess, onFailure);
 			} else {
+				event.target.sign_up_button.disabled = false;
 				$('#password1').val('');
 				$('#password2').val('');
 				$('#noMatch_help').show();
@@ -94,7 +96,7 @@ function loadAccount() {
 }
 function trySignin(email) {
 	$('#loginForm').hide();
-	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'email':email }, function(result) {
+	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'request': 'alias', 'email':email }, function(result) {
 		if (typeof result.alias !== "undefined" && result.alias !== null) {
 			console.log('alias GET successful:\n', result);
 			var fname = result.alias;
@@ -135,12 +137,16 @@ $(document).ready(function(){
 function registrationSuccess(result) {
 	var fname = sessionStorage.getItem("fname");
 	var email = sessionStorage.getItem('email');
-	var data = { 'email':email, 'alias':fname };
-	$.put('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', data, function(result) {
-		console.log('alias PUT result:\n', result);
+	var data = { 'request': 'register', 'email':email, 'alias':fname };
+	$.ajax({
+		'method': 'PUT',
+		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
+		'data': data
 	});
-	alert('Registration successful! Please check your email inbox or spam folder for your verification link.\nVerify your email before signing in.');
-	loadSplash();
+	$('form#loginForm').hide();
+	$('#alias_display').text(fname);
+	$('#signup_screen').hide();
+	$('#registration_success_screen').show();
 }
 
 var ipaStudy = window.ipaStudy || {};
@@ -222,7 +228,9 @@ function createCognitoUser(email) {
 	});
 }
 var onFailure = function registerFailure(err) {
-	alert('Something went wrong with your registration.');
+	$('#signup_screen').hide();
+	$('#registration_failure_screen').show();
+
 };
 var credKeys = [
 	'accessKeyId',

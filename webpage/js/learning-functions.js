@@ -6,7 +6,7 @@ window.learningRecord = {
 	'finish': null,
 	'interactions': [],
 	'finished': false
-}
+};
 window.learningContent = {
 	'UID': null,
 	'screen': null,
@@ -17,14 +17,14 @@ window.learningContent = {
 };
 var ipaPhonemesHttpRequest = new XMLHttpRequest();
 ipaPhonemesHttpRequest.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if (this.readyState === 4 && this.status === 200) {
 		window.ipaPhonemes = JSON.parse(this.responseText);
     }
-}
+};
 ipaPhonemesHttpRequest.open("GET", "js/ipaPhonemes.json", true);
 ipaPhonemesHttpRequest.send();
 
-var ipaKnowledgeAssesment = {
+var ipaKnowledgeAssessment = {
 	'email': null,
 	'type': 'ipaKnowledge',
 	'certain': {
@@ -41,20 +41,23 @@ var ipaKnowledgeAssesment = {
 		//  	'word': 'days'
 		//  }
 	}
-}
-var cycleScreen = [
-	'#firstReadingAssesment',
-	'#secondReadingAssesment',
-	'#initialIpaKnowledge',
-	'#firstIpaAssesment',
-	'#secondIpaAssesment'
-];
+};
+var ReadingComprehensionAssessment = {
+	'email': null,
+	'type': null,
+	'correct': [],
+	'incorrect': [],
+	'incorrectAnswers': {
+		//	'1': 4
+	}
+};
 function updateLearningContent() {
-	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/content/', 
-		  { 'email': window.learningRecord.email }, 
+	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', 
+		  { 'request': 'content', 'email': window.learningRecord.email }, 
 		  function(result) {
 		if (typeof result.screen !== "undefined" && result.screen !== null) {
 			window.learningContent.UID = result.UID;
+			window.learningRecord.UID = result.UID;
 			window.learningContent.screen = result.screen;
 			window.learningContent.html = result.html;
 			window.learningContent.title = result.title;
@@ -62,6 +65,7 @@ function updateLearningContent() {
 			window.learningContent.phonemes = result.phonemes;
 			sessionStorage.setItem('interactionIndex', result.studyMethod);
 			$( window.learningContent.screen ).show();
+            $(window).scrollTop(0);
 			openLearningModal();
 		} else {
 			alert('Sorry, something went wrong when connecting with the server.');
@@ -70,32 +74,131 @@ function updateLearningContent() {
 	});
 }
 function updateLearnScreenDiv() {
-	window.learningContent.screen = cycleScreen.shift();
-	cycleScreen.push(window.learningContent.screen);
 	$('div.mainReader').each(function(){
 		$( this ).hide();
 	}).ready(function(){
-		// updateLearningContent();
-		openLearningModal();
-		$( window.learningContent.screen ).show();
+		updateLearningContent();
 	});
 }
-function putLearningRecord(learningRecord) {
-	// $.put('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/content/');
+function putLearningRecord() {
+	$.ajax({
+		'method': 'PUT',
+		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
+		'data': { 'request': 'record', 'learningRecord': $.extend({},window.learningRecord) }
+	});
+	window.learningRecord.start = null;
+	window.learningRecord.finish = null;
+	window.learningRecord.interactions = [];
+	if (window.learningRecord.finished) {
+		window.learningRecord.finished = false;
+		//updateLearnScreenDiv();
+	}
 }
-function putAssesment(assesment) {
-	// $.put('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/assesment/');
+function putAssessment(assessment) {
+	$.ajax({
+		'method': 'PUT',
+		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
+		'data': { 'request': 'assessment', 'assessment': assessment }
+	});
+}
+function assesReadingComprehension() {
+	$('#modal_ReadingAssessmentComprehension').modal('hide');
+	var index = 0;
+	var question = {};
+	console.log(window.learningContent.screen);
+	switch(window.learningContent.screen) {
+		case '#firstReadingAssessment':
+			console.log('first');
+			index = 6 - firstReadingComprehension.length;
+			break;
+		case '#secondReadingAssessment':
+			console.log('second');
+			index = 6 - secondReadingComprehension.length;
+			break;
+	}
+	if (index === 6) {
+		switch(window.learningContent.screen) {
+			case '#firstReadingAssessment':
+				window.learningContent.screen = '#secondReadingAssessment';
+				break;
+			case '#secondReadingAssessment':
+				window.learningContent.screen = '#initialIpaKnowledge';
+				break;
+		}
+		console.log(window.learningContent.screen);
+		$('div.mainReader').each(function(){
+			$( this ).hide();
+		}).ready(function(){
+			$( window.learningContent.screen ).show();
+            $(window).scrollTop(0);
+			openLearningModal();
+		});
+		// putAssessment($.extend({}, ReadingComprehensionAssessment));
+		ReadingComprehensionAssessment.correct = [];
+		ReadingComprehensionAssessment.incorrect = [];
+		ReadingComprehensionAssessment.incorrectAnswers = {};
+		return;
+	}
+	switch(window.learningContent.screen) {
+		case '#firstReadingAssessment':
+			console.log(firstReadingComprehension.length);
+			question = firstReadingComprehension.shift();
+			break;
+		case '#secondReadingAssessment':
+			console.log(secondReadingComprehension.length);
+			question = secondReadingComprehension.shift();
+			break;
+	}
+	$('#ReadingAssessmentComprehension_questionIndex').text('Question ' + (index) + ' of 5');
+	$('#ReadingAssessmentComprehension_body').text(question.question);
+	var choice = 0;
+	$('#ReadingAssessmentComprehension_options input').each(function() {
+		var option = question.choices[choice];
+		choice += 1;
+		$( this ).val(option)
+			.attr('data-option', choice.toString())
+			.attr('data-correct', question.answer.toString())
+			.attr('data-questionNum', index.toString())
+			.removeClass('btn-success btn-danger tada headShake fadeInLeft fadeOutRight');
+	});
+	$('#ReadingAssessmentComprehension_options input').off().addClass('disabled animated fadeInLeft');
+	$('#modal_ReadingAssessmentComprehension').modal('show');
+	setTimeout(function(){ $('#ReadingAssessmentComprehension_options input')
+		.removeClass('disabled').off()
+		.on('click', ComprehensionMatchTest); }, 500);
+}
+function ComprehensionMatchTest() {
+	$('#ReadingAssessmentComprehension_options input').off();
+	$('#ReadingAssessmentComprehension_options input').addClass('disabled');
+	var option = $( this ).attr('data-option');
+	var correct = $( this ).attr('data-correct');
+	var questionNum = $( this ).attr('data-questionNum');
+	if (option === correct) {
+		$( this ).addClass('btn-success tada');
+		ReadingComprehensionAssessment.correct.push(questionNum);
+	} else {
+		$( this ).addClass('btn-danger headShake');
+		ReadingComprehensionAssessment.incorrectAnswers[questionNum] = option;
+		ReadingComprehensionAssessment.incorrect.push(questionNum);
+	}
+	setTimeout(function(){ $('#ReadingAssessmentComprehension_options input').addClass('fadeOutRight'); }, 500);
+	setTimeout(function(){ assesReadingComprehension(); }, 1500);
 }
 function assessInitialIpaKnowledge() {
 	$('#modal_initialIpaKnowledge').modal('hide');
-	$('#unsure_checkbox').prop('checked', false);
+	$('#unsure_checkbox')
+		.removeClass('btn-warning unsure')
+		.addClass('btn-outline-warning')
+		.html('&#x25EF;&nbsp;&nbsp;I&rsquo;m not sure');
 	var index = 
-		ipaKnowledgeAssesment.certain.correct.length + 
-		ipaKnowledgeAssesment.certain.incorrect.length +
-		ipaKnowledgeAssesment.uncertain.correct.length + 
-		ipaKnowledgeAssesment.uncertain.incorrect.length;
-	if (index == 12) {
+		ipaKnowledgeAssessment.certain.correct.length + 
+		ipaKnowledgeAssessment.certain.incorrect.length +
+		ipaKnowledgeAssessment.uncertain.correct.length + 
+		ipaKnowledgeAssessment.uncertain.incorrect.length;
+	if (index === 12) {
+		window.learningContent.screen = '#learnImmersiveText';
 		window.loadLearn();
+		// putAssessment(ipaKnowledgeAssessment);
 		return;
 	}
 	$('#initialIpaKnowledge_questionIndex').text('Question ' + (index + 1) + ' of 12');
@@ -131,56 +234,55 @@ function ipaMatchTest(){
 	var word = $( this ).attr('data-word');
 	if (option === correct) {
 		$( this ).addClass('btn-primary');
-		if ($('#unsure_checkbox').prop('checked')) {
-			ipaKnowledgeAssesment.uncertain.correct.push(correct);
+		if ($('#unsure_checkbox').hasClass('unsure')) {
+			ipaKnowledgeAssessment.uncertain.correct.push(correct);
 		} else {
-			ipaKnowledgeAssesment.certain.correct.push(correct);
+			ipaKnowledgeAssessment.certain.correct.push(correct);
 		}
 	} else {
 		$( this ).addClass('btn-primary');
-		if ($('#unsure_checkbox').prop('checked')) {
-			ipaKnowledgeAssesment.uncertain.incorrect.push(correct);
+		var wrongAnswer = {
+			'character': option,
+			'word': word
+		};
+		ipaKnowledgeAssessment.incorrectAnswers[correct] = wrongAnswer;
+		if ($('#unsure_checkbox').hasClass('unsure')) {
+			ipaKnowledgeAssessment.uncertain.incorrect.push(correct);
 		} else {
-			ipaKnowledgeAssesment.certain.incorrect.push(correct);
+			ipaKnowledgeAssessment.certain.incorrect.push(correct);
 		}
 	}
 	setTimeout(function(){ $('#initialIpaKnowledge_options input').addClass('fadeOutRight'); }, 500);
 	setTimeout(function(){ assessInitialIpaKnowledge(); }, 1500);
 }
 function openLearningModal() {
-	window.learningRecord.finish = $.now();
 	if (window.learningRecord.interactions.length > 0) {
-		var learningRecord = $.extend({}, window.learningRecord);
-		window.learningRecord.start = null;
-		window.learningRecord.finish = null;
-		window.learningRecord.interactions = [];
-		putLearningRecord(learningRecord);
+		window.learningRecord.finish = $.now();
+		putLearningRecord();
 	}
 	$('main div.modal').each(function() {
 		$( this ).modal('hide');
 	}).ready(function() {
 		switch(window.learningContent.screen) {
-			case '#firstReadingAssesment':
-				$('#modal_firstReadingAssesment').modal('show');
+			case '#firstReadingAssessment':
+				$('#modal_firstReadingAssessment').modal('show');
 				break;
-			case '#secondReadingAssesment':
-				$('#modal_secondReadingAssesment').modal('show');
+			case '#secondReadingAssessment':
+				$('#modal_secondReadingAssessment').modal('show');
 				break;
-			// case '#initialIpaKnowledge':
-				// $('#modal_initialIpaKnowledge').modal('show');
-				// This modal is opened from the home screen.
-				// Hide the Pause Button instead.
+			//  case '#initialIpaKnowledge':
+			//  	$('#modal_initialIpaKnowledge').on('hide.bs.modal', function(){});
 			case '#learnImmersiveText':
 				$('#modal_immersionInstructions').modal('show');
 				break;
 			case '#ipaReadingSpeed':
 				$('#modal_ipaReadingSpeed').modal('show');
 				break;
-			case '#firstIpaAssesment':
-				$('#modal_firstIpaAssesment').modal('show');
+			case '#firstIpaAssessment':
+				$('#modal_firstIpaAssessment').modal('show');
 				break;
-			case '#secondIpaAssesment':		
-				$('#modal_secondIpaAssesment').modal('show');
+			case '#secondIpaAssessment':		
+				$('#modal_secondIpaAssessment').modal('show');
 				break;
 		}		
 	});
@@ -213,12 +315,15 @@ $(document).ready(function(){
 						for (var i = 0; i < result.length; i++) {
 							if (result[i].getName() === 'email'){
 								var email = result[i].getValue();
+								console.log('email: ',email);
 								window.learningRecord.email = email;
+								ipaKnowledgeAssessment.email = email;
 								sessionStorage.setItem('email', email);
+								loadAccount();
 							}
 						}
 					});
-					loadAccount();
+					
 				} else {
 					ipaStudy.signOut();
 				}
@@ -230,6 +335,19 @@ $(document).ready(function(){
 	$(window).blur(function(){
 		openLearningModal();
 	});
+	$('#unsure_checkbox').click(function(){
+		if ($('#unsure_checkbox').hasClass('unsure')) {
+			$('#unsure_checkbox')
+				.removeClass('btn-warning unsure')
+				.addClass('btn-outline-warning')
+				.html('&#x25EF;&nbsp;&nbsp;I&rsquo;m not sure');
+		} else {
+			$('#unsure_checkbox')
+				.removeClass('btn-outline-warning')
+				.addClass('btn-warning unsure')
+				.html('&#x2714;&nbsp;&nbsp;I&rsquo;m not sure');
+		}
+	})
 });
 
 var ipaStudy = window.ipaStudy || {};
@@ -314,3 +432,57 @@ function createCognitoUser(email) {
 var onFailure = function registerFailure(err) {
 	alert('Something went wrong with your registration.');
 };
+var firstReadingComprehension = [
+	{
+		'question': 'According to the text, what is one of Chimamanda Ngozi Adichie\u2019s most popular novels called?',
+		'answer': 3,
+		'choices': ['A. Chinua Achebe', 'B. Biafran War', 'C. Half of a Yellow Sun', 'D. Americanah']
+	},
+	{
+		'question': 'Which of the following shows the sequence of events as described in the passage in the correct order?',
+		'answer': 3,
+		'choices': ['A. Chimamanda had a passion for literature, majored in creative writing, studied medicine in Nigeria, and then moved to the United States.', 'B. Chimamanda had a passion for literature, moved to the United States, majored in creative writing, and then studied medicine in Nigeria.', 'C. Chimamanda had a passion for literature, studied medicine in Nigeria, moved to the United States, and then majored in creative writing.', 'D. Chimamanda studied medicine in Nigeria, moved to the United States, majored in creative writing, and then had a passion for literature.']
+	},
+	{
+		'question': 'Based on the text, what conclusion can you make about Chimamanda\u2019s interests?',
+		'answer': 1,
+		'choices': ['A. By the end of graduate school, Chimamanda became more interested in her early passion for literature than studying medicine.', 'B. By the end of graduate school, Chimamanda became less interested in her early passion for literature than studying medicine.', 'C. By the end of graduate school, Chimamanda became just as interested in both her early passion for literature and studying medicine.', 'D. By the end of graduate school, Chimamanda lost her interest in both her early passion for literature and studying medicine.']
+	},
+	{
+		'question': 'Based on the text, what likely influenced Chimamanda\u2019s writing?',
+		'answer': 3,
+		'choices': ['A. Chimamanda living in Nigeria likely influenced her writing, but living in the United States did not influence her writing.', 'B. Chimamanda living in the United States likely influenced her writing, but living in Nigeria did not influence her writing.', 'C. Chimamanda living in Nigeria and living in the United States both likely influenced her writing.', 'D. Chimamanda living in Nigeria and living in the United States both likely did not influence her writing.']
+	},
+	{
+		'question': 'What is the main idea of the text?',
+		'answer': 2,
+		'choices': ['A. Chimamanda Ngozi Adichie did not want to be a writer at first, so she studied medicine in Nigeria and then decided to move to the United States to study communication and political science.', 'B. Although Chimamanda Ngozi Adichie developed an early passion for literature in Nigeria, she studied other subjects before finally becoming a writer and writing some novels, even earning awards for her writing.', 'C. One of Chimamanda Ngozi Adichie\u2019s most popular novels is Half of a Yellow Sun, which is a story about three characters before and during Nigeria\u2019s Biafran War, and the novel has even been adapted into a movie.', 'D. One of the recent novels by Chimamanda Ngozi Adichie is about the experience of a Nigerian girl studying at an American college, and Chimamanda denies that the story is about her own experience.']
+	}
+];
+var secondReadingComprehension = [
+	{
+		'question': 'What is the one thing that Andreas likes more than science?',
+		'answer': 2,
+		'choices': ['A. his friend Tyrell', 'B. basketball', 'C. baseball', 'D. video games']
+	},
+	{
+		'question': 'Every night after dinner, Andreas goes outside and practices shooting baskets. What motivates this action?',
+		'answer': 4,
+		'choices': ['A. Andreas wants to beat Tyrell at basketball.', 'B. Andreas wants to show off for his parents.', 'C. Andreas wants to avoid doing his homework.', 'D. Andreas wants to make the basketball team.']
+	},
+	{
+		'question': 'What conclusion does the text best support?',
+		'answer': 1,
+		'choices': ['A. It is important to both Andreas and Tyrell that they make the team together.', 'B. Andreas and Tyrell secretly don\u2019t care whether the other one makes the team.', 'C. Andreas and Tyrell\u2019s friendship is based on competition.', 'D. Andreas and Tyrell will play better basketball together since they made the team together.']
+	},
+	{
+		'question': '\u201cAndreas thought it was the best sound in the world.\u201d Why might Andreas think this is the best sound?',
+		'answer': 3,
+		'choices': ['A. because it means he missed the net', 'B. because it is simply a pleasant sound', 'C. because it means he scored a basket', 'D. because it means the other team scored']
+	},
+	{
+		'question': 'What is this story mostly about?',
+		'answer': 3,
+		'choices': ['A. how to play the game of basketball', 'B. practicing in preparation for tryouts', 'C. two friends making a basketball team together', 'D. the friendship between two boys']
+	}
+];
