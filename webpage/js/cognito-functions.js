@@ -100,7 +100,9 @@ function trySignin(email) {
 		if (typeof result.alias !== "undefined" && result.alias !== null) {
 			console.log('alias GET successful:\n', result);
 			var fname = result.alias;
+			var studyMethod = result.studyMethod;
 			sessionStorage.setItem("fname", fname);
+			sessionStorage.setItem('studyMethod', studyMethod);
 			loadSignin();
 		} else {
 			$('#loginForm').show();

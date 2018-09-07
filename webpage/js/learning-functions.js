@@ -1,11 +1,12 @@
-/*global ipaStudy _config AmazonCognitoIdentity AWSCognito*/
+// initialize learningRecord, learningContent, and ipaPhonemes
 window.learningRecord = {
 	'UID': null,
 	'email': null,
 	'start': null,
 	'finish': null,
 	'interactions': [],
-	'finished': false
+	'finished': false,
+	'ipaWPM': 30
 };
 window.learningContent = {
 	'UID': null,
@@ -15,6 +16,8 @@ window.learningContent = {
 	'paragraphs': [],
 	'phonemes': {}
 };
+
+// load ipaPhonemes.json
 var ipaPhonemesHttpRequest = new XMLHttpRequest();
 ipaPhonemesHttpRequest.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
@@ -24,6 +27,7 @@ ipaPhonemesHttpRequest.onreadystatechange = function() {
 ipaPhonemesHttpRequest.open("GET", "js/ipaPhonemes.json", true);
 ipaPhonemesHttpRequest.send();
 
+// initialize assessments
 var ipaKnowledgeAssessment = {
 	'email': null,
 	'type': 'ipaKnowledge',
@@ -51,6 +55,120 @@ var ReadingComprehensionAssessment = {
 		//	'1': 4
 	}
 };
+
+//on first load
+$(document).ready(function(){
+	var cognitoUser = ipaStudy.userPool.getCurrentUser();
+	if (cognitoUser === null) {
+		window.location.replace('index.html');
+	} else {
+		cognitoUser.getSession(function(err, session) {
+			if(!err) {
+				if (session.isValid()) {
+					cognitoUser.getUserAttributes(function(err, result) {
+						if (!err) {
+						}
+						for (var i = 0; i < result.length; i++) {
+							if (result[i].getName() === 'email'){
+								var email = result[i].getValue();
+								console.log('email: ',email);
+								window.learningRecord.email = email;
+								ipaKnowledgeAssessment.email = email;
+								ReadingComprehensionAssessment.email = email;
+								sessionStorage.setItem('email', email);
+								loadLearningScreen();
+							}
+						}
+					});
+					
+				} else {
+					ipaStudy.signOut();
+				}
+			} else {
+				ipaStudy.signOut();
+			}
+		});
+	}
+	$(window).blur(function(){
+		openLearningModal();
+	});
+	$('#unsure_checkbox').click(function(){
+		if ($('#unsure_checkbox').hasClass('unsure')) {
+			$('#unsure_checkbox')
+				.removeClass('btn-warning unsure')
+				.addClass('btn-outline-warning')
+				.html('&#x25EF;&nbsp;&nbsp;I&rsquo;m not sure');
+		} else {
+			$('#unsure_checkbox')
+				.removeClass('btn-outline-warning')
+				.addClass('btn-warning unsure')
+				.html('&#x2714;&nbsp;&nbsp;I&rsquo;m not sure');
+		}
+	});
+	$('.timedLearning').on('hide.bs.modal', function() {
+		if (window.learningRecord.start !== null && window.learningRecord.finish !== null) {
+			window.learningRecord.start = $.now() - (window.learningRecord.finish - window.learningRecord.start);
+			window.learningRecord.finish = null;
+		} else {
+			window.learningRecord.start = $.now();
+			window.learningRecord.finish = null;
+		}
+	});
+});
+
+function openLearningModal() {
+	if (window.learningRecord.start !== null) {
+		window.learningRecord.finish = $.now();
+	}
+	if (window.learningRecord.interactions.length > 0) {
+		putLearningRecord();
+	}
+	$('main div.modal').each(function() {
+		$( this ).modal('hide');
+	}).ready(function() {
+		switch(window.learningContent.screen) {
+			case '#firstReadingAssessment':
+				$('#modal_firstReadingAssessment').modal('show');
+				break;
+			case '#secondReadingAssessment':
+				$('#modal_secondReadingAssessment').modal('show');
+				break;
+			case '#learnImmersiveText':
+				$('#modal_immersionInstructions').modal('show');
+				break;
+			case '#ipaReadingSpeed':
+				$('#modal_ipaReadingSpeed').modal('show');
+				break;
+			case '#firstIpaAssessment':
+				$('#modal_firstIpaAssessment').modal('show');
+				break;
+			case '#secondIpaAssessment':		
+				$('#modal_secondIpaAssessment').modal('show');
+				break;
+		}		
+	});
+}
+
+function loadLearningScreen() {
+	$('section').each(function() {
+		$( this ).hide();
+	}).ready(function(){
+		$('#learn_screen').show();
+		updateLearnScreenDiv();
+		$('div.lowerRightButton div').on('click', function(){
+			updateLearnScreenDiv();
+		});
+	});
+}
+
+function updateLearnScreenDiv() {
+	$('div.mainReader').each(function(){
+		$( this ).hide();
+	}).ready(function(){
+		updateLearningContent();
+	});
+}
+
 function updateLearningContent() {
 	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', 
 		  { 'request': 'content', 'email': window.learningRecord.email }, 
@@ -63,8 +181,12 @@ function updateLearningContent() {
 			window.learningContent.title = result.title;
 			window.learningContent.paragraphs = result.paragraphs;
 			window.learningContent.phonemes = result.phonemes;
-			sessionStorage.setItem('interactionIndex', result.studyMethod);
+			window.learningRecord.ipaWPM = parseInt(result.ipaWPM);
+			sessionStorage.setItem('studyMethod', parseInt(result.studyMethod));
 			$( window.learningContent.screen ).show();
+			if (window.learningContent.screen === '#learnImmersiveText') {
+				window.loadImmersiveText();
+			}
             $(window).scrollTop(0);
 			openLearningModal();
 		} else {
@@ -73,34 +195,35 @@ function updateLearningContent() {
 		}
 	});
 }
-function updateLearnScreenDiv() {
-	$('div.mainReader').each(function(){
-		$( this ).hide();
-	}).ready(function(){
-		updateLearningContent();
-	});
-}
+
 function putLearningRecord() {
+	var updateScreenFlag = (window.learningRecord.finished) ? true : false;
 	$.ajax({
-		'method': 'PUT',
-		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
-		'data': { 'request': 'record', 'learningRecord': $.extend({},window.learningRecord) }
+		method: 'PUT',
+		url: 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
+		data: { 'request': 'record', 'learningRecord': JSON.stringify($.extend({},window.learningRecord)) },
+		async: false,
+		timeout: 3000
 	});
+	console.log('line 206');
+	if (updateScreenFlag) {
+		console.log('line 208');
+		updateLearnScreenDiv();
+	}
+	window.learningRecord.finished = false;
 	window.learningRecord.start = null;
 	window.learningRecord.finish = null;
 	window.learningRecord.interactions = [];
-	if (window.learningRecord.finished) {
-		window.learningRecord.finished = false;
-		//updateLearnScreenDiv();
-	}
 }
+
 function putAssessment(assessment) {
 	$.ajax({
 		'method': 'PUT',
 		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
-		'data': { 'request': 'assessment', 'assessment': assessment }
+		'data': { 'request': 'assessment', 'assessment': JSON.stringify(assessment) }
 	});
 }
+
 function assesReadingComprehension() {
 	$('#modal_ReadingAssessmentComprehension').modal('hide');
 	var index = 0;
@@ -120,20 +243,17 @@ function assesReadingComprehension() {
 		switch(window.learningContent.screen) {
 			case '#firstReadingAssessment':
 				window.learningContent.screen = '#secondReadingAssessment';
+				ReadingComprehensionAssessment.type = 'firstReadingAssessment';
 				break;
 			case '#secondReadingAssessment':
 				window.learningContent.screen = '#initialIpaKnowledge';
+				ReadingComprehensionAssessment.type = 'secondReadingAssessment';
 				break;
 		}
-		console.log(window.learningContent.screen);
-		$('div.mainReader').each(function(){
-			$( this ).hide();
-		}).ready(function(){
-			$( window.learningContent.screen ).show();
-            $(window).scrollTop(0);
-			openLearningModal();
-		});
-		// putAssessment($.extend({}, ReadingComprehensionAssessment));
+		window.learningRecord.finished = true;
+		putLearningRecord();
+		putAssessment($.extend({}, ReadingComprehensionAssessment));
+		ReadingComprehensionAssessment.type = null;
 		ReadingComprehensionAssessment.correct = [];
 		ReadingComprehensionAssessment.incorrect = [];
 		ReadingComprehensionAssessment.incorrectAnswers = {};
@@ -167,6 +287,7 @@ function assesReadingComprehension() {
 		.removeClass('disabled').off()
 		.on('click', ComprehensionMatchTest); }, 500);
 }
+
 function ComprehensionMatchTest() {
 	$('#ReadingAssessmentComprehension_options input').off();
 	$('#ReadingAssessmentComprehension_options input').addClass('disabled');
@@ -184,6 +305,7 @@ function ComprehensionMatchTest() {
 	setTimeout(function(){ $('#ReadingAssessmentComprehension_options input').addClass('fadeOutRight'); }, 500);
 	setTimeout(function(){ assesReadingComprehension(); }, 1500);
 }
+
 function assessInitialIpaKnowledge() {
 	$('#modal_initialIpaKnowledge').modal('hide');
 	$('#unsure_checkbox')
@@ -197,8 +319,8 @@ function assessInitialIpaKnowledge() {
 		ipaKnowledgeAssessment.uncertain.incorrect.length;
 	if (index === 12) {
 		window.learningContent.screen = '#learnImmersiveText';
-		window.loadLearn();
-		// putAssessment(ipaKnowledgeAssessment);
+		window.loadImmersiveText();
+		putAssessment(ipaKnowledgeAssessment);
 		return;
 	}
 	$('#initialIpaKnowledge_questionIndex').text('Question ' + (index + 1) + ' of 12');
@@ -226,6 +348,7 @@ function assessInitialIpaKnowledge() {
 		.removeClass('disabled').off()
 		.on('click', ipaMatchTest); }, 500);
 }
+
 function ipaMatchTest(){
 	$('#initialIpaKnowledge_options input').off();
 	$('#initialIpaKnowledge_options input').addClass('disabled');
@@ -255,120 +378,32 @@ function ipaMatchTest(){
 	setTimeout(function(){ $('#initialIpaKnowledge_options input').addClass('fadeOutRight'); }, 500);
 	setTimeout(function(){ assessInitialIpaKnowledge(); }, 1500);
 }
-function openLearningModal() {
-	if (window.learningRecord.interactions.length > 0) {
-		window.learningRecord.finish = $.now();
-		putLearningRecord();
-	}
-	$('main div.modal').each(function() {
-		$( this ).modal('hide');
-	}).ready(function() {
-		switch(window.learningContent.screen) {
-			case '#firstReadingAssessment':
-				$('#modal_firstReadingAssessment').modal('show');
-				break;
-			case '#secondReadingAssessment':
-				$('#modal_secondReadingAssessment').modal('show');
-				break;
-			//  case '#initialIpaKnowledge':
-			//  	$('#modal_initialIpaKnowledge').on('hide.bs.modal', function(){});
-			case '#learnImmersiveText':
-				$('#modal_immersionInstructions').modal('show');
-				break;
-			case '#ipaReadingSpeed':
-				$('#modal_ipaReadingSpeed').modal('show');
-				break;
-			case '#firstIpaAssessment':
-				$('#modal_firstIpaAssessment').modal('show');
-				break;
-			case '#secondIpaAssessment':		
-				$('#modal_secondIpaAssessment').modal('show');
-				break;
-		}		
-	});
 
-}
-function loadAccount() {
-	$('section').each(function() {
-		$( this ).hide();
-	}).ready(function(){
-		$('#learn_screen').show();
-		updateLearnScreenDiv();
-		$('div.lowerRightButton div').on('click', function(){
-			updateLearnScreenDiv();
-		});
-	});
-}
 
-//on first load
-$(document).ready(function(){
-	var cognitoUser = ipaStudy.userPool.getCurrentUser();
-	if (cognitoUser === null) {
-		window.location.replace('index.html');
-	} else {
-		cognitoUser.getSession(function(err, session) {
-			if(!err) {
-				if (session.isValid()) {
-					cognitoUser.getUserAttributes(function(err, result) {
-						if (!err) {
-						}
-						for (var i = 0; i < result.length; i++) {
-							if (result[i].getName() === 'email'){
-								var email = result[i].getValue();
-								console.log('email: ',email);
-								window.learningRecord.email = email;
-								ipaKnowledgeAssessment.email = email;
-								sessionStorage.setItem('email', email);
-								loadAccount();
-							}
-						}
-					});
-					
-				} else {
-					ipaStudy.signOut();
-				}
-			} else {
-				ipaStudy.signOut();
-			}
-		});
-	}
-	$(window).blur(function(){
-		openLearningModal();
-	});
-	$('#unsure_checkbox').click(function(){
-		if ($('#unsure_checkbox').hasClass('unsure')) {
-			$('#unsure_checkbox')
-				.removeClass('btn-warning unsure')
-				.addClass('btn-outline-warning')
-				.html('&#x25EF;&nbsp;&nbsp;I&rsquo;m not sure');
-		} else {
-			$('#unsure_checkbox')
-				.removeClass('btn-outline-warning')
-				.addClass('btn-warning unsure')
-				.html('&#x2714;&nbsp;&nbsp;I&rsquo;m not sure');
-		}
-	})
-});
-
+// Amazon Cognito Functions
 var ipaStudy = window.ipaStudy || {};
 
 var poolData = {
 	UserPoolId: _config.cognito.userPoolId,
 	ClientId: _config.cognito.userPoolClientId
 };
+
 if (!(_config.cognito.userPoolId &&
 	  _config.cognito.userPoolClientId &&
 	  _config.cognito.region)) {
 	console.log('improper cognito config');
 }
+
 ipaStudy.userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 if (typeof AWSCognito !== 'undefined') {
 	AWSCognito.config.region = _config.cognito.region;
 }
+
 ipaStudy.signOut = function signOut() {
 	ipaStudy.userPool.getCurrentUser().signOut();
 	window.location.replace('index.html');
 };
+
 ipaStudy.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
 	var cognitoUser = ipaStudy.userPool.getCurrentUser();
 	if (cognitoUser) {
@@ -385,9 +420,7 @@ ipaStudy.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject)
 		resolve(null);
 	}
 });
-/*
-* Cognito User Pool functions
-*/
+
 ipaStudy.register = function register(fname, email, password, onSuccess, onFailure) {
 	var data_given_name = {
 		Name: 'given_name',
@@ -403,6 +436,7 @@ ipaStudy.register = function register(fname, email, password, onSuccess, onFailu
 		}
 	});
 };
+
 ipaStudy.signin = function signin(email, password, onSuccess, onFailure) {
 	var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
 		Username: email,
@@ -414,6 +448,7 @@ ipaStudy.signin = function signin(email, password, onSuccess, onFailure) {
 		onFailure: onFailure
 	});
 };
+
 ipaStudy.verify = function verify(email, code, onSuccess, onFailure) {
 	createCognitoUser(email).confirmRegistration(code, true, function confirmCallback(err, result) {
 		if (!err) {
@@ -423,15 +458,19 @@ ipaStudy.verify = function verify(email, code, onSuccess, onFailure) {
 		}
 	});
 };
+
 function createCognitoUser(email) {
 	return new AmazonCognitoIdentity.CognitoUser({
 		Username: email,
 		Pool: ipaStudy.userPool
 	});
 }
+
 var onFailure = function registerFailure(err) {
 	alert('Something went wrong with your registration.');
 };
+
+// Assesment Questions
 var firstReadingComprehension = [
 	{
 		'question': 'According to the text, what is one of Chimamanda Ngozi Adichie\u2019s most popular novels called?',
@@ -459,6 +498,7 @@ var firstReadingComprehension = [
 		'choices': ['A. Chimamanda Ngozi Adichie did not want to be a writer at first, so she studied medicine in Nigeria and then decided to move to the United States to study communication and political science.', 'B. Although Chimamanda Ngozi Adichie developed an early passion for literature in Nigeria, she studied other subjects before finally becoming a writer and writing some novels, even earning awards for her writing.', 'C. One of Chimamanda Ngozi Adichie\u2019s most popular novels is Half of a Yellow Sun, which is a story about three characters before and during Nigeria\u2019s Biafran War, and the novel has even been adapted into a movie.', 'D. One of the recent novels by Chimamanda Ngozi Adichie is about the experience of a Nigerian girl studying at an American college, and Chimamanda denies that the story is about her own experience.']
 	}
 ];
+
 var secondReadingComprehension = [
 	{
 		'question': 'What is the one thing that Andreas likes more than science?',
