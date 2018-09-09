@@ -117,6 +117,9 @@ $(document).ready(function(){
 });
 
 function openLearningModal() {
+	if (($('#modal_ReadingAssessmentComprehension').data('bs.modal') || {})._isShown) {
+		return;
+	}
 	if (window.learningRecord.start !== null) {
 		window.learningRecord.finish = $.now();
 	}
@@ -196,6 +199,17 @@ function updateLearningContent() {
 	});
 }
 
+function finishedImmersiveText() {
+	$('#learnImmersiveText').hide();
+	$('#loadingNext').show();
+	window.learningRecord.finish = $.now();
+	window.learningRecord.finished = true;
+	var w = $('#learnImmersiveText').find('span').length;
+	var m = (window.learningRecord.finish - window.learningRecord.start) / 60000;
+	window.learningRecord.ipaWPM = Math.floor(w / m);
+	putLearningRecord();
+}
+
 function putLearningRecord() {
 	var updateScreenFlag = (window.learningRecord.finished) ? true : false;
 	$.ajax({
@@ -205,9 +219,7 @@ function putLearningRecord() {
 		async: false,
 		timeout: 3000
 	});
-	console.log('line 206');
 	if (updateScreenFlag) {
-		console.log('line 208');
 		updateLearnScreenDiv();
 	}
 	window.learningRecord.finished = false;
@@ -225,31 +237,54 @@ function putAssessment(assessment) {
 }
 
 function assesReadingComprehension() {
+	if (window.learningRecord.finish === null) {
+		window.learningRecord.finish = $.now();
+	}
 	$('#modal_ReadingAssessmentComprehension').modal('hide');
 	var index = 0;
 	var question = {};
-	console.log(window.learningContent.screen);
 	switch(window.learningContent.screen) {
 		case '#firstReadingAssessment':
-			console.log('first');
 			index = 6 - firstReadingComprehension.length;
 			break;
 		case '#secondReadingAssessment':
-			console.log('second');
 			index = 6 - secondReadingComprehension.length;
+			break;
+		case '#firstIpaAssessment':
+			index = 6 - firstIpaComprehension.length;
+			break;
+		case '#secondIpaAssessment':
+			index = 6 - secondIpaComprehension.length;
 			break;
 	}
 	if (index === 6) {
+		var w = 100;
+		var m = (window.learningRecord.finish - window.learningRecord.start) / 60000;
 		switch(window.learningContent.screen) {
 			case '#firstReadingAssessment':
 				window.learningContent.screen = '#secondReadingAssessment';
 				ReadingComprehensionAssessment.type = 'firstReadingAssessment';
+				w = 214;
 				break;
 			case '#secondReadingAssessment':
 				window.learningContent.screen = '#initialIpaKnowledge';
 				ReadingComprehensionAssessment.type = 'secondReadingAssessment';
+				w = 754;
+				break;
+			case '#firstIpaAssessment':
+				ReadingComprehensionAssessment.type = 'firstIpaAssessment';
+				w = 527;
+				break;
+			case '#secondIpaAssessment':
+				ReadingComprehensionAssessment.type = 'secondIpaAssessment';
+				w = 1552;
 				break;
 		}
+		window.learningRecord.ipaWPM = Math.floor(w / m);
+		var durationMinutes = Math.round(754 / window.learningRecord.ipaWPM);
+		var durationText = (durationMinutes === 1) ? ' minute' : ' minutes';
+		durationText = durationMinutes.toString() + durationText;
+		$('#secondReadingAssessmentDuration').text( durationText );
 		window.learningRecord.finished = true;
 		putLearningRecord();
 		putAssessment($.extend({}, ReadingComprehensionAssessment));
@@ -261,18 +296,29 @@ function assesReadingComprehension() {
 	}
 	switch(window.learningContent.screen) {
 		case '#firstReadingAssessment':
-			console.log(firstReadingComprehension.length);
 			question = firstReadingComprehension.shift();
 			break;
 		case '#secondReadingAssessment':
-			console.log(secondReadingComprehension.length);
 			question = secondReadingComprehension.shift();
 			break;
+		case '#firstIpaAssessment':
+			question = firstIpaComprehension.shift();
+			break;
+		case '#secondIpaAssessment':
+			question = secondIpaComprehension.shift();
+			break;
 	}
-	$('#ReadingAssessmentComprehension_questionIndex').text('Question ' + (index) + ' of 5');
+	var questionCount = (window.learningContent.screen === "#firstIpaAssessment") ? 4 : 5;
+	$('#ReadingAssessmentComprehension_questionIndex').text('Question ' + (index) + ' of ' + (questionCount));
 	$('#ReadingAssessmentComprehension_body').text(question.question);
 	var choice = 0;
 	$('#ReadingAssessmentComprehension_options input').each(function() {
+		if (choice === 3 && window.learningContent.screen === "#firstIpaAssessment") {
+			$( this ).hide();
+			return;
+		} else if (choice === 3 && window.learningContent.screen === "#secondIpaAssessment") {
+			$( this ).show();
+		}
 		var option = question.choices[choice];
 		choice += 1;
 		$( this ).val(option)
@@ -306,7 +352,7 @@ function ComprehensionMatchTest() {
 	setTimeout(function(){ assesReadingComprehension(); }, 1500);
 }
 
-function assessInitialIpaKnowledge() {
+function assessIpaKnowledge() {
 	$('#modal_initialIpaKnowledge').modal('hide');
 	$('#unsure_checkbox')
 		.removeClass('btn-warning unsure')
@@ -318,9 +364,11 @@ function assessInitialIpaKnowledge() {
 		ipaKnowledgeAssessment.uncertain.correct.length + 
 		ipaKnowledgeAssessment.uncertain.incorrect.length;
 	if (index === 12) {
-		window.learningContent.screen = '#learnImmersiveText';
-		window.loadImmersiveText();
+		ipaKnowledgeAssessment.type =
+			(window.learningContent.screen === '#initialIpaKnowledge') ? 'initialIpaKnowledge' : 'finalIpaKnowledge';
 		putAssessment(ipaKnowledgeAssessment);
+		window.learningRecord.finished = true;
+		putLearningRecord();
 		return;
 	}
 	$('#initialIpaKnowledge_questionIndex').text('Question ' + (index + 1) + ' of 12');
@@ -376,7 +424,7 @@ function ipaMatchTest(){
 		}
 	}
 	setTimeout(function(){ $('#initialIpaKnowledge_options input').addClass('fadeOutRight'); }, 500);
-	setTimeout(function(){ assessInitialIpaKnowledge(); }, 1500);
+	setTimeout(function(){ assessIpaKnowledge(); }, 1500);
 }
 
 
@@ -524,5 +572,59 @@ var secondReadingComprehension = [
 		'question': 'What is this story mostly about?',
 		'answer': 3,
 		'choices': ['A. how to play the game of basketball', 'B. practicing in preparation for tryouts', 'C. two friends making a basketball team together', 'D. the friendship between two boys']
+	}
+];
+var firstIpaComprehension = [
+	{
+		'question': 'What does Alyssa get at the department store?',
+		'answer': 2,
+		'choices': ['A. art supplies', 'B. a bow tie', 'C. a pair of shoes']
+	},
+	{
+		'question': 'Why does Alyssa become embarrassed by her bow tie?',
+		'answer': 1,
+		'choices': ['A. Aveed says that bow ties are for boys.', 'B. Alyssa\u2019s mom said that bow ties are for boys.', 'C. Aveed won\u2019t speak to Alyssa when he sees her bow tie.']
+	},
+	{
+		'question': 'Alyssa does not feel embarrassed by her bow tie after she speaks with the 7th grader. Which evidence from the story supports this statement?',
+		'answer': 3,
+		'choices': ['A. The older girl says to Alyssa, \u201CI like your bow tie!\u201D', 'B. One of Alyssa\u2019s classmates says, \u201CBow ties are for boys.\u201D', 'C. Alyssa can\u2019t wait to show her bow tie to her art teacher.']
+	},
+	{
+		'question': 'What does Alyssa end up thinking about her bow tie?',
+		'answer': 1,
+		'choices': ['A. The bow tie shows that she is creative.', 'B. The bow tie does not show how creative she is.', 'C. She should not have worn the bow tie to school.']
+	},
+	{
+		'question': 'What is a theme of this story?',
+		'answer': 1,
+		'choices': ['A. You shouldn\u2019t be embarrassed for being creative.', 'B. Only boys should wear bow ties to school.', 'C. Your parents know what is best for you.']
+	}
+];
+var secondIpaComprehension = [
+	{
+		'question': 'Where does Gina\u2019s family live?',
+		'answer': 2,
+		'choices': ['A. in the forest', 'B. in an old hotel', 'C. in an old school', 'D. in a fox den']
+	},
+	{
+		'question': 'How does Gina deal with the problem of the fox portal?',
+		'answer': 3,
+		'choices': ['A. swimming through the foxes', 'B. running out of the hotel ', 'C. chanting a spell from a book', 'D. calling her parents for help']
+	},
+	{
+		'question': 'The hotel that Gina visits after falling off her bike is magical. What evidence from the story supports this conclusion?',
+		'answer': 1,
+		'choices': ['A. Foxes appear from a hole in the bookcase.', 'B. The hallway is longer than Gina remembers.', 'C. Gina walks through a door with a fox-shaped handle.', 'D. Marilyn and Melinda drink champagne and white tea.']
+	},
+	{
+		'question': 'What can be inferred about Gina\u2019s experience with Marilyn, Melinda, and the Fox Hunter?',
+		'answer': 4,
+		'choices': ['A. Gina\u2019s experience with Marilyn, Melinda, and the Fox Hunter taught her to be careful around strangers.', 'B. Gina does not want to see Marilyn, Melinda, and the Fox Hunter again.', 'C. Gina experience with Marilyn, Melinda, and the Fox Hunter took place in reality.', 'D. Gina imagined or dreamt her experience with Marilyn, Melinda, and the Fox Hunter.']
+	},
+	{
+		'question': 'What is this story mostly about?',
+		'answer': 1,
+		'choices': ['A. a mysterious hotel with a portal to foxes', 'B. a family that moves to an old hotel', 'C. a girl who crashes her bike and is late to school', 'D. a book called The Curious Situation of Foxes']
 	}
 ];

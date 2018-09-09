@@ -1,19 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
-
-.wordMatchLayout {
-	margin: 8pt 24pt 8pt 24pt;
+.phonemeMapSpan:hover, .wordRevealSpan:hover, .wordMatchSpan:hover {
+	color: #28a745;
 }
-.phonemeMap {
-	margin: 8pt 24pt 8pt 24pt;
-}
-.phonemeItem {
-	margin: 8pt 24pt 8pt 24pt;
-}
-.immersionInstructions {
-	margin: 8pt 24pt 8pt 24pt;
-}
-.wordReveal {
+.wordMatchLayout, .phonemeMap, .phonemeItem, .immersionInstructions, .wordReveal {
 	margin: 8pt 24pt 8pt 24pt;
 }
 .interacted {

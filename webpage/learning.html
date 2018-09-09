@@ -50,7 +50,7 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" data-toggle="collapse" data-target="#navbarSupportedContent"
-							href="#">Help</a>
+							onClick="openLearningModal()" href="#">Help</a>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,6 +83,8 @@
 	</section>
 	<section id="learn_screen">
 		<div class="jumbotron jumbotron-fluid text-center">
+			<div id="loadingNext" class="col-lg-6 offset-lg-3 mainReader">
+			</div>
 			<div id="learnImmersiveText" class="col-lg-6 offset-lg-3 mainReader">
 			</div>
 			<div id="firstReadingAssessment" class="col-lg-6 offset-lg-3 mainReader">
@@ -136,7 +138,7 @@
 				<p>There are only 12 questions. Each question is multiple choice. If you don&rsquo;t know the answer, check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
 				<p>Remember, we are not testing you&nbsp;&mdash; we are testing our hypothesis. When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assessment</span> button below.</p>
 				<div class="">
-					<div id="initialIpaKnowledge_complete" onClick="assessInitialIpaKnowledge()"
+					<div id="initialIpaKnowledge_complete" onClick="assessIpaKnowledge()"
 							class="btn btn-outline-success my-2 my-sm-0 float-right">
 						Begin IPA Assessment
 					</div>
@@ -183,11 +185,9 @@
 				<p>&#8220;a&#618; la&#618;k j&#650;&#601;r ba&#650; ta&#618;!&#8221; &#240;i &#712;o&#650;ld&#601;r g&#604;rl s&#603;z. &#8220;&#618;t &#618;z &#712;v&#603;ri kul. ju m&#652;st bi &#712;v&#603;ri <span class="noWrapSpan">kri&#712;e&#618;t&#618;v.&#8221;</span></p>
 				<p><span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> &#712;d&#652;z&#601;nt fil <span class="noWrapSpan">&#618;m&#712;b&#603;r&#601;st</span> <span class="noWrapSpan">&#716;&#603;ni&#712;m&#596;r.</span> &#643;i la&#618;ks &#712;bi&#618;&#331; <span class="noWrapSpan">kri&#712;e&#618;t&#618;v.</span> &#643;i k&#230;nt we&#618;t tu &#643;o&#650; h&#604;r ba&#650; ta&#618; tu h&#604;r &#593;rt &#712;ti&#679;&#601;r.</p>
 				<p>w&#603;n w&#652;n &#652;v h&#604;r <span class="noWrapSpan">&#712;kl&#230;&#716;sme&#618;ts</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r b&#596;&#618;z,&#8221; <span class="noWrapSpan">&#601;&#712;l&#618;s&#601;</span> s&#603;z, &#8220;ba&#650; ta&#618;z &#593;r f&#596;r <span class="noWrapSpan">&#712;&#603;vri&#716;w&#652;n.</span> <span class="noWrapSpan">&#601;&#712;sp&#603;&#643;li</span> &#618;f ju &#593;r <span class="noWrapSpan">kri&#712;e&#618;t&#618;v,</span> la&#618;k mi!&#8221;</p>
-				<div class="lowerRightButton">
-					<div id="firstIpaAssessment_complete"
-							class="btn btn-outline-success my-2 my-sm-0 float-right">
-						Done
-					</div>
+				<div id="firstIpaAssessment_complete" onClick="assesReadingComprehension()"
+						class="btn btn-outline-success my-2 my-sm-0 float-right">
+					Done
 				</div>
 			</div>
 			<div id="secondIpaAssessment" class="col-lg-6 offset-lg-3 mainReader">
@@ -249,12 +249,24 @@
 				<p>&#8220;a&#618;&#8230; do&#650;nt &#712;r&#618;li <span class="noWrapSpan">r&#618;&#712;m&#603;mb&#601;r,&#8221;</span> &#712;&#676;in&#601; s&#603;z, &#712;r&#652;b&#618;&#331; &#601; &#712;pe&#618;nf&#601;l l&#652;mp &#593;n h&#604;r &#712;f&#596;rh&#603;d.</p>
 				<p>&#8220;o&#650;, w&#618;l ju l&#650;k &#230;t &#240;&#230;t!&#8221; h&#604;r &#712;m&#652;&#240;&#601;r s&#603;z, &#712;p&#596;&#618;nt&#618;&#331; &#230;t &#240;&#601; w&#650;dz. &#8220;ha&#650; swit!&#8221;</p>
 				<p>&#593;n &#240;&#601; d&#604;rt p&#230;&#952; <span class="noWrapSpan">b&#618;&#712;ha&#618;nd</span> h&#604;r, &#601; &#712;f&#230;m&#601;li &#652;v &#712;f&#593;ks&#601;z &#618;z &#712;me&#618;k&#618;&#331; &#240;&#603;r we&#618; &#712;&#618;ntu &#240;&#601; w&#650;dz. &#712;&#676;in&#601; skw&#618;nts &#230;nd sw&#603;rz &#643;i siz &#712;m&#603;r&#601;l&#601;n &#230;nd <span class="noWrapSpan">m&#601;&#712;l&#618;nd&#601;,</span> dr&#603;st &#618;n &#712;f&#603;&#240;&#601;rz &#230;nd &#712;fa&#618;n&#601;riz, &#712;lid&#618;&#331; &#240;&#603;m ho&#650;m.</p>
-				<div class="lowerRightButton">
-					<div id="secondIpaAssessment_complete"
-							class="btn btn-outline-success my-2 my-sm-0 float-right">
-						Done
-					</div>
+				<div id="secondIpaAssessment_complete"  onClick="assesReadingComprehension()"
+						class="btn btn-outline-success my-2 my-sm-0 float-right">
+					Done
 				</div>
+			</div>
+			<div id="finalIpaKnowledge" class="col-lg-6 offset-lg-3 mainReader">
+				<p class="lead">You did it!</p>
+				<p>We&rsquo;re almost done with you; thank you so much for sticking with us. Now we just have three sections to check how effective this tool has been: two reading assessments, just like the two you just after signing in the first time, but this time in IPA; and another IPA test, just like the one you took when we started. This is a closed book test&nbsp;&mdash; we want to measure how much you actually learned in the previous lessons, so your honesty is appreciated.</p>
+				<p>There are only 12 questions. Each question is multiple choice. If you don&rsquo;t know the answer, check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
+				<p>When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assessment</span> button below.</p>
+				<div id="initialIpaKnowledge_complete" onClick="assessIpaKnowledge()"
+						class="btn btn-outline-success my-2 my-sm-0 float-right">
+					Begin IPA Assessment
+				</div>
+			</div>
+			<div id="finalScreen" class="col-lg-6 offset-lg-3 mainReader">
+				<p class="lead">Thank you so much!</p>
+				<p>You&rsquo;ve completed you&rsquo;re portion. Now we&rsquo;ll let you know when we complete ours.</p>
 			</div>
 		</div>
 	</section>
@@ -270,7 +282,7 @@
 				<div class="modal-body">
 					<div id="firstReadingAssessment_body" class="immersionInstructions">
 						<p>Before you begin learning the International Phonetic Alphabet (IPA), we want to record a baseline to measure your learning against. We are not testing you&nbsp;&mdash; we are testing a method of aiding you in learning the IPA. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -327,8 +339,8 @@
 				</div>
 				<div class="modal-body">
 					<div id="secondReadingAssessment_body" class="immersionInstructions">
-						<p>Now that you are familiar with the interface, we have one more, slightly longer text for you to read. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>Now that you are familiar with the interface, we have one more, slightly longer text for you to read. It should take you about <span id="secondReadingAssessmentDuration">a few</span> minutes to read. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>A timer is started when you close this pop-up. If you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -388,8 +400,9 @@
 				</div>
 				<div class="modal-body">
 					<div id="immersionInstructions_body" class="immersionInstructions">
-						<p>This is an immersive text learning environment. After closing this pop-up, please click on each unfamiliar word for assistance on how to read the combination of IPA characters (we refer to this combination as a lexigram&nbsp;&mdash; a visual representation of a word).</p>
-						<p>Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please press the Pause button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>This section should take you about <span id="immersiveTextDuration">a few minutes</span> to read.</p>
+						<p>This is an immersive text learning environment. You may click on any unfamiliar word outside this pop-up for assistance on how to read the combination of IPA characters (we refer to this combination as a <strong>lexigram</strong>&nbsp;&mdash; a visual representation of a word).</p>
+						<p>Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -410,7 +423,7 @@
 				<div class="modal-body">
 					<div id="firstIpaAssessment_body" class="immersionInstructions">
 						<p>Now that you are familiar with the IPA, we want to measure your learning. This text will not have access to the immersive aide you&rsquo;ve been using. We are not testing you&nbsp;&mdash; we are testing the method we put you through. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -432,7 +445,7 @@
 				<div class="modal-body">
 					<div id="secondIpaAssessment_body" class="immersionInstructions">
 						<p>That first reading should have had many familiar lexigrams. This second reading is a little longer, and has more unfamiliar lexigrams&nbsp;&mdash; you will need to use the recoding skills you&rsquo;ve developed. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please press the <span>Pause</span> button in the top right corner (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>

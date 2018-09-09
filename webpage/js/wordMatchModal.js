@@ -10,6 +10,11 @@ function prepModal(lexigram, reveal, method) {
 	if (method === 'wordMatchSpan') prepWordMatchModal(lexigram, reveal);
 }
 function prepPhonemeMapModal(lexigram, reveal) {
+	var interaction = {
+		'studyMethod': 'phonemeMap',
+		'lexigram': lexigram
+	}
+	window.learningRecord.interactions.push(interaction);
 	$('#phonemeMap_body').html('');
 	$('#phonemeMap_title').text(lexigram);
 	$.each(lexigram.split(''), function(index, alpha) {
@@ -28,6 +33,12 @@ function prepPhonemeMapModal(lexigram, reveal) {
 	$('#modal_phonemeMap').modal('show');
 }
 function prepWordRevealModal(lexigram, reveal) {
+	var interaction = {
+		'studyMethod': 'wordReveal',
+		'lexigram': lexigram,
+		'reveal': reveal
+	}
+	window.learningRecord.interactions.push(interaction);
 	$('#wordReveal_body').html('');
 	$('#wordReveal_title').text(lexigram);
 	$('#wordReveal_body').text(reveal);
@@ -40,6 +51,14 @@ function prepWordMatchModal(lexigram, reveal) {
 	var option2 = (correctMatch === 1) ? lexigram : createVariation(lexigram, [option1]);
 	var option3 = (correctMatch === 2) ? lexigram : createVariation(lexigram, [option1, option2]);
 	
+	// log interaction
+	var interaction = {
+		'studyMethod': 'wordMatch',
+		'lexigram': lexigram,
+		'options': [option1, option2, option3]
+	}
+	window.learningRecord.interactions.push(interaction);
+
 	// set modal title to lexigram
 	$('#wordMatch_title').text(lexigram);
 	
@@ -97,6 +116,11 @@ function wordMatchTest() {
 	// pull variables for match test
 	var testLexigram = this.value;
 	var matchLexigram = $('#wordMatch_title').text();
+	var interaction = {
+		'studyMethod': 'wordMatch',
+		'lexigram': matchLexigram,
+		'correctMatch': true
+	}
 	
 	// test for match
 	if (testLexigram === matchLexigram) {
@@ -117,7 +141,10 @@ function wordMatchTest() {
 		// increase cost to user of incorrect choice
 		$('#wordMatch_hidden').hide();
 		$('#wordMatch_close').show();
+		interaction.correctMatch = false;
+		interaction.incorrectChoice = testLexigram;
 	}
+	window.learningRecord.interactions.push(interaction);
 }
 
 window.loadImmersiveText = function loadImmersiveText() {
@@ -142,7 +169,7 @@ window.loadImmersiveText = function loadImmersiveText() {
 	$('#learnImmersiveText').html('');
 	window.learningRecord.interactions = [];
 	var spanIndex = 0;
-	$.each( window.learningRecord.paragraphs, function(paragraphIndex, paragraph) {
+	$.each( window.learningContent.paragraphs, function(paragraphIndex, paragraph) {
 		var interactionMethod = 'wordMatchSpan';
 		interactionMethod = (studyMethod === 0) ? 'phonemeMapSpan' : interactionMethod;
 		interactionMethod = (studyMethod === 1) ? 'wordRevealSpan' : interactionMethod;
@@ -164,7 +191,7 @@ window.loadImmersiveText = function loadImmersiveText() {
 	var done = document.createElement('div');
 	done.textContent = 'Done';
 	done.setAttribute('class', 'btn btn-outline-success my-2 my-sm-0 float-right');
-	done.setAttribute('onClick', 'updateLearnScreenDiv()');
+	done.setAttribute('onClick', 'finishedImmersiveText()');
 	$('#learnImmersiveText').append(done);
 	$('#learnImmersiveText span').on('click', function() {
 		var lexigram = $(this).attr('data-lexigram');
@@ -173,6 +200,7 @@ window.loadImmersiveText = function loadImmersiveText() {
 		$(this).addClass('interacted');
 		prepModal(lexigram, reveal, method);
 	});
+	$('#immersiveTextDuration').text(Math.round(spanIndex / window.learningRecord.ipaWPM));
 };
 window.shuffle = function shuffle(a) {
     var j, x, i;
