@@ -11,15 +11,15 @@ function loadSplash() {
 		$('form#loginForm').show();
 		$('#loginForm').submit(function(event){
 			event.preventDefault();
-			var email = $('[data-id=loginEmail_val]').val();
+			var email = $('[data-id=loginEmail_val]').val().toLowerCase();
 			sessionStorage.setItem('email', email);
 			trySignin(email);
 		});
 		$('#signupForm').submit(function(event){
 			event.preventDefault();
-			var email = $('[data-id=signupEmail_val]').val();
+			var email = $('[data-id=signupEmail_val]').val().toLowerCase();
 			sessionStorage.setItem('email', email);
-			loadSignup();
+			trySignin(email);
 		});
 	});
 }
@@ -89,6 +89,7 @@ function loadSignup() {
 	});
 }
 function loadAccount() {
+	localStorage.setItem('email', sessionStorage.getItem('email'));
 	window.location.href = 'learning.html';
 	$('section').each(function() {
 		$( this ).hide();
@@ -99,6 +100,12 @@ function trySignin(email) {
 	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'request': 'alias', 'email':email }, function(result) {
 		if (typeof result.alias !== "undefined" && result.alias !== null) {
 			console.log('alias GET successful:\n', result);
+			if (localStorage.getItem('email') !== null && localStorage.getItem('email') === email) {
+				window.location.href = 'learning.html';
+				return;
+			} else {
+				localStorage.setItem('email', null);
+			}
 			var fname = result.alias;
 			var studyMethod = result.studyMethod;
 			sessionStorage.setItem("fname", fname);
@@ -116,6 +123,15 @@ function trySignin(email) {
 $(document).ready(function(){
 	$('section').each(function() {
 		$( this ).hide();
+	});
+	$(document).click(function (event) {
+		var clickover = $(event.target);
+		var _opened = $(".navbar-collapse").hasClass("show");
+		if (_opened === true 
+				&& !clickover.hasClass("navbar-toggler")
+				&& clickover.attr('data-id') !== 'loginEmail_val' ) {
+			$("button.navbar-toggler").click();
+		}
 	});
 	var cognitoUser = ipaStudy.userPool.getCurrentUser();
 	if (cognitoUser !== null) {
@@ -145,6 +161,7 @@ function registrationSuccess(result) {
 		'url': 'https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/',
 		'data': data
 	});
+	localStorage.setItem('email', email);
 	$('form#loginForm').hide();
 	$('#alias_display').text(fname);
 	$('#signup_screen').hide();

@@ -17,3 +17,6 @@
 .noWrapSpan {
 	white-space: nowrap;
 }
+#timeLapsed {
+	color: red;
+}

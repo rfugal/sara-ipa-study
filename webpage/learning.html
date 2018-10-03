@@ -6,6 +6,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sara&rsquo;s IPA Study</title>
 
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href="http://www.sara.ai/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="http://www.sara.ai/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="http://www.sara.ai/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="http://www.sara.ai/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="http://www.sara.ai/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="http://www.sara.ai/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="http://www.sara.ai/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="http://www.sara.ai/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="http://www.sara.ai/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="http://www.sara.ai/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.sara.ai/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="http://www.sara.ai/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="http://www.sara.ai/favicon/favicon-16x16.png">
+	<link rel="manifest" href="http://www.sara.ai/favicon/manifest.json">
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
@@ -38,10 +54,11 @@
 <header>
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-			<a class="navbar-brand" onClick="loadSplash()" href="#">Sara&rsquo;s IPA Study</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 			</button>
+			<a class="navbar-brand" onClick="loadSplash()" href="#">Sara&rsquo;s IPA Study</a>
+			<a id="timeLapsed" class="nav-link" onClick="openLearningModal()" href="#">0:00</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
@@ -134,8 +151,8 @@
 			</div>
 			<div id="initialIpaKnowledge" class="col-lg-6 offset-lg-3 mainReader">
 				<p class="lead">IPA Knowledge</p>
-				<p>We are almost ready to start learning. Before beginning, we want to record your baseline knowledge of IPA. This is a closed book test&nbsp;&mdash; we want to measure how much you actually learn in the upcoming lessons, so your honesty is appreciated.</p>
-				<p>There are only 12 questions. Each question is multiple choice. If you don&rsquo;t know the answer, check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
+				<p>You are almost ready to start learning. Before beginning, we want to record your baseline knowledge of IPA. This is a closed book test&nbsp;&mdash; we want to measure how much you actually learn in the upcoming lessons, so your honesty is appreciated. There are only 12 questions. Each question is multiple choice.</p>
+				<p>For each question, if you don&rsquo;t know the answer please check the &ldquo;I&rsquo;m not sure&rdquo; box and then make a guess.</p>
 				<p>Remember, we are not testing you&nbsp;&mdash; we are testing our hypothesis. When you are ready to begin, click the <span style="color: #28a745">Begin IPA Assessment</span> button below.</p>
 				<div class="">
 					<div id="initialIpaKnowledge_complete" onClick="assessIpaKnowledge()"
@@ -282,7 +299,7 @@
 				<div class="modal-body">
 					<div id="firstReadingAssessment_body" class="immersionInstructions">
 						<p>Before you begin learning the International Phonetic Alphabet (IPA), we want to record a baseline to measure your learning against. We are not testing you&nbsp;&mdash; we are testing a method of aiding you in learning the IPA. After closing this pop-up, please read the text at your regular pace. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click on the timer (<span style="color: red;">0:00</span>) in the top menu to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -339,9 +356,8 @@
 				</div>
 				<div class="modal-body">
 					<div id="secondReadingAssessment_body" class="immersionInstructions">
-						<p>Now that you are familiar with the interface, we have one more, slightly longer text for you to read. It should take you about <span id="secondReadingAssessmentDuration">a few</span> minutes to read. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. If you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
-						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
+						<p>Now that you are familiar with the interface, we have a short story for you to read. It should take you about <span id="secondReadingAssessmentDuration">a few minutes</span> to read. There are a few questions about the text that you will need to answer when you are done.</p>
+						<p>If you are interupted please click on the timer (<span style="color: red;">0:00</span>) in the top menu to return to this pop-up.</p>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -401,8 +417,8 @@
 				<div class="modal-body">
 					<div id="immersionInstructions_body" class="immersionInstructions">
 						<p>This section should take you about <span id="immersiveTextDuration">a few minutes</span> to read.</p>
-						<p>This is an immersive text learning environment. You may click on any unfamiliar word outside this pop-up for assistance on how to read the combination of IPA characters (we refer to this combination as a <strong>lexigram</strong>&nbsp;&mdash; a visual representation of a word).</p>
-						<p>Remember, we are not testing you&nbsp;&mdash; we are testing the method. Take the time you need to learn, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>Click on any unfamiliar word for assistance on how to read the combination of IPA characters (we refer to this combination as a <strong>lexigram</strong>&nbsp;&mdash; a visual representation of a word).</p>
+						<p>Take the time you need to learn, but if you are interupted please click on the timer (<span style="color: red;">0:00</span>) in the top menu to return to this pop-up.</p>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -423,7 +439,7 @@
 				<div class="modal-body">
 					<div id="firstIpaAssessment_body" class="immersionInstructions">
 						<p>Now that you are familiar with the IPA, we want to measure your learning. This text will not have access to the immersive aide you&rsquo;ve been using. We are not testing you&nbsp;&mdash; we are testing the method we put you through. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click on the timer (<span style="color: red;">0:00</span>) in the top menu to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -445,7 +461,7 @@
 				<div class="modal-body">
 					<div id="secondIpaAssessment_body" class="immersionInstructions">
 						<p>That first reading should have had many familiar lexigrams. This second reading is a little longer, and has more unfamiliar lexigrams&nbsp;&mdash; you will need to use the recoding skills you&rsquo;ve developed. After closing this pop-up, please read the text as best you can. There are a few questions about the text that you will need to answer when you are done.</p>
-						<p>A timer is started when you close this pop-up. Take the time you need, but if you are interupted please click <span>Help</span> in the top menu (or inside the collapsed menu on a smaller screen) to return to this pop-up.</p>
+						<p>Take the time you need, but if you are interupted please click on the timer (<span style="color: red;">0:00</span>) in the top menu to return to this pop-up.</p>
 						<p>When you have finished reading the entire text, please press the <span style="color: #28a745">Done</span> button in the lower right corner.</p>
 					</div>
 				</div>
@@ -465,7 +481,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					Match one of the lexigrams below to the heading above &hellip;
+					Select the lexigram (word) below that matches the heading above &hellip;
 					<div class="wordMatchLayout">
 						<input id="wordMatch_option1" type="button" class="btn">
 					</div>

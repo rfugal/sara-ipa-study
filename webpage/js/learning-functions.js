@@ -16,6 +16,8 @@ window.learningContent = {
 	'paragraphs': [],
 	'phonemes': {}
 };
+window.timeOnTask = 0;
+var totTimeout;
 
 // load ipaPhonemes.json
 var ipaPhonemesHttpRequest = new XMLHttpRequest();
@@ -53,14 +55,48 @@ var ReadingComprehensionAssessment = {
 	'incorrect': [],
 	'incorrectAnswers': {
 		//	'1': 4
-	}
+	},
+	'wpm': 0
 };
+
+function updateTimeOnTask() {
+	timer();
+	var totMins = Math.floor(window.timeOnTask/60).toString();
+	var totSecs = ("0" + (window.timeOnTask % 60).toString()).slice(-2);
+	$('#timeLapsed').text(totMins + ":" + totSecs);
+	window.timeOnTask++;
+}
+function timer() {
+	totTimeout = setTimeout(updateTimeOnTask, 1000);
+}
 
 //on first load
 $(document).ready(function(){
 	var cognitoUser = ipaStudy.userPool.getCurrentUser();
 	if (cognitoUser === null) {
-		window.location.replace('index.html');
+		if (localStorage.getItem('email') !== null) {
+			var email = localStorage.getItem('email');
+			$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', { 'request': 'alias', 'email':email }, function(result) {
+				if (typeof result.alias !== "undefined" && result.alias !== null) {
+					console.log('alias GET successful:\n', result);
+					var fname = result.alias;
+					var studyMethod = result.studyMethod;
+					var email = localStorage.getItem('email');
+					localStorage.setItem("fname", fname);
+					localStorage.setItem('studyMethod', studyMethod);
+					window.learningRecord.email = email;
+					ipaKnowledgeAssessment.email = email;
+					ReadingComprehensionAssessment.email = email;
+					loadLearningScreen();
+				} else {
+					$('#loginForm').show();
+					localStorage.setItem('email', null);
+					window.location.replace('index.html');
+				}
+			});
+		} else {
+			window.location.replace('index.html');
+		}
 	} else {
 		cognitoUser.getSession(function(err, session) {
 			if(!err) {
@@ -75,7 +111,7 @@ $(document).ready(function(){
 								window.learningRecord.email = email;
 								ipaKnowledgeAssessment.email = email;
 								ReadingComprehensionAssessment.email = email;
-								sessionStorage.setItem('email', email);
+								localStorage.setItem('email', email);
 								loadLearningScreen();
 							}
 						}
@@ -91,6 +127,13 @@ $(document).ready(function(){
 	}
 	$(window).blur(function(){
 		openLearningModal();
+	});
+	$(document).click(function (event) {
+		var clickover = $(event.target);
+		var _opened = $(".navbar-collapse").hasClass("show");
+		if (_opened === true && !clickover.hasClass("navbar-toggler") ) {
+			$("button.navbar-toggler").click();
+		}
 	});
 	$('#unsure_checkbox').click(function(){
 		if ($('#unsure_checkbox').hasClass('unsure')) {
@@ -113,22 +156,26 @@ $(document).ready(function(){
 			window.learningRecord.start = $.now();
 			window.learningRecord.finish = null;
 		}
+        timer();
 	});
 });
 
 function openLearningModal() {
-	if (($('#modal_ReadingAssessmentComprehension').data('bs.modal') || {})._isShown) {
+	if (($('.modal').data('bs.modal') || {})._isShown) {
 		return;
 	}
+    clearTimeout(totTimeout);
 	if (window.learningRecord.start !== null) {
 		window.learningRecord.finish = $.now();
 	}
 	if (window.learningRecord.interactions.length > 0) {
 		putLearningRecord();
 	}
+/*
 	$('main div.modal').each(function() {
 		$( this ).modal('hide');
 	}).ready(function() {
+*/
 		switch(window.learningContent.screen) {
 			case '#firstReadingAssessment':
 				$('#modal_firstReadingAssessment').modal('show');
@@ -149,7 +196,9 @@ function openLearningModal() {
 				$('#modal_secondIpaAssessment').modal('show');
 				break;
 		}		
+/*
 	});
+*/
 }
 
 function loadLearningScreen() {
@@ -173,6 +222,9 @@ function updateLearnScreenDiv() {
 }
 
 function updateLearningContent() {
+	clearTimeout(totTimeout);
+	window.timeOnTask = 0;
+	$('#timeLapsed').text('0:00');
 	$.get('https://0ugaks5lgg.execute-api.us-east-1.amazonaws.com/Prod/', 
 		  { 'request': 'content', 'email': window.learningRecord.email }, 
 		  function(result) {
@@ -185,7 +237,7 @@ function updateLearningContent() {
 			window.learningContent.paragraphs = result.paragraphs;
 			window.learningContent.phonemes = result.phonemes;
 			window.learningRecord.ipaWPM = parseInt(result.ipaWPM);
-			sessionStorage.setItem('studyMethod', parseInt(result.studyMethod));
+			localStorage.setItem('studyMethod', parseInt(result.studyMethod));
 			$( window.learningContent.screen ).show();
 			if (window.learningContent.screen === '#learnImmersiveText') {
 				window.loadImmersiveText();
@@ -245,19 +297,19 @@ function assesReadingComprehension() {
 	var question = {};
 	switch(window.learningContent.screen) {
 		case '#firstReadingAssessment':
-			index = 6 - firstReadingComprehension.length;
+			index = (firstReadingComprehension.length === 0) ? 0 : 3 - firstReadingComprehension.length;
 			break;
 		case '#secondReadingAssessment':
-			index = 6 - secondReadingComprehension.length;
+			index = (secondReadingComprehension.length === 0) ? 0 : 6 - secondReadingComprehension.length;
 			break;
 		case '#firstIpaAssessment':
-			index = 6 - firstIpaComprehension.length;
+			index = (firstIpaComprehension.length === 0) ? 0 : 5 - firstIpaComprehension.length;
 			break;
 		case '#secondIpaAssessment':
-			index = 6 - secondIpaComprehension.length;
+			index = (secondIpaComprehension.length === 0) ? 0 : 6 - secondIpaComprehension.length;
 			break;
 	}
-	if (index === 6) {
+	if (index === 0) {
 		var w = 100;
 		var m = (window.learningRecord.finish - window.learningRecord.start) / 60000;
 		switch(window.learningContent.screen) {
@@ -281,6 +333,7 @@ function assesReadingComprehension() {
 				break;
 		}
 		window.learningRecord.ipaWPM = Math.floor(w / m);
+		ReadingComprehensionAssessment.wpm = Math.floor(w / m);
 		var durationMinutes = Math.round(754 / window.learningRecord.ipaWPM);
 		var durationText = (durationMinutes === 1) ? ' minute' : ' minutes';
 		durationText = durationMinutes.toString() + durationText;
@@ -308,7 +361,15 @@ function assesReadingComprehension() {
 			question = secondIpaComprehension.shift();
 			break;
 	}
-	var questionCount = (window.learningContent.screen === "#firstIpaAssessment") ? 4 : 5;
+	var questionCount = 5;
+	switch(window.learningContent.screen) {
+		case "#firstReadingAssessment":
+			questionCount = 2;
+			break;
+		case "#firstIpaAssessment":
+			questionCount = 4;
+			break;
+	}
 	$('#ReadingAssessmentComprehension_questionIndex').text('Question ' + (index) + ' of ' + (questionCount));
 	$('#ReadingAssessmentComprehension_body').text(question.question);
 	var choice = 0;
@@ -449,6 +510,7 @@ if (typeof AWSCognito !== 'undefined') {
 
 ipaStudy.signOut = function signOut() {
 	ipaStudy.userPool.getCurrentUser().signOut();
+	localStorage.setItem('email', null);
 	window.location.replace('index.html');
 };
 
@@ -529,7 +591,7 @@ var firstReadingComprehension = [
 		'question': 'Which of the following shows the sequence of events as described in the passage in the correct order?',
 		'answer': 3,
 		'choices': ['A. Chimamanda had a passion for literature, majored in creative writing, studied medicine in Nigeria, and then moved to the United States.', 'B. Chimamanda had a passion for literature, moved to the United States, majored in creative writing, and then studied medicine in Nigeria.', 'C. Chimamanda had a passion for literature, studied medicine in Nigeria, moved to the United States, and then majored in creative writing.', 'D. Chimamanda studied medicine in Nigeria, moved to the United States, majored in creative writing, and then had a passion for literature.']
-	},
+	}/*,
 	{
 		'question': 'Based on the text, what conclusion can you make about Chimamanda\u2019s interests?',
 		'answer': 1,
@@ -544,7 +606,7 @@ var firstReadingComprehension = [
 		'question': 'What is the main idea of the text?',
 		'answer': 2,
 		'choices': ['A. Chimamanda Ngozi Adichie did not want to be a writer at first, so she studied medicine in Nigeria and then decided to move to the United States to study communication and political science.', 'B. Although Chimamanda Ngozi Adichie developed an early passion for literature in Nigeria, she studied other subjects before finally becoming a writer and writing some novels, even earning awards for her writing.', 'C. One of Chimamanda Ngozi Adichie\u2019s most popular novels is Half of a Yellow Sun, which is a story about three characters before and during Nigeria\u2019s Biafran War, and the novel has even been adapted into a movie.', 'D. One of the recent novels by Chimamanda Ngozi Adichie is about the experience of a Nigerian girl studying at an American college, and Chimamanda denies that the story is about her own experience.']
-	}
+	}*/
 ];
 
 var secondReadingComprehension = [
